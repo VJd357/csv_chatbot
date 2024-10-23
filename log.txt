@@ -1,0 +1,137 @@
+2024-10-23 17:29:18,979 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 17:29:18,989 - INFO - Prompt: You are an experienced Sql developer with 10 years of experience.
+OpenAI Response: ```sql
+SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS TotalGoals
+FROM WorldCupMatches
+GROUP BY [Year]
+ORDER BY TotalGoals DESC
+LIMIT 5;
+```
+2024-10-23 17:29:19,023 - INFO - Executed Query: SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS TotalGoals
+FROM WorldCupMatches
+GROUP BY [Year]
+ORDER BY TotalGoals DESC
+LIMIT 5;
+Result:      Year  TotalGoals
+0  2014.0       206.0
+1  1998.0       171.0
+2  2002.0       161.0
+3  2006.0       147.0
+4  1982.0       146.0
+2024-10-23 17:29:20,700 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 17:29:20,706 - INFO - Prompt: 
+        Based on the given context:      Year  TotalGoals
+0  2014.0       206.0
+1  1998.0       171.0
+2  2002.0       161.0
+3  2006.0       147.0
+4  1982.0       146.0,
+        answer the following question: What is the highest number of goals scored in a single year in a world cup?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is the highest number of goals scored in a single year in a world cup? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: What is the highest number of goals scored in a single year in a world cup? 
+
+Answer: The highest number of goals scored in a single year in a World Cup is 206, which occurred in the year 2014.
+2024-10-23 17:31:26,277 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 17:31:26,284 - INFO - Prompt: You are an experienced Sql developer with 10 years of experience.
+OpenAI Response: ```sql
+SELECT MAX([MatchesPlayed]) 
+FROM [WorldCups];
+```
+2024-10-23 17:31:26,301 - INFO - Executed Query: SELECT MAX([MatchesPlayed]) 
+FROM [WorldCups];
+Result:    MAX([MatchesPlayed])
+0                    64
+2024-10-23 17:31:27,628 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 17:31:27,631 - INFO - Prompt: 
+        Based on the given context:    MAX([MatchesPlayed])
+0                    64,
+        answer the following question: What is the maximum number of matches in a world cup?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is the maximum number of matches in a world cup? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: What is the maximum number of matches in a world cup? 
+
+Answer: The maximum number of matches in a World Cup is 64, as per the data available.
+2024-10-23 17:33:36,005 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 17:33:36,010 - INFO - Prompt: You are an experienced Sql developer with 10 years of experience.
+OpenAI Response: ```sql
+SELECT [Country], COUNT(*) AS [Total Wins]
+FROM [WorldCups]
+WHERE [Winner] IS NOT NULL
+GROUP BY [Country]
+ORDER BY [Total Wins] DESC
+```
+2024-10-23 17:33:36,034 - INFO - Executed Query: SELECT [Country], COUNT(*) AS [Total Wins]
+FROM [WorldCups]
+WHERE [Winner] IS NOT NULL
+GROUP BY [Country]
+ORDER BY [Total Wins] DESC
+Result:    Country  Total Wins
+0   Mexico           2
+1    Italy           2
+2  Germany           2
+3   France           2
+4   Brazil           2
+2024-10-23 17:33:37,409 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 17:33:37,414 - INFO - Prompt: 
+        Based on the given context:          Country  Total Wins
+0         Mexico           2
+1          Italy           2
+2        Germany           2
+3         France           2
+4         Brazil           2
+5        Uruguay           1
+6            USA           1
+7    Switzerland           1
+8         Sweden           1
+9          Spain           1
+10  South Africa           1
+11   Korea/Japan           1
+12       England           1
+13         Chile           1
+14     Argentina           1,
+        answer the following question: which country is the most successful in the history of worldcup?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: which country is the most successful in the history of worldcup? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: which country is the most successful in the history of worldcup? 
+
+Answer: Based on the provided data, there are multiple countries tied with the highest total wins, each having won the World Cup 2 times: Mexico, Italy, Germany, France, and Brazil.

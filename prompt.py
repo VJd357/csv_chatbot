@@ -21,6 +21,7 @@ class Prompt:
             "The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. "
             "Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, "
             "including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. "
+            "If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer."
             "It is essential to correctly integrate table names, column names, and any specified conditions. "
             "Your goal is to produce a query that executes flawlessly in a typical SQL environment, "
             "returning the complete row of data where the conditions are met. "
@@ -31,7 +32,8 @@ class Prompt:
             f"<content> User's question: {question} </content>"
             f"The available table names are: {', '.join(table_names)}, strictly use the table names among these. "
             "When grouping or counting is necessary, avoid using * after the SELECT statement. "
-            "The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query. "
+            "The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. "
+            "Do not use cases such as top 5 or top. "
             f"<context> {columns_info} </context>"
             "The output should be solely the SQL query, with no additional text or commentary."
         )
@@ -50,6 +52,7 @@ class Prompt:
         Based on the given context: {result_df},
         answer the following question: {question}. 
         If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
         Output guidelines: 
         1. The Output should be precise and follow the question given by the user.
         2. The Output should not display the complete df that is provided as context to the llm.

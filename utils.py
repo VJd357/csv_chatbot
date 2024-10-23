@@ -8,8 +8,8 @@ class Utility:
         with open('creds.yaml', 'r') as file:
             creds = yaml.safe_load(file)
         model = creds['openai']['openai_model']
-        api_key = creds['openai']['openai_key']
-        return api_key, model
+       # api_key = creds['openai']['openai_key']
+        return model
 
     @staticmethod
     def create_tables_from_csv(csv_paths, db_name):

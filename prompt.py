@@ -53,6 +53,7 @@ class Prompt:
         answer the following question: {question}. 
         If the data in context has None, Nan or null values ignore it and give the next most suitable output.
         If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
         Output guidelines: 
         1. The Output should be precise and follow the question given by the user.
         2. The Output should not display the complete df that is provided as context to the llm.
@@ -61,7 +62,10 @@ class Prompt:
         5. Output should be described in the text format in a sentence or more if required.
         Output Format: 
             Question: {question} \n\n            
-            Answer: response
+            Answer: -> Data-Info
+                    -> Key findings
+                    -> Visible trends
+                    -> Actionable Insights
         
         """
 

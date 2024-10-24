@@ -323,3 +323,703 @@ Result:          Contract     Age_Group Churn Label  Customer_Count
 OpenAI Response: Question: What is the relation between the contract type of a customer to their churn state, based on their age-groups? 
 
 Answer: The data reveals distinct patterns of churn based on contract type and age group. Customers on a Month-to-Month contract exhibit higher churn rates across all age groups compared to those on One Year and Two Year contracts. Specifically, the churn is most pronounced in the 30-59 age group for Month-to-Month contracts and decreases significantly for One Year and Two Year contracts. In contrast, the under 30 age group shows relatively high churn for Month-to-Month but lower churn for both One Year and Two Year contracts. Overall, customers in longer-term contracts (One Year and Two Year) demonstrate a lower tendency to churn compared to those on Month-to-Month contracts.
+2024-10-24 11:49:59,571 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:49:59,575 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Identify the trend over time in avg monthly data usage in downloading based on their interenet type and the thier region? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT 
+    [Internet Type], 
+    [Quarter], 
+    AVG([Avg Monthly GB Download]) AS Avg_Monthly_Data_Usage
+FROM 
+    telco
+GROUP BY 
+    [Internet Type], [Quarter]
+ORDER BY 
+    [Internet Type], [Quarter];
+```
+2024-10-24 11:50:21,098 - INFO - Executed Query: SELECT 
+    [Internet Type], 
+    [Quarter], 
+    AVG([Avg Monthly GB Download]) AS Avg_Monthly_Data_Usage
+FROM 
+    telco
+GROUP BY 
+    [Internet Type], [Quarter]
+ORDER BY 
+    [Internet Type], [Quarter];
+Result:   Internet Type Quarter  Avg_Monthly_Data_Usage
+0          None      Q3                0.000000
+1         Cable      Q3               27.872289
+2           DSL      Q3               27.514528
+3   Fiber Optic      Q3               25.008896
+2024-10-24 11:50:41,890 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:50:41,894 - INFO - Prompt: 
+        Based on the given context:   Internet Type Quarter  Avg_Monthly_Data_Usage
+0          None      Q3                0.000000
+1         Cable      Q3               27.872289
+2           DSL      Q3               27.514528
+3   Fiber Optic      Q3               25.008896,
+        answer the following question: Identify the trend over time in avg monthly data usage in downloading based on their interenet type and the thier region?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: Identify the trend over time in avg monthly data usage in downloading based on their interenet type and the thier region? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: Identify the trend over time in avg monthly data usage in downloading based on their internet type and their region?
+
+Answer: Based on the available data for Q3, the trend in average monthly data usage for different internet types is as follows: Cable internet shows the highest average monthly data usage at approximately 27.87 GB, followed closely by DSL with approximately 27.51 GB, and Fiber Optic with 25.01 GB. The internet type "None" is excluded from consideration, indicating that users with Cable and DSL tend to have higher data usage compared to those using Fiber Optic in this period. Further analysis over additional quarters or regions would be needed to identify long-term trends.
+2024-10-24 11:54:25,223 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:54:25,224 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Identify the trend among the intrenet users over time in avg monthly data usage in downloading based on their interenet type and the thier region? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT 
+    [Internet Type], 
+    [Country], 
+    [State], 
+    AVG([Avg Monthly GB Download]) AS Average_Monthly_Data_Usage 
+FROM 
+    telco 
+GROUP BY 
+    [Internet Type], 
+    [Country], 
+    [State] 
+ORDER BY 
+    [Internet Type], 
+    [Country], 
+    [State];
+```
+2024-10-24 11:54:35,254 - INFO - Executed Query: SELECT 
+    [Internet Type], 
+    [Country], 
+    [State], 
+    AVG([Avg Monthly GB Download]) AS Average_Monthly_Data_Usage 
+FROM 
+    telco 
+GROUP BY 
+    [Internet Type], 
+    [Country], 
+    [State] 
+ORDER BY 
+    [Internet Type], 
+    [Country], 
+    [State];
+Result:   Internet Type        Country       State  Average_Monthly_Data_Usage
+0          None  United States  California                    0.000000
+1         Cable  United States  California                   27.872289
+2           DSL  United States  California                   27.514528
+3   Fiber Optic  United States  California                   25.008896
+2024-10-24 11:55:01,294 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:55:01,310 - INFO - Prompt: 
+        Based on the given context:   Internet Type        Country       State  Average_Monthly_Data_Usage
+0          None  United States  California                    0.000000
+1         Cable  United States  California                   27.872289
+2           DSL  United States  California                   27.514528
+3   Fiber Optic  United States  California                   25.008896,
+        answer the following question: Identify the trend among the intrenet users over time in avg monthly data usage in downloading based on their interenet type and the thier region?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: Identify the trend among the intrenet users over time in avg monthly data usage in downloading based on their interenet type and the thier region? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: Identify the trend among the internet users over time in avg monthly data usage in downloading based on their internet type and their region? 
+
+Answer: Based on the provided data, users in California, United States, exhibit varying average monthly data usage based on internet type. Cable users have the highest average usage at approximately 27.87 GB, followed closely by DSL at about 27.51 GB, while Fiber Optic users have the lowest at roughly 25.01 GB. The trend suggests that Cable and DSL users are more engaged in data usage compared to Fiber Optic users in this region, indicating potential preferences for different internet services among consumers.
+2024-10-24 12:07:01,927 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:07:01,936 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Identify the trend among the intrenet users over time in avg monthly data usage in downloading based on their interenet type and the thier region? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Internet Type], 
+       [Country], 
+       [State], 
+       AVG([Avg Monthly GB Download]) AS [Avg Monthly Data Usage]
+FROM [telco]
+GROUP BY [Internet Type], [Country], [State]
+ORDER BY [Internet Type], [Country], [State];
+```
+2024-10-24 12:07:07,873 - INFO - Executed Query: SELECT [Internet Type], 
+       [Country], 
+       [State], 
+       AVG([Avg Monthly GB Download]) AS [Avg Monthly Data Usage]
+FROM [telco]
+GROUP BY [Internet Type], [Country], [State]
+ORDER BY [Internet Type], [Country], [State];
+Result:   Internet Type        Country       State  Avg Monthly Data Usage
+0          None  United States  California                0.000000
+1         Cable  United States  California               27.872289
+2           DSL  United States  California               27.514528
+3   Fiber Optic  United States  California               25.008896
+2024-10-24 12:07:15,539 - INFO - Executed Query: SELECT [Internet Type], 
+       [Country], 
+       [State], 
+       AVG([Avg Monthly GB Download]) AS [Avg Monthly Data Usage]
+FROM [telco]
+GROUP BY [Internet Type], [Country], [State]
+ORDER BY [Internet Type], [Country], [State];
+Result:   Internet Type        Country       State  Avg Monthly Data Usage
+0          None  United States  California                0.000000
+1         Cable  United States  California               27.872289
+2           DSL  United States  California               27.514528
+3   Fiber Optic  United States  California               25.008896
+2024-10-24 12:08:24,790 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:08:24,795 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What is the relation between the contract type of a customer to their churn state, based on their age-groups? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Contract], 
+       CASE 
+           WHEN [Age] < 30 THEN 'Under 30'
+           WHEN [Age] BETWEEN 30 AND 60 THEN '30-60'
+           ELSE 'Senior'
+       END AS [Age Group], 
+       [Churn Label]
+FROM [telco]
+GROUP BY [Contract], 
+         CASE 
+             WHEN [Age] < 30 THEN 'Under 30'
+             WHEN [Age] BETWEEN 30 AND 60 THEN '30-60'
+             ELSE 'Senior'
+         END, 
+         [Churn Label]
+ORDER BY [Contract], 
+         [Age Group];
+```
+2024-10-24 12:08:36,449 - INFO - Executed Query: SELECT [Contract], 
+       CASE 
+           WHEN [Age] < 30 THEN 'Under 30'
+           WHEN [Age] BETWEEN 30 AND 60 THEN '30-60'
+           ELSE 'Senior'
+       END AS [Age Group], 
+       [Churn Label]
+FROM [telco]
+GROUP BY [Contract], 
+         CASE 
+             WHEN [Age] < 30 THEN 'Under 30'
+             WHEN [Age] BETWEEN 30 AND 60 THEN '30-60'
+             ELSE 'Senior'
+         END, 
+         [Churn Label]
+ORDER BY [Contract], 
+         [Age Group];
+Result:          Contract Age Group Churn Label
+0  Month-to-Month     30-60          No
+1  Month-to-Month     30-60         Yes
+2  Month-to-Month    Senior          No
+3  Month-to-Month    Senior         Yes
+4  Month-to-Month  Under 30          No
+2024-10-24 12:15:05,190 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:15:05,194 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Give a summary of the data? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT * FROM telco;
+```
+2024-10-24 12:15:09,808 - INFO - Executed Query: SELECT * FROM telco;
+Result:   Customer ID  Gender  Age Under 30 Senior Citizen Married Dependents  \
+0  8779-QRDMV    Male   78       No            Yes      No         No   
+1  7495-OOKFY  Female   74       No            Yes     Yes        Yes   
+2  1658-BYGOY    Male   71       No            Yes      No        Yes   
+3  4598-XLKNJ  Female   78       No            Yes     Yes        Yes   
+4  4846-WHAFZ  Female   80       No            Yes     Yes        Yes   
+
+   Number of Dependents        Country       State  ...  \
+0                     0  United States  California  ...   
+1                     1  United States  California  ...   
+2                     3  United States  California  ...   
+3                     1  United States  California  ...   
+4                     1  United States  California  ...   
+
+  Total Extra Data Charges  Total Long Distance Charges  Total Revenue  \
+0                       20                         0.00          59.65   
+1                        0                       390.80        1024.10   
+2                        0                       203.94        1910.88   
+3                        0                       494.00        2995.07   
+4                        0                       234.21        3102.36   
+
+   Satisfaction Score  Customer Status Churn Label Churn Score  CLTV  \
+0                   3          Churned         Yes          91  5433   
+1                   3          Churned         Yes          69  5302   
+2                   2          Churned         Yes          81  3179   
+3                   2          Churned         Yes          88  5337   
+4                   2          Churned         Yes          67  2793   
+
+    Churn Category                  Churn Reason  
+0       Competitor  Competitor offered more data  
+1       Competitor  Competitor made better offer  
+2       Competitor  Competitor made better offer  
+3  Dissatisfaction     Limited range of services  
+4            Price            Extra data charges  
+
+[5 rows x 50 columns]
+2024-10-24 12:15:25,305 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:15:25,308 - INFO - Prompt: 
+        Based on the given context:      Customer ID  Gender  Age Under 30 Senior Citizen Married Dependents  \
+0     8779-QRDMV    Male   78       No            Yes      No         No   
+1     7495-OOKFY  Female   74       No            Yes     Yes        Yes   
+2     1658-BYGOY    Male   71       No            Yes      No        Yes   
+3     4598-XLKNJ  Female   78       No            Yes     Yes        Yes   
+4     4846-WHAFZ  Female   80       No            Yes     Yes        Yes   
+...          ...     ...  ...      ...            ...     ...        ...   
+7038  2569-WGERO  Female   30       No             No      No         No   
+7039  6840-RESVB    Male   38       No             No     Yes        Yes   
+7040  2234-XADUH  Female   30       No             No     Yes        Yes   
+7041  4801-JZAZL  Female   32       No             No     Yes        Yes   
+7042  3186-AJIEK    Male   44       No             No      No         No   
+
+      Number of Dependents        Country       State  ...  \
+0                        0  United States  California  ...   
+1                        1  United States  California  ...   
+2                        3  United States  California  ...   
+3                        1  United States  California  ...   
+4                        1  United States  California  ...   
+...                    ...            ...         ...  ...   
+7038                     0  United States  California  ...   
+7039                     2  United States  California  ...   
+7040                     2  United States  California  ...   
+7041                     2  United States  California  ...   
+7042                     0  United States  California  ...   
+
+     Total Extra Data Charges  Total Long Distance Charges  Total Revenue  \
+0                          20                         0.00          59.65   
+1                           0                       390.80        1024.10   
+2                           0                       203.94        1910.88   
+3                           0                       494.00        2995.07   
+4                           0                       234.21        3102.36   
+...                       ...                          ...            ...   
+7038                        0                      1639.44        3039.53   
+7039                        0                       865.20        2807.47   
+7040                        0                      2135.52        9453.04   
+7041                        0                         0.00         319.21   
+7042                        0                      2043.36        8887.86   
+
+      Satisfaction Score  Customer Status Churn Label Churn Score  CLTV  \
+0                      3          Churned         Yes          91  5433   
+1                      3          Churned         Yes          69  5302   
+2                      2          Churned         Yes          81  3179   
+3                      2          Churned         Yes          88  5337   
+4                      2          Churned         Yes          67  2793   
+...                  ...              ...         ...         ...   ...   
+7038                   5           Stayed          No          45  5306   
+7039                   3           Stayed          No          59  2140   
+7040                   4           Stayed          No          71  5560   
+7041                   4           Stayed          No          59  2793   
+7042                   4           Stayed          No          38  5097   
+
+       Churn Category                  Churn Reason  
+0          Competitor  Competitor offered more data  
+1          Competitor  Competitor made better offer  
+2          Competitor  Competitor made better offer  
+3     Dissatisfaction     Limited range of services  
+4               Price            Extra data charges  
+...               ...                           ...  
+7038             None                          None  
+7039             None                          None  
+7040             None                          None  
+7041             None                          None  
+7042             None                          None  
+
+[7043 rows x 50 columns],
+        answer the following question: Give a summary of the data?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: Give a summary of the data? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: **Question:** Give a summary of the data? 
+
+**Answer:** The dataset comprises 7,043 records of customers, each with 50 attributes including Customer ID, Gender, Age, Marital Status, Dependents, Charges, Revenue, Satisfaction Score, Customer Status, and Churn Information. The age range indicates a significant number of senior citizens, as many entries fall within the 60-80 age bracket. The dataset highlights customer satisfaction scores, churn labels, and reasons for churn, with some customers indicating they were attracted by competitor offers. Revenue values vary widely, with some customers generating substantial revenue, while a few exhibit minimal charges. Overall, the dataset provides a comprehensive view of customer demographics, contracting behaviors, and churn dynamics in the telecommunications sector.
+2024-10-24 12:18:35,103 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:18:35,114 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Give a summary of the data, identify various trends and give detailed information and insights about the measures to grow buisness? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT 
+    [Gender], 
+    AVG([Age]) AS [Average Age], 
+    COUNT([Customer ID]) AS [Total Customers], 
+    SUM([Total Revenue]) AS [Total Revenue], 
+    AVG([Satisfaction Score]) AS [Average Satisfaction Score],
+    COUNT(DISTINCT [Offer]) AS [Total Offers],
+    SUM([Number of Referrals]) AS [Total Referrals]
+FROM 
+    telco
+WHERE 
+    [Customer Status] = 'Active'
+GROUP BY 
+    [Gender]
+ORDER BY 
+    [Total Revenue] DESC;
+```
+2024-10-24 12:18:40,034 - INFO - Executed Query: SELECT 
+    [Gender], 
+    AVG([Age]) AS [Average Age], 
+    COUNT([Customer ID]) AS [Total Customers], 
+    SUM([Total Revenue]) AS [Total Revenue], 
+    AVG([Satisfaction Score]) AS [Average Satisfaction Score],
+    COUNT(DISTINCT [Offer]) AS [Total Offers],
+    SUM([Number of Referrals]) AS [Total Referrals]
+FROM 
+    telco
+WHERE 
+    [Customer Status] = 'Active'
+GROUP BY 
+    [Gender]
+ORDER BY 
+    [Total Revenue] DESC;
+Result: Empty DataFrame
+Columns: [Gender, Average Age, Total Customers, Total Revenue, Average Satisfaction Score, Total Offers, Total Referrals]
+Index: []
+2024-10-24 12:28:19,830 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:28:19,833 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What kind of streaming services does the people with multiple lines use based on their city. </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [City], [Streaming TV], [Streaming Movies], [Streaming Music]
+FROM [telco]
+WHERE [Multiple Lines] = 'Yes'
+ORDER BY [City];
+```
+2024-10-24 12:28:24,849 - INFO - Executed Query: SELECT [City], [Streaming TV], [Streaming Movies], [Streaming Music]
+FROM [telco]
+WHERE [Multiple Lines] = 'Yes'
+ORDER BY [City];
+Result:      City Streaming TV Streaming Movies Streaming Music
+0  Acampo          Yes              Yes             Yes
+1  Acampo          Yes              Yes             Yes
+2  Acampo          Yes              Yes             Yes
+3   Acton           No              Yes             Yes
+4   Acton           No               No              No
+2024-10-24 12:28:39,633 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:28:39,662 - INFO - Prompt: 
+        Based on the given context:               City Streaming TV Streaming Movies Streaming Music
+0           Acampo          Yes              Yes             Yes
+1           Acampo          Yes              Yes             Yes
+2           Acampo          Yes              Yes             Yes
+3            Acton           No              Yes             Yes
+4            Acton           No               No              No
+...            ...          ...              ...             ...
+2966  Yucca Valley          Yes              Yes              No
+2967  Yucca Valley           No               No              No
+2968  Yucca Valley          Yes               No              No
+2969  Yucca Valley          Yes               No              No
+2970         Zenia          Yes              Yes             Yes
+
+[2971 rows x 4 columns],
+        answer the following question: What kind of streaming services does the people with multiple lines use based on their city.. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What kind of streaming services does the people with multiple lines use based on their city. 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: What kind of streaming services does the people with multiple lines use based on their city. 
+
+Answer: The data shows that residents of Acampo predominantly use all three types of streaming services: TV, Movies, and Music. In Acton, however, there are mixed usages, with some individuals not using any streaming services, while others use both Movies and Music. For Yucca Valley, the streaming services usage varies; for example, some residents use TV and Movies but no Music. Lastly, Zenia residents use all three streaming services as well.
+2024-10-24 12:34:33,392 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:34:33,393 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: How does people with different age groups adds up to the total revenue, also distinguish it based on the gener? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT 
+    [Gender], 
+    CASE 
+        WHEN [Age] < 30 THEN 'Under 30'
+        WHEN [Age] >= 30 AND [Age] < 65 THEN '30-64'
+        ELSE '65 and Over'
+    END AS [Age Group],
+    SUM([Total Revenue]) AS [Total Revenue]
+FROM 
+    [telco]
+GROUP BY 
+    [Gender], 
+    CASE 
+        WHEN [Age] < 30 THEN 'Under 30'
+        WHEN [Age] >= 30 AND [Age] < 65 THEN '30-64'
+        ELSE '65 and Over'
+    END
+ORDER BY 
+    [Gender], 
+    [Age Group];
+```
+2024-10-24 12:34:39,013 - INFO - Executed Query: SELECT 
+    [Gender], 
+    CASE 
+        WHEN [Age] < 30 THEN 'Under 30'
+        WHEN [Age] >= 30 AND [Age] < 65 THEN '30-64'
+        ELSE '65 and Over'
+    END AS [Age Group],
+    SUM([Total Revenue]) AS [Total Revenue]
+FROM 
+    [telco]
+GROUP BY 
+    [Gender], 
+    CASE 
+        WHEN [Age] < 30 THEN 'Under 30'
+        WHEN [Age] >= 30 AND [Age] < 65 THEN '30-64'
+        ELSE '65 and Over'
+    END
+ORDER BY 
+    [Gender], 
+    [Age Group];
+Result:    Gender    Age Group  Total Revenue
+0  Female        30-64     6394086.97
+1  Female  65 and Over     2063677.49
+2  Female     Under 30     2094597.53
+3    Male        30-64     6723689.61
+4    Male  65 and Over     2031649.99
+2024-10-24 12:34:56,469 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:34:56,491 - INFO - Prompt: 
+        Based on the given context:    Gender    Age Group  Total Revenue
+0  Female        30-64     6394086.97
+1  Female  65 and Over     2063677.49
+2  Female     Under 30     2094597.53
+3    Male        30-64     6723689.61
+4    Male  65 and Over     2031649.99
+5    Male     Under 30     2063430.10,
+        answer the following question: How does people with different age groups adds up to the total revenue, also distinguish it based on the gener?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: How does people with different age groups adds up to the total revenue, also distinguish it based on the gener? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: How does people with different age groups adds up to the total revenue, also distinguish it based on the gender? 
+
+Answer: The total revenue generated by different age groups, distinguished by gender, is as follows: For females, the total revenue from the age group 30-64 is $6,394,086.97, from the age group 65 and over is $2,063,677.49, and from the age group under 30 is $2,094,597.53. For males, the total revenue from the age group 30-64 is $6,723,689.61, from the age group 65 and over is $2,031,649.99, and from the age group under 30 is $2,063,430.10.
+2024-10-24 12:39:06,245 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:39:06,254 - INFO - Prompt: 
+        Based on the given context:    Gender    Age Group  Total Revenue
+0  Female        30-64     6394086.97
+1  Female  65 and Over     2063677.49
+2  Female     Under 30     2094597.53
+3    Male        30-64     6723689.61
+4    Male  65 and Over     2031649.99
+5    Male     Under 30     2063430.10,
+        answer the following question: How does people with different age groups adds up to the total revenue, also distinguish it based on the gener?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: How does people with different age groups adds up to the total revenue, also distinguish it based on the gener? 
+
+            
+            Answer: -> Data-Info
+                    -> Key findings
+                    -> Visible trends
+                    -> Actionable Insights
+        
+        
+OpenAI Response: Question: How does people with different age groups add up to the total revenue, also distinguish it based on the gender? 
+
+Answer: 
+- **Data-Info**: The total revenue generated from different age groups is segmented by gender. The age groups are defined as "Under 30", "30-64", and "65 and Over". 
+- **Key findings**: 
+  - For **Females**: 
+    - Under 30: $2,094,597.53 
+    - 30-64: $6,394,086.97 
+    - 65 and Over: $2,063,677.49 
+    - **Total Revenue**: $10,552,361.99 
+
+  - For **Males**: 
+    - Under 30: $2,063,430.10 
+    - 30-64: $6,723,689.61 
+    - 65 and Over: $2,031,649.99 
+    - **Total Revenue**: $10,818,769.70 
+
+- **Visible trends**: Both genders show a significant amount of revenue in the "30-64" age group, with males having a slightly higher total revenue across all age groups compared to females.
+- **Actionable Insights**: Companies might consider focusing marketing efforts more on the "30-64" age demographic for both genders, as it generates the highest revenue. Additionally, understanding the different revenue dynamics between genders can help tailor products and services to meet the preferences of each group effectively.
+2024-10-24 12:48:13,805 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:48:13,813 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What does the churn reason, regarding better competitor offer has to do with the charges or services offered by the company? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Churn Reason], [Monthly Charge], [Total Charges], [Offer]
+FROM [telco]
+WHERE [Churn Reason] LIKE '%better competitor offer%'
+```
+2024-10-24 12:48:21,047 - INFO - Executed Query: SELECT [Churn Reason], [Monthly Charge], [Total Charges], [Offer]
+FROM [telco]
+WHERE [Churn Reason] LIKE '%better competitor offer%'
+Result: Empty DataFrame
+Columns: [Churn Reason, Monthly Charge, Total Charges, Offer]
+Index: []
+2024-10-24 12:48:56,690 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:48:56,692 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What does the churn reason, regarding competitor offer has to do with the charges or services offered by the company? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT * 
+FROM [telco] 
+WHERE [Churn Reason] LIKE '%competitor offer%'
+```
+2024-10-24 12:49:00,347 - INFO - Executed Query: SELECT * 
+FROM [telco] 
+WHERE [Churn Reason] LIKE '%competitor offer%'
+Result:   Customer ID  Gender  Age Under 30 Senior Citizen Married Dependents  \
+0  8779-QRDMV    Male   78       No            Yes      No         No   
+1  4913-EHYUI    Male   80       No            Yes     Yes         No   
+2  0727-BMPLR  Female   66       No            Yes      No         No   
+3  9369-XFEHK  Female   76       No            Yes     Yes         No   
+4  1236-WFCDV    Male   74       No            Yes      No         No   
+
+   Number of Dependents        Country       State  ...  \
+0                     0  United States  California  ...   
+1                     0  United States  California  ...   
+2                     0  United States  California  ...   
+3                     0  United States  California  ...   
+4                     0  United States  California  ...   
+
+  Total Extra Data Charges  Total Long Distance Charges  Total Revenue  \
+0                       20                         0.00          59.65   
+1                        0                      2732.80        8527.45   
+2                      100                      2055.90        7665.20   
+3                        0                      1095.27        3751.77   
+4                        0                       158.34        1424.44   
+
+   Satisfaction Score  Customer Status Churn Label Churn Score  CLTV  \
+0                   3          Churned         Yes          91  5433   
+1                   1          Churned         Yes          91  6268   
+2                   3          Churned         Yes          83  5679   
+3                   2          Churned         Yes          72  3601   
+4                   3          Churned         Yes          96  4777   
+
+   Churn Category                               Churn Reason  
+0      Competitor               Competitor offered more data  
+1      Competitor  Competitor offered higher download speeds  
+2      Competitor  Competitor offered higher download speeds  
+3      Competitor               Competitor offered more data  
+4      Competitor               Competitor offered more data  
+
+[5 rows x 50 columns]
+2024-10-24 12:49:19,912 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 12:49:19,918 - INFO - Prompt: 
+        Based on the given context:     Customer ID  Gender  Age Under 30 Senior Citizen Married Dependents  \
+0    8779-QRDMV    Male   78       No            Yes      No         No   
+1    4913-EHYUI    Male   80       No            Yes     Yes         No   
+2    0727-BMPLR  Female   66       No            Yes      No         No   
+3    9369-XFEHK  Female   76       No            Yes     Yes         No   
+4    1236-WFCDV    Male   74       No            Yes      No         No   
+..          ...     ...  ...      ...            ...     ...        ...   
+212  8992-JQYUN    Male   40       No             No     Yes         No   
+213  7703-ZEKEF    Male   47       No             No      No         No   
+214  1699-HPSBG    Male   44       No             No      No         No   
+215  8775-CEBBJ  Female   40       No             No      No         No   
+216  0639-TSIQW  Female   28      Yes             No      No         No   
+
+     Number of Dependents        Country       State  ...  \
+0                       0  United States  California  ...   
+1                       0  United States  California  ...   
+2                       0  United States  California  ...   
+3                       0  United States  California  ...   
+4                       0  United States  California  ...   
+..                    ...            ...         ...  ...   
+212                     0  United States  California  ...   
+213                     0  United States  California  ...   
+214                     0  United States  California  ...   
+215                     0  United States  California  ...   
+216                     0  United States  California  ...   
+
+    Total Extra Data Charges  Total Long Distance Charges  Total Revenue  \
+0                         20                         0.00          59.65   
+1                          0                      2732.80        8527.45   
+2                        100                      2055.90        7665.20   
+3                          0                      1095.27        3751.77   
+4                          0                       158.34        1424.44   
+..                       ...                          ...            ...   
+212                        0                         0.00          50.35   
+213                        0                       430.10        2347.20   
+214                        0                       115.20         843.00   
+215                        0                       377.28         780.63   
+216                        0                      2512.50        9398.75   
+
+     Satisfaction Score  Customer Status Churn Label Churn Score  CLTV  \
+0                     3          Churned         Yes          91  5433   
+1                     1          Churned         Yes          91  6268   
+2                     3          Churned         Yes          83  5679   
+3                     2          Churned         Yes          72  3601   
+4                     3          Churned         Yes          96  4777   
+..                  ...              ...         ...         ...   ...   
+212                   1          Churned         Yes          65  4526   
+213                   2          Churned         Yes          78  5701   
+214                   3          Churned         Yes          69  4581   
+215                   2          Churned         Yes          87  2029   
+216                   1          Churned         Yes          70  5620   
+
+     Churn Category                               Churn Reason  
+0        Competitor               Competitor offered more data  
+1        Competitor  Competitor offered higher download speeds  
+2        Competitor  Competitor offered higher download speeds  
+3        Competitor               Competitor offered more data  
+4        Competitor               Competitor offered more data  
+..              ...                                        ...  
+212      Competitor               Competitor offered more data  
+213      Competitor               Competitor offered more data  
+214      Competitor  Competitor offered higher download speeds  
+215      Competitor  Competitor offered higher download speeds  
+216      Competitor               Competitor offered more data  
+
+[217 rows x 50 columns],
+        answer the following question: What does the churn reason, regarding competitor offer has to do with the charges or services offered by the company?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What does the churn reason, regarding competitor offer has to do with the charges or services offered by the company? 
+
+            
+            Answer: -> Data-Info
+                    -> Key findings
+                    -> Visible trends
+                    -> Actionable Insights
+        
+        
+OpenAI Response: Question: What does the churn reason, regarding competitor offer has to do with the charges or services offered by the company? 
+
+Answer: 
+- **Data-Info**: The analysis of the churn reasons indicates that customers have left the company primarily due to competitors providing better offerings, such as higher download speeds or more data for a similar price.
+- **Key findings**: A significant number of customers expressed that they churned because competitors offered superior services that are perceived as providing more value for their money. Such reasons highlight a gap in the company's service portfolio compared to competitors.
+- **Visible trends**: The age demographic of churned customers ranges widely, but many are seniors who may prioritize reliability and quality service. Importantly, customers with higher Total Revenue contributions from the company's services also frequently cited competitor services as their reason for leaving.
+- **Actionable Insights**: Consider conducting a competitive analysis to identify and optimize offerings in areas where competitors surpass the company, specifically in data packages and download speeds. Additionally, enhancing customer engagement and loyalty programs may help retain high-value customers. Exploring feedback mechanisms to understand specific customer needs can provide insights to better align services with client expectations.

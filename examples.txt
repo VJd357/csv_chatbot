@@ -1,0 +1,20 @@
+Column_info_context = {'telco': ['Customer ID', 'Gender', 'Age', 'Under 30', 'Senior Citizen', 'Married', 'Dependents', 'Number of Dependents', 'Country', 'State', 'City', 'Zip Code', 'Latitude', 'Longitude', 'Population', 'Quarter', 'Referred a Friend', 'Number of Referrals', 'Tenure in Months', 'Offer', 'Phone Service', 'Avg Monthly Long Distance Charges', 'Multiple Lines', 'Internet Service', 'Internet Type', 'Avg Monthly GB Download', 'Online Security', 'Online Backup', 'Device Protection Plan', 'Premium Tech Support', 'Streaming TV', 'Streaming Movies', 'Streaming Music', 'Unlimited Data', 'Contract', 'Paperless Billing', 'Payment Method', 'Monthly Charge', 'Total Charges', 'Total Refunds', 'Total Extra Data Charges', 'Total Long Distance Charges', 'Total Revenue', 'Satisfaction Score', 'Customer Status', 'Churn Label', 'Churn Score', 'CLTV', 'Churn Category', 'Churn Reason']}
+Question = "What is the relation between the contract type of a customer to their churn state, based on their age-groups?"
+Query = """SELECT [Contract], 
+       CASE 
+           WHEN [Age] < 30 THEN 'Under 30' 
+           WHEN [Age] >= 30 AND [Age] < 60 THEN '30-59' 
+           ELSE '60 and Above' 
+       END AS Age_Group, 
+       [Churn Label], 
+       COUNT(*) AS Customer_Count
+FROM [telco]
+GROUP BY [Contract], 
+         CASE 
+             WHEN [Age] < 30 THEN 'Under 30' 
+             WHEN [Age] >= 30 AND [Age] < 60 THEN '30-59' 
+             ELSE '60 and Above' 
+         END, 
+         [Churn Label]
+ORDER BY [Contract], Age_Group;"""
+

@@ -135,3 +135,21 @@ Result:    Country  Total Wins
 OpenAI Response: Question: which country is the most successful in the history of worldcup? 
 
 Answer: Based on the provided data, there are multiple countries tied with the highest total wins, each having won the World Cup 2 times: Mexico, Italy, Germany, France, and Brazil.
+2024-10-23 18:13:13,872 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 18:13:13,891 - INFO - Prompt: You are an experienced Sql developer with 10 years of experience.
+OpenAI Response: ```sql
+SELECT [Player Name], COUNT(*) AS [Goals Scored]
+FROM [WorldCupPlayers]
+WHERE [Event] = 'Goal'
+GROUP BY [Player Name]
+ORDER BY [Goals Scored] DESC
+```
+2024-10-23 18:14:03,432 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-23 18:14:03,438 - INFO - Prompt: You are an experienced Sql developer with 10 years of experience.
+OpenAI Response: ```sql
+SELECT [Player Name], SUM([GoalsScored]) AS TotalGoals
+FROM WorldCupPlayers
+GROUP BY [Player Name]
+ORDER BY TotalGoals DESC
+LIMIT 5;
+```

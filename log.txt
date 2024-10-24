@@ -153,3 +153,173 @@ GROUP BY [Player Name]
 ORDER BY TotalGoals DESC
 LIMIT 5;
 ```
+2024-10-24 11:12:09,518 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:12:09,529 - INFO - Prompt: You are an experienced Sql developer with 10 years of experience.
+OpenAI Response: ```sql
+SELECT [Churn Label], AVG([Satisfaction Score]) AS Avg_Satisfaction_Score
+FROM [telco]
+GROUP BY [Churn Label];
+```
+2024-10-24 11:12:31,106 - INFO - Executed Query: SELECT [Churn Label], AVG([Satisfaction Score]) AS Avg_Satisfaction_Score
+FROM [telco]
+GROUP BY [Churn Label];
+Result:   Churn Label  Avg_Satisfaction_Score
+0          No                3.789911
+1         Yes                1.736223
+2024-10-24 11:13:19,300 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:13:19,305 - INFO - Prompt: 
+        Based on the given context:   Churn Label  Avg_Satisfaction_Score
+0          No                3.789911
+1         Yes                1.736223,
+        answer the following question: What is the one trend difference between people who are churned vs people who arent churned?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is the one trend difference between people who are churned vs people who arent churned? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: ```sql
+SELECT [Churn Label], AVG([Satisfaction Score]) AS Avg_Satisfaction_Score
+FROM telco
+WHERE [Churn Label] IS NOT NULL
+GROUP BY [Churn Label];
+```
+2024-10-24 11:14:46,210 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:14:46,215 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What is the one trend difference between people who are churned vs people who arent churned? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Churn Category], COUNT(*) AS [Count]
+FROM [telco]
+GROUP BY [Churn Category]
+ORDER BY [Count] DESC;
+```
+2024-10-24 11:14:55,330 - INFO - Executed Query: SELECT [Churn Category], COUNT(*) AS [Count]
+FROM [telco]
+GROUP BY [Churn Category]
+ORDER BY [Count] DESC;
+Result:     Churn Category  Count
+0             None   5174
+1       Competitor    841
+2         Attitude    314
+3  Dissatisfaction    303
+4            Price    211
+2024-10-24 11:15:17,408 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:15:17,413 - INFO - Prompt: 
+        Based on the given context:     Churn Category  Count
+0             None   5174
+1       Competitor    841
+2         Attitude    314
+3  Dissatisfaction    303
+4            Price    211
+5            Other    200,
+        answer the following question: What is the one trend difference between people who are churned vs people who arent churned?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is the one trend difference between people who are churned vs people who arent churned? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: What is the one trend difference between people who are churned vs people who arent churned? 
+
+Answer: The primary trend difference is that customers who churned showed dissatisfaction with factors such as attitude, dissatisfaction, and price, while the majority of non-churned customers (5174) did not express any churn-related issues.
+2024-10-24 11:18:07,507 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:18:07,516 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What is the relation between the contract type of a customer to their churn state, based on their age-groups? </content>The available table names are: telco, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'telco' has columns: Customer ID, Gender, Age, Under 30, Senior Citizen, Married, Dependents, Number of Dependents, Country, State, City, Zip Code, Latitude, Longitude, Population, Quarter, Referred a Friend, Number of Referrals, Tenure in Months, Offer, Phone Service, Avg Monthly Long Distance Charges, Multiple Lines, Internet Service, Internet Type, Avg Monthly GB Download, Online Security, Online Backup, Device Protection Plan, Premium Tech Support, Streaming TV, Streaming Movies, Streaming Music, Unlimited Data, Contract, Paperless Billing, Payment Method, Monthly Charge, Total Charges, Total Refunds, Total Extra Data Charges, Total Long Distance Charges, Total Revenue, Satisfaction Score, Customer Status, Churn Label, Churn Score, CLTV, Churn Category, Churn Reason </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Contract], 
+       CASE 
+           WHEN [Age] < 30 THEN 'Under 30' 
+           WHEN [Age] >= 30 AND [Age] < 60 THEN '30-59' 
+           ELSE '60 and Above' 
+       END AS Age_Group, 
+       [Churn Label], 
+       COUNT(*) AS Customer_Count
+FROM [telco]
+GROUP BY [Contract], 
+         CASE 
+             WHEN [Age] < 30 THEN 'Under 30' 
+             WHEN [Age] >= 30 AND [Age] < 60 THEN '30-59' 
+             ELSE '60 and Above' 
+         END, 
+         [Churn Label]
+ORDER BY [Contract], Age_Group;
+```
+2024-10-24 11:18:35,592 - INFO - Executed Query: SELECT [Contract], 
+       CASE 
+           WHEN [Age] < 30 THEN 'Under 30' 
+           WHEN [Age] >= 30 AND [Age] < 60 THEN '30-59' 
+           ELSE '60 and Above' 
+       END AS Age_Group, 
+       [Churn Label], 
+       COUNT(*) AS Customer_Count
+FROM [telco]
+GROUP BY [Contract], 
+         CASE 
+             WHEN [Age] < 30 THEN 'Under 30' 
+             WHEN [Age] >= 30 AND [Age] < 60 THEN '30-59' 
+             ELSE '60 and Above' 
+         END, 
+         [Churn Label]
+ORDER BY [Contract], Age_Group;
+Result:          Contract     Age_Group Churn Label  Customer_Count
+0  Month-to-Month         30-59          No            1205
+1  Month-to-Month         30-59         Yes             813
+2  Month-to-Month  60 and Above          No             295
+3  Month-to-Month  60 and Above         Yes             580
+4  Month-to-Month      Under 30          No             455
+2024-10-24 11:19:17,004 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-24 11:19:17,007 - INFO - Prompt: 
+        Based on the given context:           Contract     Age_Group Churn Label  Customer_Count
+0   Month-to-Month         30-59          No            1205
+1   Month-to-Month         30-59         Yes             813
+2   Month-to-Month  60 and Above          No             295
+3   Month-to-Month  60 and Above         Yes             580
+4   Month-to-Month      Under 30          No             455
+5   Month-to-Month      Under 30         Yes             262
+6         One Year         30-59          No             743
+7         One Year         30-59         Yes              93
+8         One Year  60 and Above          No             351
+9         One Year  60 and Above         Yes              39
+10        One Year      Under 30          No             290
+11        One Year      Under 30         Yes              34
+12        Two Year         30-59          No             978
+13        Two Year         30-59         Yes              28
+14        Two Year  60 and Above          No             505
+15        Two Year  60 and Above         Yes              12
+16        Two Year      Under 30          No             352
+17        Two Year      Under 30         Yes               8,
+        answer the following question: What is the relation between the contract type of a customer to their churn state, based on their age-groups?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is the relation between the contract type of a customer to their churn state, based on their age-groups? 
+
+            
+            Answer: response
+        
+        
+OpenAI Response: Question: What is the relation between the contract type of a customer to their churn state, based on their age-groups? 
+
+Answer: The data reveals distinct patterns of churn based on contract type and age group. Customers on a Month-to-Month contract exhibit higher churn rates across all age groups compared to those on One Year and Two Year contracts. Specifically, the churn is most pronounced in the 30-59 age group for Month-to-Month contracts and decreases significantly for One Year and Two Year contracts. In contrast, the under 30 age group shows relatively high churn for Month-to-Month but lower churn for both One Year and Two Year contracts. Overall, customers in longer-term contracts (One Year and Two Year) demonstrate a lower tendency to churn compared to those on Month-to-Month contracts.

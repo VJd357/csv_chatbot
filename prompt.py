@@ -5,7 +5,7 @@ class Prompt:
     def get_combined_prompt(question, table_info):
         system_prompt = Prompt.create_system_prompt()
         sql_prompt = Prompt.create_sql_prompt(question, table_info)
-        return system_prompt, sql_prompt
+        return sql_prompt, system_prompt
 
     @staticmethod
     def create_system_prompt():

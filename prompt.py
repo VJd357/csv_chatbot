@@ -54,6 +54,7 @@ class Prompt:
         If the data in context has None, Nan or null values ignore it and give the next most suitable output.
         If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
         Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense
         Output guidelines: 
         1. The Output should be precise and follow the question given by the user.
         2. The Output should not display the complete df that is provided as context to the llm.
@@ -62,11 +63,11 @@ class Prompt:
         5. Output should be described in the text format in a sentence or more if required.
         Output Format: 
             Question: {question} \n\n            
-            Answer: -> Data-Info
-                    -> Key findings
-                    -> Visible trends
-                    -> Actionable Insights
-        
+            Answer: -> Data-Info : should have numbers and quick overview of the data piece provided in the prompt.
+                    -> Key findings : should list the findings from the glance of the data based on the question that is asked.
+                    -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
+                    -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
+                    -> Visual representation: should use graphs, charts or any other method of visual representation to beautifully represent the data.
         """
 
     @staticmethod

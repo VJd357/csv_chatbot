@@ -6,7 +6,6 @@ import sqlite3
 import pandas as pd
 import os
 import logging
-from dashboard import generate_profile, generate_visualizations_from_profile
 
 # Configure logging to log.txt
 logging.basicConfig(filename='log.txt', level=logging.INFO, 
@@ -134,28 +133,7 @@ def main():
     elif page == "Dashboard Generator":
         st.title("Automated Dashboard Generator")
 
-        uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])  
-        if uploaded_file is not None:
-            df = pd.read_csv(uploaded_file)
-
-            # Generate profile report
-            profile = generate_profile(df)
-
-            # Generate visualizations based on profile
-            visualizations = generate_visualizations_from_profile(df)
-
-            # Display data overview and visualizations
-            if len(visualizations) > 0:
-                st.subheader("Data Overview")
-                st.write(df.head())
-
-                # Display visualizations in a 3-column layout
-                for i in range(0, len(visualizations), 3):
-                    cols = st.columns(3)
-                    for j, (title, fig) in enumerate(visualizations[i:i+3]):
-                        with cols[j]:
-                            st.subheader(title)
-                            st.plotly_chart(fig, key=f"plot_{i+j}")
+        
 
 if __name__ == "__main__":
     main()

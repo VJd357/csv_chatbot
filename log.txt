@@ -1509,3 +1509,1109 @@ OpenAI Response: **Question:** How does the balance reflect with respect to the 
     - This would clearly illustrate how balance correlates with both salary and tenure, highlighting key customer segments that require attention.
 
 By presenting the data visually in this manner, stakeholders can identify important patterns and trends that might influence future customer relationship management strategies.
+2024-10-28 16:49:35,908 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 16:49:35,936 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['WorldCupMatches', 'WorldCupPlayers', 'WorldCups']
+- Column Names: Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: WorldCupMatches, WorldCupPlayers, WorldCups; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Matches 
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "bar_total_goals": "SELECT [Year], SUM([Home Team Goals]) + SUM([Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Year]",
+    "line_average_attendance": "SELECT [Year], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+    "bar_total_matches": "SELECT [Year], COUNT(*) AS [Total Matches] FROM WorldCupMatches GROUP BY [Year]",
+    "bar_goals_per_match": "SELECT [Year], (SUM([Home Team Goals]) + SUM([Away Team Goals])) / COUNT(*) AS [Goals per Match] FROM WorldCupMatches GROUP BY [Year]",
+    "line_home_team_goals": "SELECT [Year], AVG([Home Team Goals]) AS [Average Home Goals] FROM WorldCupMatches GROUP BY [Year]",
+    "line_away_team_goals": "SELECT [Year], AVG([Away Team Goals]) AS [Average Away Goals] FROM WorldCupMatches GROUP BY [Year]",
+    "scatter_attendance_vs_goals": "SELECT [Attendance], ([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches",
+    "bar_home_team_wins": "SELECT [Year], COUNT(*) AS [Home Wins] FROM WorldCupMatches WHERE [Home Team Goals] > [Away Team Goals] GROUP BY [Year]",
+    "bar_away_team_wins": "SELECT [Year], COUNT(*) AS [Away Wins] FROM WorldCupMatches WHERE [Away Team Goals] > [Home Team Goals] GROUP BY [Year]",
+    "line_match_stages": "SELECT [Stage], COUNT(*) AS [Matches Count] FROM WorldCupMatches GROUP BY [Stage] ORDER BY [Stage]"
+}
+```
+2024-10-28 16:49:35,975 - INFO - Executed Query: SELECT [Year], SUM([Home Team Goals]) + SUM([Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  Total Goals
+0     NaN          NaN
+1  1930.0         70.0
+2  1934.0         70.0
+3  1938.0         84.0
+4  1950.0         88.0
+2024-10-28 16:49:35,997 - INFO - Executed Query: SELECT [Year], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  Average Attendance
+0     NaN                 NaN
+1  1930.0        32808.277778
+2  1934.0        21352.941176
+3  1938.0        20872.222222
+4  1950.0        47511.181818
+2024-10-28 16:49:36,024 - INFO - Executed Query: SELECT [Year], COUNT(*) AS [Total Matches] FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  Total Matches
+0     NaN           3720
+1  1930.0             18
+2  1934.0             17
+3  1938.0             18
+4  1950.0             22
+2024-10-28 16:49:36,050 - INFO - Executed Query: SELECT [Year], (SUM([Home Team Goals]) + SUM([Away Team Goals])) / COUNT(*) AS [Goals per Match] FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  Goals per Match
+0     NaN              NaN
+1  1930.0         3.888889
+2  1934.0         4.117647
+3  1938.0         4.666667
+4  1950.0         4.000000
+2024-10-28 16:49:36,072 - INFO - Executed Query: SELECT [Year], AVG([Home Team Goals]) AS [Average Home Goals] FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  Average Home Goals
+0     NaN                 NaN
+1  1930.0            3.277778
+2  1934.0            2.823529
+3  1938.0            3.388889
+4  1950.0            3.136364
+2024-10-28 16:49:36,097 - INFO - Executed Query: SELECT [Year], AVG([Away Team Goals]) AS [Average Away Goals] FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  Average Away Goals
+0     NaN                 NaN
+1  1930.0            0.611111
+2  1934.0            1.294118
+3  1938.0            1.277778
+4  1950.0            0.863636
+2024-10-28 16:49:36,126 - INFO - Executed Query: SELECT [Attendance], ([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches
+Result:    Attendance  Total Goals
+0      4444.0          5.0
+1     18346.0          3.0
+2     24059.0          3.0
+3      2549.0          4.0
+4     23409.0          1.0
+2024-10-28 16:49:36,146 - INFO - Executed Query: SELECT [Year], COUNT(*) AS [Home Wins] FROM WorldCupMatches WHERE [Home Team Goals] > [Away Team Goals] GROUP BY [Year]
+Result:      Year  Home Wins
+0  1930.0         18
+1  1934.0         16
+2  1938.0         15
+3  1950.0         19
+4  1954.0         24
+2024-10-28 16:49:36,168 - INFO - Executed Query: SELECT [Year], COUNT(*) AS [Away Wins] FROM WorldCupMatches WHERE [Away Team Goals] > [Home Team Goals] GROUP BY [Year]
+Result:      Year  Away Wins
+0  1958.0          1
+1  1974.0         13
+2  1982.0          9
+3  1986.0         17
+4  1990.0         13
+2024-10-28 16:49:36,190 - INFO - Executed Query: SELECT [Stage], COUNT(*) AS [Matches Count] FROM WorldCupMatches GROUP BY [Stage] ORDER BY [Stage]
+Result:          Stage  Matches Count
+0         None           3720
+1        Final             20
+2  First round              9
+3      Group 1             62
+4      Group 2             59
+2024-10-28 16:52:44,335 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 16:52:44,351 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['WorldCupMatches', 'WorldCupPlayers', 'WorldCups']
+- Column Names: Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: WorldCupMatches, WorldCupPlayers, WorldCups; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Matches 
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "line_average_goals_per_match": "SELECT [Year], AVG([Home Team Goals] + [Away Team Goals]) AS AverageGoals FROM WorldCupMatches GROUP BY [Year]",
+    "bar_total_goals": "SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS TotalGoals FROM WorldCupMatches GROUP BY [Year]",
+    "bar_matches_per_stage": "SELECT [Stage], COUNT(*) AS MatchesPlayed FROM WorldCupMatches GROUP BY [Stage]",
+    "scatter_attendance_vs_goals": "SELECT [Attendance], ([Home Team Goals] + [Away Team Goals]) AS TotalGoals FROM WorldCupMatches",
+    "bar_attendance_by_year": "SELECT [Year], AVG([Attendance]) AS AverageAttendance FROM WorldCupMatches GROUP BY [Year]",
+    "bar_home_team_wins": "SELECT [Home Team Name], COUNT(*) AS HomeWins FROM WorldCupMatches WHERE [Home Team Goals] > [Away Team Goals] GROUP BY [Home Team Name]",
+    "bar_away_team_wins": "SELECT [Away Team Name], COUNT(*) AS AwayWins FROM WorldCupMatches WHERE [Away Team Goals] > [Home Team Goals] GROUP BY [Away Team Name]",
+    "line_matches_played": "SELECT [Year], COUNT(*) AS MatchesPlayed FROM WorldCupMatches GROUP BY [Year]",
+    "bar_most_popular_stadiums": "SELECT [Stadium], COUNT(*) AS MatchesHeld FROM WorldCupMatches GROUP BY [Stadium] ORDER BY MatchesHeld DESC",
+    "line_attendance_trend": "SELECT [Year], SUM([Attendance]) AS TotalAttendance FROM WorldCupMatches GROUP BY [Year]"
+}
+```
+2024-10-28 16:52:44,385 - INFO - Executed Query: SELECT [Year], AVG([Home Team Goals] + [Away Team Goals]) AS AverageGoals FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  AverageGoals
+0     NaN           NaN
+1  1930.0      3.888889
+2  1934.0      4.117647
+3  1938.0      4.666667
+4  1950.0      4.000000
+2024-10-28 16:52:44,421 - INFO - Executed Query: SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS TotalGoals FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  TotalGoals
+0     NaN         NaN
+1  1930.0        70.0
+2  1934.0        70.0
+3  1938.0        84.0
+4  1950.0        88.0
+2024-10-28 16:52:44,448 - INFO - Executed Query: SELECT [Stage], COUNT(*) AS MatchesPlayed FROM WorldCupMatches GROUP BY [Stage]
+Result:          Stage  MatchesPlayed
+0         None           3720
+1        Final             20
+2  First round              9
+3      Group 1             62
+4      Group 2             59
+2024-10-28 16:52:44,491 - INFO - Executed Query: SELECT [Attendance], ([Home Team Goals] + [Away Team Goals]) AS TotalGoals FROM WorldCupMatches
+Result:    Attendance  TotalGoals
+0      4444.0         5.0
+1     18346.0         3.0
+2     24059.0         3.0
+3      2549.0         4.0
+4     23409.0         1.0
+2024-10-28 16:52:44,522 - INFO - Executed Query: SELECT [Year], AVG([Attendance]) AS AverageAttendance FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  AverageAttendance
+0     NaN                NaN
+1  1930.0       32808.277778
+2  1934.0       21352.941176
+3  1938.0       20872.222222
+4  1950.0       47511.181818
+2024-10-28 16:52:44,539 - INFO - Executed Query: SELECT [Home Team Name], COUNT(*) AS HomeWins FROM WorldCupMatches WHERE [Home Team Goals] > [Away Team Goals] GROUP BY [Home Team Name]
+Result:   Home Team Name  HomeWins
+0        Algeria         1
+1      Argentina        41
+2      Australia         2
+3        Austria        10
+4        Belgium        11
+2024-10-28 16:52:44,554 - INFO - Executed Query: SELECT [Away Team Name], COUNT(*) AS AwayWins FROM WorldCupMatches WHERE [Away Team Goals] > [Home Team Goals] GROUP BY [Away Team Name]
+Result:   Away Team Name  AwayWins
+0        Algeria         2
+1      Argentina         3
+2        Austria         2
+3        Belgium         4
+4         Brazil        12
+2024-10-28 16:52:44,573 - INFO - Executed Query: SELECT [Year], COUNT(*) AS MatchesPlayed FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  MatchesPlayed
+0     NaN           3720
+1  1930.0             18
+2  1934.0             17
+3  1938.0             18
+4  1950.0             22
+2024-10-28 16:52:44,591 - INFO - Executed Query: SELECT [Stadium], COUNT(*) AS MatchesHeld FROM WorldCupMatches GROUP BY [Stadium] ORDER BY MatchesHeld DESC
+Result:                    Stadium  MatchesHeld
+0                     None         3720
+1           Estadio Azteca           19
+2           Olympiastadion           14
+3                  Jalisco           14
+4  Nou Camp - Estadio Le�n           11
+2024-10-28 16:52:44,612 - INFO - Executed Query: SELECT [Year], SUM([Attendance]) AS TotalAttendance FROM WorldCupMatches GROUP BY [Year]
+Result:      Year  TotalAttendance
+0     NaN              NaN
+1  1930.0         590549.0
+2  1934.0         363000.0
+3  1938.0         375700.0
+4  1950.0        1045246.0
+2024-10-28 16:54:39,710 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 16:54:39,717 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['WorldCupMatches', 'WorldCupPlayers', 'WorldCups']
+- Column Names: Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: WorldCupMatches, WorldCupPlayers, WorldCups; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Players
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "bar_players_by_team": "SELECT [Team Initials], COUNT(*) as [Total Players] FROM [WorldCupPlayers] GROUP BY [Team Initials]",
+    "line_average_shirt_number": "SELECT AVG(CAST([Shirt Number] AS INT)) as [Average Shirt Number], [Team Initials] FROM [WorldCupPlayers] GROUP BY [Team Initials]",
+    "scatter_player_events": "SELECT COUNT([Event]) as [Event Count], [Player Name] FROM [WorldCupPlayers] GROUP BY [Player Name]",
+    "bar_players_per_coach": "SELECT [Coach Name], COUNT(*) as [Total Players] FROM [WorldCupPlayers] GROUP BY [Coach Name]",
+    "line_top_players_event_counts": "SELECT [Player Name], COUNT([Event]) as [Event Count] FROM [WorldCupPlayers] GROUP BY [Player Name] ORDER BY [Event Count] DESC",
+    "scatter_player_position_event_count": "SELECT [Position], COUNT([Event]) as [Event Count] FROM [WorldCupPlayers] GROUP BY [Position]",
+    "bar_players_by_position": "SELECT [Position], COUNT(*) as [Total Players] FROM [WorldCupPlayers] GROUP BY [Position]",
+    "line_player_goal_count": "SELECT [Player Name], SUM(CASE WHEN [Event] = 'Goal' THEN 1 ELSE 0 END) as [Goals Scored] FROM [WorldCupPlayers] GROUP BY [Player Name]",
+    "bar_top_players_by_goals": "SELECT [Player Name], SUM(CASE WHEN [Event] = 'Goal' THEN 1 ELSE 0 END) as [Total Goals] FROM [WorldCupPlayers] GROUP BY [Player Name] ORDER BY [Total Goals] DESC",
+    "line_player_average_events_per_match": "SELECT [Player Name], AVG(COUNT([Event])) as [Average Events] FROM [WorldCupPlayers] GROUP BY [Player Name] HAVING COUNT(DISTINCT [MatchID]) > 0"
+}
+```
+2024-10-28 16:54:39,765 - INFO - Executed Query: SELECT [Team Initials], COUNT(*) as [Total Players] FROM [WorldCupPlayers] GROUP BY [Team Initials]
+Result:   Team Initials  Total Players
+0           ALG            316
+1           ANG             69
+2           ARG           1807
+3           AUS            296
+4           AUT            638
+2024-10-28 16:54:39,862 - INFO - Executed Query: SELECT AVG(CAST([Shirt Number] AS INT)) as [Average Shirt Number], [Team Initials] FROM [WorldCupPlayers] GROUP BY [Team Initials]
+Result:    Average Shirt Number Team Initials
+0             11.791139           ALG
+1             12.000000           ANG
+2             10.809076           ARG
+3             11.888514           AUS
+4              9.913793           AUT
+2024-10-28 16:54:40,001 - INFO - Executed Query: SELECT COUNT([Event]) as [Event Count], [Player Name] FROM [WorldCupPlayers] GROUP BY [Player Name]
+Result:    Event Count Player Name
+0            0     ?URI?I?
+1            1  A BAUTISTA
+2            3      A COLE
+3            3  A GUARDADO
+4            0    A MEDINA
+2024-10-28 16:54:40,063 - INFO - Executed Query: SELECT [Coach Name], COUNT(*) as [Total Players] FROM [WorldCupPlayers] GROUP BY [Coach Name]
+Result:                  Coach Name  Total Players
+0       ACOSTA Nelson (URU)             88
+1        ADSHEAD John (NZL)             66
+2     AL JOHAR Nasser (KSA)             69
+3  AL KARASHI Mohamed (KSA)             22
+4         ALAMOS Luis (CHI)            132
+2024-10-28 16:54:40,187 - INFO - Executed Query: SELECT [Player Name], COUNT([Event]) as [Event Count] FROM [WorldCupPlayers] GROUP BY [Player Name] ORDER BY [Event Count] DESC
+Result:       Player Name  Event Count
+0           KLOSE           23
+1         RONALDO           18
+2       V. PERSIE           16
+3          M�LLER           16
+4  SCHWEINSTEIGER           15
+2024-10-28 16:54:40,298 - INFO - Executed Query: SELECT [Position], COUNT([Event]) as [Event Count] FROM [WorldCupPlayers] GROUP BY [Position]
+Result:   Position  Event Count
+0     None         8496
+1        C          472
+2       GK           88
+3      GKC           13
+2024-10-28 16:54:40,368 - INFO - Executed Query: SELECT [Position], COUNT(*) as [Total Players] FROM [WorldCupPlayers] GROUP BY [Position]
+Result:   Position  Total Players
+0     None          33641
+1        C           1510
+2       GK           2441
+3      GKC            192
+2024-10-28 16:54:40,516 - INFO - Executed Query: SELECT [Player Name], SUM(CASE WHEN [Event] = 'Goal' THEN 1 ELSE 0 END) as [Goals Scored] FROM [WorldCupPlayers] GROUP BY [Player Name]
+Result:   Player Name  Goals Scored
+0     ?URI?I?             0
+1  A BAUTISTA             0
+2      A COLE             0
+3  A GUARDADO             0
+4    A MEDINA             0
+2024-10-28 16:54:40,633 - INFO - Executed Query: SELECT [Player Name], SUM(CASE WHEN [Event] = 'Goal' THEN 1 ELSE 0 END) as [Total Goals] FROM [WorldCupPlayers] GROUP BY [Player Name] ORDER BY [Total Goals] DESC
+Result:   Player Name  Total Goals
+0        �ZIL            0
+1      �UNJI?            0
+2       �ULER            0
+3   �STENSTAD            0
+4       �IGI?            0
+2024-10-28 16:58:44,392 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 16:58:44,396 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['WorldCupMatches', 'WorldCupPlayers', 'WorldCups']
+- Column Names: Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: WorldCupMatches, WorldCupPlayers, WorldCups; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: world cups
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "line_years_winners": "SELECT [Year], [Winner] FROM WorldCups ORDER BY [Year];",
+    "bar_total_goals": "SELECT [Year], [GoalsScored] FROM WorldCups ORDER BY [Year];",
+    "bar_qualified_teams": "SELECT [Year], [QualifiedTeams] FROM WorldCups ORDER BY [Year];",
+    "bar_matches_played": "SELECT [Year], [MatchesPlayed] FROM WorldCups ORDER BY [Year];",
+    "bar_attendance": "SELECT [Year], [Attendance] FROM WorldCups ORDER BY [Year];",
+    "scatter_goals_attendance": "SELECT [GoalsScored], [Attendance] FROM WorldCups; ",
+    "bar_runners_up": "SELECT [Year], [Runners-Up] FROM WorldCups ORDER BY [Year];",
+    "bar_third_place": "SELECT [Year], [Third] FROM WorldCups ORDER BY [Year];",
+    "bar_fourth_place": "SELECT [Year], [Fourth] FROM WorldCups ORDER BY [Year];",
+    "line_average_attendance": "SELECT [Year], AVG([Attendance]) AS AverageAttendance FROM WorldCups GROUP BY [Year] ORDER BY [Year];"
+}
+```
+2024-10-28 16:58:44,420 - INFO - Executed Query: SELECT [Year], [Winner] FROM WorldCups ORDER BY [Year];
+Result:    Year      Winner
+0  1930     Uruguay
+1  1934       Italy
+2  1938       Italy
+3  1950     Uruguay
+4  1954  Germany FR
+2024-10-28 16:58:44,436 - INFO - Executed Query: SELECT [Year], [GoalsScored] FROM WorldCups ORDER BY [Year];
+Result:    Year  GoalsScored
+0  1930           70
+1  1934           70
+2  1938           84
+3  1950           88
+4  1954          140
+2024-10-28 16:58:44,453 - INFO - Executed Query: SELECT [Year], [QualifiedTeams] FROM WorldCups ORDER BY [Year];
+Result:    Year  QualifiedTeams
+0  1930              13
+1  1934              16
+2  1938              15
+3  1950              13
+4  1954              16
+2024-10-28 16:58:44,468 - INFO - Executed Query: SELECT [Year], [MatchesPlayed] FROM WorldCups ORDER BY [Year];
+Result:    Year  MatchesPlayed
+0  1930             18
+1  1934             17
+2  1938             18
+3  1950             22
+4  1954             26
+2024-10-28 16:58:44,494 - INFO - Executed Query: SELECT [Year], [Attendance] FROM WorldCups ORDER BY [Year];
+Result:    Year Attendance
+0  1930    590.549
+1  1934    363.000
+2  1938    375.700
+3  1950  1.045.246
+4  1954    768.607
+2024-10-28 16:58:44,520 - INFO - Executed Query: SELECT [GoalsScored], [Attendance] FROM WorldCups; 
+Result:    GoalsScored Attendance
+0           70    590.549
+1           70    363.000
+2           84    375.700
+3           88  1.045.246
+4          140    768.607
+2024-10-28 16:58:44,538 - INFO - Executed Query: SELECT [Year], [Runners-Up] FROM WorldCups ORDER BY [Year];
+Result:    Year      Runners-Up
+0  1930       Argentina
+1  1934  Czechoslovakia
+2  1938         Hungary
+3  1950          Brazil
+4  1954         Hungary
+2024-10-28 16:58:44,556 - INFO - Executed Query: SELECT [Year], [Third] FROM WorldCups ORDER BY [Year];
+Result:    Year    Third
+0  1930      USA
+1  1934  Germany
+2  1938   Brazil
+3  1950   Sweden
+4  1954  Austria
+2024-10-28 16:58:44,574 - INFO - Executed Query: SELECT [Year], [Fourth] FROM WorldCups ORDER BY [Year];
+Result:    Year      Fourth
+0  1930  Yugoslavia
+1  1934     Austria
+2  1938      Sweden
+3  1950       Spain
+4  1954     Uruguay
+2024-10-28 16:58:44,590 - INFO - Executed Query: SELECT [Year], AVG([Attendance]) AS AverageAttendance FROM WorldCups GROUP BY [Year] ORDER BY [Year];
+Result:    Year  AverageAttendance
+0  1930            590.549
+1  1934            363.000
+2  1938            375.700
+3  1950              1.045
+4  1954            768.607
+2024-10-28 17:00:12,287 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 17:00:12,295 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['Bank churn test data']
+- Column Names: Table 'Bank churn test data' has columns: customer_id, credit_score, country, gender, age, tenure, balance, products_number, credit_card, active_member, estimated_salary
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: Bank churn test data; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: churn rate
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "bar_churn_rate": "SELECT [gender], COUNT(*) * 100.0 / (SELECT COUNT(*) FROM [Bank churn test data]) AS [churn_rate] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [gender]",
+    "line_age_churn_trend": "SELECT [age], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [age] ORDER BY [age]",
+    "scatter_balance_churn": "SELECT [balance], [age], CASE WHEN [active_member] = 0 THEN 'Churned' ELSE 'Active' END AS [status] FROM [Bank churn test data]",
+    "bar_products_churn": "SELECT [products_number], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [products_number] ORDER BY [products_number]",
+    "bar_country_churn": "SELECT [country], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [country]",
+    "bar_credit_card_churn": "SELECT [credit_card], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [credit_card]",
+    "line_credit_score_churn_trend": "SELECT [credit_score], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [credit_score] ORDER BY [credit_score]",
+    "bar_age_group_churn": "SELECT CASE WHEN [age] < 30 THEN 'Under 30' WHEN [age] BETWEEN 30 AND 50 THEN '30-50' ELSE 'Over 50' END AS [age_group], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [age_group]",
+    "bar_tenure_churn": "SELECT [tenure], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [tenure] ORDER BY [tenure]",
+    "summary_churn_by_gender": "SELECT COUNT(*) AS [total_count], SUM(CASE WHEN [active_member] = 0 THEN 1 ELSE 0 END) AS [churned_count] FROM [Bank churn test data]"
+}
+```
+2024-10-28 17:00:12,331 - INFO - Executed Query: SELECT [gender], COUNT(*) * 100.0 / (SELECT COUNT(*) FROM [Bank churn test data]) AS [churn_rate] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [gender]
+Result:    gender  churn_rate
+0  Female       22.59
+1    Male       25.90
+2024-10-28 17:00:12,351 - INFO - Executed Query: SELECT [age], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [age] ORDER BY [age]
+Result:    age  churn_count
+0   18            9
+1   19           12
+2   20           21
+3   21           21
+4   22           38
+2024-10-28 17:00:12,424 - INFO - Executed Query: SELECT [balance], [age], CASE WHEN [active_member] = 0 THEN 'Churned' ELSE 'Active' END AS [status] FROM [Bank churn test data]
+Result:      balance  age   status
+0       0.00   42   Active
+1   83807.86   41   Active
+2  159660.80   42  Churned
+3       0.00   39  Churned
+4  125510.82   43   Active
+2024-10-28 17:00:12,442 - INFO - Executed Query: SELECT [products_number], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [products_number] ORDER BY [products_number]
+Result:    products_number  churn_count
+0                1         2521
+1                2         2144
+2                3          153
+3                4           31
+2024-10-28 17:00:12,461 - INFO - Executed Query: SELECT [country], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [country]
+Result:    country  churn_count
+0   France         2423
+1  Germany         1261
+2    Spain         1165
+2024-10-28 17:00:12,482 - INFO - Executed Query: SELECT [credit_card], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [credit_card]
+Result:    credit_card  churn_count
+0            0         1401
+1            1         3448
+2024-10-28 17:00:12,508 - INFO - Executed Query: SELECT [credit_score], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [credit_score] ORDER BY [credit_score]
+Result:    credit_score  churn_count
+0           350            2
+1           351            1
+2           358            1
+3           359            1
+4           363            1
+2024-10-28 17:00:12,530 - INFO - Executed Query: SELECT CASE WHEN [age] < 30 THEN 'Under 30' WHEN [age] BETWEEN 30 AND 50 THEN '30-50' ELSE 'Over 50' END AS [age_group], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [age_group]
+Result:   age_group  churn_count
+0     30-50         3620
+1   Over 50          425
+2  Under 30          804
+2024-10-28 17:00:12,550 - INFO - Executed Query: SELECT [tenure], COUNT(*) AS [churn_count] FROM [Bank churn test data] WHERE [active_member] = 0 GROUP BY [tenure] ORDER BY [tenure]
+Result:    tenure  churn_count
+0       0          194
+1       1          466
+2       2          488
+3       3          485
+4       4          489
+2024-10-28 17:00:12,567 - INFO - Executed Query: SELECT COUNT(*) AS [total_count], SUM(CASE WHEN [active_member] = 0 THEN 1 ELSE 0 END) AS [churned_count] FROM [Bank churn test data]
+Result:    total_count  churned_count
+0        10000           4849
+2024-10-28 17:11:40,434 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 17:11:40,452 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['events1', 'items', 'users']
+- Column Names: Table 'events1' has columns: user_id, ga_session_id, country, device, type, item_id, date; Table 'items' has columns: id, name, brand, variant, category, price_in_usd; Table 'users' has columns: id, ltv, date
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: events1, items, users; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Sales
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "bar_total_sales_by_brand": "SELECT i.brand, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY i.brand",
+    "line_sales_trend_over_time": "SELECT e.date, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date ORDER BY e.date",
+    "scatter_sales_ltv_correlation": "SELECT u.ltv, SUM(i.price_in_usd) AS total_sales FROM users u JOIN events1 e ON u.id = e.user_id JOIN items i ON e.item_id = i.id GROUP BY u.ltv",
+    "bar_sales_by_device": "SELECT e.device, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.device",
+    "line_average_sales_per_user_over_time": "SELECT e.date, AVG(i.price_in_usd) AS average_sales_per_user FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date ORDER BY e.date",
+    "bar_sales_by_country": "SELECT e.country, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.country",
+    "line_sales_growth_rate": "SELECT e.date, (SUM(i.price_in_usd) - LAG(SUM(i.price_in_usd)) OVER (ORDER BY e.date)) / LAG(SUM(i.price_in_usd)) OVER (ORDER BY e.date) * 100 AS sales_growth_rate FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date ORDER BY e.date",
+    "scatter_device_vs_sales": "SELECT e.device, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.device",
+    "bar_top_items_by_sales": "SELECT i.name, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY i.name ORDER BY total_sales DESC",
+    "line_sales_per_country_over_time": "SELECT e.date, e.country, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date, e.country ORDER BY e.date, e.country"
+}
+```
+2024-10-28 17:11:43,835 - INFO - Executed Query: SELECT i.brand, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY i.brand
+Result:             brand  total_sales
+0  #IamRemarkable       182812
+1         Android      2053103
+2          Google     15376808
+3    Google Cloud       248931
+4         YouTube       927659
+2024-10-28 17:11:49,228 - INFO - Executed Query: SELECT e.date, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date ORDER BY e.date
+Result:                   date  total_sales
+0  2020-11-01 00:27:14           31
+1  2020-11-01 01:44:44           30
+2  2020-11-01 03:06:29          309
+3  2020-11-01 03:09:47          316
+4  2020-11-01 03:10:08          316
+2024-10-28 17:11:53,164 - INFO - Executed Query: SELECT u.ltv, SUM(i.price_in_usd) AS total_sales FROM users u JOIN events1 e ON u.id = e.user_id JOIN items i ON e.item_id = i.id GROUP BY u.ltv
+Result:    ltv  total_sales
+0    0     10127785
+1    1            1
+2    2           29
+3    3         1042
+4    4          655
+2024-10-28 17:11:58,311 - INFO - Executed Query: SELECT e.device, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.device
+Result:     device  total_sales
+0  desktop     10830589
+1   mobile      7513222
+2   tablet       445502
+2024-10-28 17:12:03,670 - INFO - Executed Query: SELECT e.date, AVG(i.price_in_usd) AS average_sales_per_user FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date ORDER BY e.date
+Result:                   date  average_sales_per_user
+0  2020-11-01 00:27:14               15.500000
+1  2020-11-01 01:44:44               15.000000
+2  2020-11-01 03:06:29               25.750000
+3  2020-11-01 03:09:47               26.333333
+4  2020-11-01 03:10:08               26.333333
+2024-10-28 17:12:09,225 - INFO - Executed Query: SELECT e.country, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.country
+Result:   country  total_sales
+0    None        98113
+1      AE        41423
+2      AL         5819
+3      AM         6714
+4      AR        50189
+2024-10-28 17:12:14,990 - INFO - Executed Query: SELECT e.date, (SUM(i.price_in_usd) - LAG(SUM(i.price_in_usd)) OVER (ORDER BY e.date)) / LAG(SUM(i.price_in_usd)) OVER (ORDER BY e.date) * 100 AS sales_growth_rate FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date ORDER BY e.date
+Result:                   date  sales_growth_rate
+0  2020-11-01 00:27:14                NaN
+1  2020-11-01 01:44:44                0.0
+2  2020-11-01 03:06:29              900.0
+3  2020-11-01 03:09:47                0.0
+4  2020-11-01 03:10:08                0.0
+2024-10-28 17:12:20,191 - INFO - Executed Query: SELECT e.device, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.device
+Result:     device  total_sales
+0  desktop     10830589
+1   mobile      7513222
+2   tablet       445502
+2024-10-28 17:12:24,350 - INFO - Executed Query: SELECT i.name, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY i.name ORDER BY total_sales DESC
+Result:                                       name  total_sales
+0                    Google Zip Hoodie F/C       843564
+1          Google Crewneck Sweatshirt Navy       640288
+2  Google Badge Heavyweight Pullover Black       620722
+3            Google Men's Tech Fleece Grey       559819
+4         Google Crewneck Sweatshirt Green       507210
+2024-10-28 17:12:31,325 - INFO - Executed Query: SELECT e.date, e.country, SUM(i.price_in_usd) AS total_sales FROM items i JOIN events1 e ON i.id = e.item_id GROUP BY e.date, e.country ORDER BY e.date, e.country
+Result:                   date country  total_sales
+0  2020-11-01 00:27:14      US           31
+1  2020-11-01 01:44:44      SE           30
+2  2020-11-01 03:06:29      US          309
+3  2020-11-01 03:09:47      US          316
+4  2020-11-01 03:10:08      US          316
+2024-10-28 17:34:55,912 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 17:34:55,932 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['cancer_patients_data']
+- Column Names: Table 'cancer_patients_data' has columns: Patient Id, Age, Gender, Air Pollution, Alcohol use, Dust Allergy, OccuPational Hazards, Genetic Risk, chronic Lung Disease, Balanced Diet, Obesity, Smoking, Passive Smoker, Chest Pain, Coughing of Blood, Fatigue, Weight Loss, Shortness of Breath, Wheezing, Swallowing Difficulty, Clubbing of Finger Nails, Frequent Cold, Dry Cough, Snoring, Level
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: cancer_patients_data; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Trends
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "bar_age_distribution": "SELECT [Age], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Age] ORDER BY [Age]",
+    "bar_gender_distribution": "SELECT [Gender], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Gender]",
+    "bar_obesity_impact": "SELECT [Obesity], COUNT(*) as [Total Patients] FROM cancer_patients_data WHERE [Level] IS NOT NULL GROUP BY [Obesity]",
+    "bar_air_pollution_impact": "SELECT [Air Pollution], COUNT(*) as [Total Patients] FROM cancer_patients_data WHERE [Level] IS NOT NULL GROUP BY [Air Pollution]",
+    "scatter_smoking_vs_obesity": "SELECT [Smoking], [Obesity] FROM cancer_patients_data WHERE [Smoking] IS NOT NULL AND [Obesity] IS NOT NULL",
+    "line_chronic_lung_disease_trend": "SELECT [Level], COUNT(*) as [Total Patients] FROM cancer_patients_data WHERE [chronic Lung Disease] = 'Yes' GROUP BY [Level] ORDER BY [Level]",
+    "line_age_trend": "SELECT [Age], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Age] ORDER BY [Age]",
+    "bar_gender_vs_obesity": "SELECT [Gender], [Obesity], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Gender], [Obesity]",
+    "bar_dust_allergy_distribution": "SELECT [Dust Allergy], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Dust Allergy]",
+    "scatter_air_pollution_vs_fatigue": "SELECT [Air Pollution], [Fatigue] FROM cancer_patients_data WHERE [Air Pollution] IS NOT NULL AND [Fatigue] IS NOT NULL"
+}
+```
+2024-10-28 17:34:55,971 - INFO - Executed Query: SELECT [Age], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Age] ORDER BY [Age]
+Result:    Age  Total Patients
+0   14               9
+1   17              20
+2   18              18
+3   19              20
+4   22              19
+2024-10-28 17:34:55,991 - INFO - Executed Query: SELECT [Gender], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Gender]
+Result:    Gender  Total Patients
+0       1             598
+1       2             402
+2024-10-28 17:34:56,015 - INFO - Executed Query: SELECT [Obesity], COUNT(*) as [Total Patients] FROM cancer_patients_data WHERE [Level] IS NOT NULL GROUP BY [Obesity]
+Result:    Obesity  Total Patients
+0        1              70
+1        2             140
+2        3             193
+3        4             191
+4        5              20
+2024-10-28 17:34:56,036 - INFO - Executed Query: SELECT [Air Pollution], COUNT(*) as [Total Patients] FROM cancer_patients_data WHERE [Level] IS NOT NULL GROUP BY [Air Pollution]
+Result:    Air Pollution  Total Patients
+0              1             141
+1              2             201
+2              3             173
+3              4              90
+4              5              20
+2024-10-28 17:34:56,055 - INFO - Executed Query: SELECT [Smoking], [Obesity] FROM cancer_patients_data WHERE [Smoking] IS NOT NULL AND [Obesity] IS NOT NULL
+Result:    Smoking  Obesity
+0        3        4
+1        2        2
+2        2        7
+3        7        7
+4        8        7
+2024-10-28 17:34:56,070 - INFO - Executed Query: SELECT [Level], COUNT(*) as [Total Patients] FROM cancer_patients_data WHERE [chronic Lung Disease] = 'Yes' GROUP BY [Level] ORDER BY [Level]
+Result: Empty DataFrame
+Columns: [Level, Total Patients]
+Index: []
+2024-10-28 17:34:56,095 - INFO - Executed Query: SELECT [Age], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Age] ORDER BY [Age]
+Result:    Age  Total Patients
+0   14               9
+1   17              20
+2   18              18
+3   19              20
+4   22              19
+2024-10-28 17:34:56,123 - INFO - Executed Query: SELECT [Gender], [Obesity], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Gender], [Obesity]
+Result:    Gender  Obesity  Total Patients
+0       1        1              39
+1       1        2              78
+2       1        3              91
+3       1        4             112
+4       1        5              17
+2024-10-28 17:34:56,140 - INFO - Executed Query: SELECT [Dust Allergy], COUNT(*) as [Total Patients] FROM cancer_patients_data GROUP BY [Dust Allergy]
+Result:    Dust Allergy  Total Patients
+0             1              60
+1             2              70
+2             3             101
+3             4             133
+4             5             111
+2024-10-28 17:34:56,158 - INFO - Executed Query: SELECT [Air Pollution], [Fatigue] FROM cancer_patients_data WHERE [Air Pollution] IS NOT NULL AND [Fatigue] IS NOT NULL
+Result:    Air Pollution  Fatigue
+0              2        3
+1              3        1
+2              4        8
+3              7        4
+4              6        3
+2024-10-28 17:39:12,667 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-10-28 17:39:12,683 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['cancer_patients_data']
+- Column Names: Table 'cancer_patients_data' has columns: Patient Id, Age, Gender, Air Pollution, Alcohol use, Dust Allergy, OccuPational Hazards, Genetic Risk, chronic Lung Disease, Balanced Diet, Obesity, Smoking, Passive Smoker, Chest Pain, Coughing of Blood, Fatigue, Weight Loss, Shortness of Breath, Wheezing, Swallowing Difficulty, Clubbing of Finger Nails, Frequent Cold, Dry Cough, Snoring, Level
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User Question**:
+   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Use this question to identify relevant parts of the dataset.
+
+3. **Analysis and Insights**:
+   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
+   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
+   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
+   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
+   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
+   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+
+4. **SQL Query Generation**:
+   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
+   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
+   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
+   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
+   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
+   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
+   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
+   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
+   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
+   - The available table names are: cancer_patients_data; strictly use the table names among these.
+   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
+   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Trends
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "line_age_trend": "SELECT [Age], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Age] ORDER BY [Age];",
+    "bar_gender_distribution": "SELECT [Gender], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Gender];",
+    "scatter_air_pollution_obesity": "SELECT [Air Pollution], [Obesity] FROM [cancer_patients_data];",
+    "bar_smoking_effect": "SELECT [Smoking], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Smoking];",
+    "line_chest_pain_trend": "SELECT [Level], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] WHERE [Chest Pain] = 'Yes' GROUP BY [Level] ORDER BY [Level];",
+    "bar_gender_vs_smoking": "SELECT [Gender], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] WHERE [Smoking] = 'Yes' GROUP BY [Gender];",
+    "scatter_genetic_risks_fatigue": "SELECT [Genetic Risk], [Fatigue] FROM [cancer_patients_data];",
+    "line_age_vs_weight_loss": "SELECT [Age], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] WHERE [Weight Loss] = 'Yes' GROUP BY [Age] ORDER BY [Age];",
+    "bar_alcohol_use_distribution": "SELECT [Alcohol use], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Alcohol use];",
+    "scatter_coughing_blood_age": "SELECT [Age], [Coughing of Blood] FROM [cancer_patients_data];"
+}
+```
+2024-10-28 17:39:12,709 - INFO - Executed Query: SELECT [Age], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Age] ORDER BY [Age];
+Result:    Age  Patient Count
+0   14              9
+1   17             20
+2   18             18
+3   19             20
+4   22             19
+2024-10-28 17:39:12,730 - INFO - Executed Query: SELECT [Gender], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Gender];
+Result:    Gender  Patient Count
+0       1            598
+1       2            402
+2024-10-28 17:39:12,755 - INFO - Executed Query: SELECT [Air Pollution], [Obesity] FROM [cancer_patients_data];
+Result:    Air Pollution  Obesity
+0              2        4
+1              3        2
+2              4        7
+3              7        7
+4              6        7
+2024-10-28 17:39:12,782 - INFO - Executed Query: SELECT [Smoking], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Smoking];
+Result:    Smoking  Patient Count
+0        1            181
+1        2            222
+2        3            172
+3        4             59
+4        5             10
+2024-10-28 17:39:12,801 - INFO - Executed Query: SELECT [Level], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] WHERE [Chest Pain] = 'Yes' GROUP BY [Level] ORDER BY [Level];
+Result: Empty DataFrame
+Columns: [Level, Patient Count]
+Index: []
+2024-10-28 17:39:12,819 - INFO - Executed Query: SELECT [Gender], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] WHERE [Smoking] = 'Yes' GROUP BY [Gender];
+Result: Empty DataFrame
+Columns: [Gender, Patient Count]
+Index: []
+2024-10-28 17:39:12,845 - INFO - Executed Query: SELECT [Genetic Risk], [Fatigue] FROM [cancer_patients_data];
+Result:    Genetic Risk  Fatigue
+0             3        3
+1             4        1
+2             5        8
+3             6        4
+4             7        3
+2024-10-28 17:39:12,855 - INFO - Executed Query: SELECT [Age], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] WHERE [Weight Loss] = 'Yes' GROUP BY [Age] ORDER BY [Age];
+Result: Empty DataFrame
+Columns: [Age, Patient Count]
+Index: []
+2024-10-28 17:39:12,878 - INFO - Executed Query: SELECT [Alcohol use], COUNT(*) AS [Patient Count] FROM [cancer_patients_data] GROUP BY [Alcohol use];
+Result:    Alcohol use  Patient Count
+0            1            152
+1            2            202
+2            3             80
+3            4             41
+4            5             90
+2024-10-28 17:39:12,898 - INFO - Executed Query: SELECT [Age], [Coughing of Blood] FROM [cancer_patients_data];
+Result:    Age  Coughing of Blood
+0   33                  4
+1   17                  3
+2   35                  8
+3   37                  8
+4   46                  9

@@ -67,7 +67,7 @@ class Prompt:
                     -> Key findings : should list the findings from the glance of the data based on the question that is asked.
                     -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
                     -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
-                    -> Visual representation: should use graphs, charts or any other method of visual representation to beautifully represent the data.
+                    -> Graph type : Also provide the graph type for the result_df best possible way to visualize the df:{result_df} the output should be in the form : "bar" in case of bar graphs and "line" in case line graphs and so on, Ensure that output for graph type is one word only. 
         """
 
     @staticmethod
@@ -75,11 +75,11 @@ class Prompt:
         return Prompt.create_final_prompt(result_df, question)
 
     @staticmethod
-    def create_dashboard_prompt(question, table_info):
+    def create_dashboard_prompt(dashboard_topic, table_info):
         table_names = Prompt.extract_table_names(table_info)
         columns_info = Prompt.format_columns_info(table_info)
         prompt = f"""
-Your task is to generate a series of SQL queries based on a provided dataset and a user's question. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's instructions and create SQL queries that extract data suitable for dashboard visualization.
+Your task is to generate a series of SQL queries based on a provided dataset and a user's Key statement. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's statement and create SQL queries that extract data suitable for dashboard visualization.
 
 Reference Data:
 - Table Names: {table_names}
@@ -91,34 +91,44 @@ Instructions:
    - You will be provided with a dataset described in the reference data.
    - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
 
-2. **User Question**:
-   - The user will provide a question or guidance, indicating the focus area for your analysis (e.g., "matches").
-   - Use this question to identify relevant parts of the dataset.
+2. **User statement**:
+   - The user will provide a Key statement or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Develop a comprehensive mind map around the key statement to broaden the scope of analysis. For instance, if the key statement is "matches," consider analyzing aspects such as "Wins, losses, successful teams, averages, totals, match types, levels," and more. This approach ensures a thorough exploration of the topic.
+   - Use this key statement to identify and focus on the most relevant parts of the dataset, ensuring a targeted and insightful analysis.
+
+   **Example Scenarios**:
+   - If the user provides a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+   - For a key statement such as "customer feedback," consider analyzing "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+   - With a focus on "employee performance," explore areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+
+   - These examples illustrate how to open up the area of analysis based on user input, ensuring a comprehensive and insightful exploration of the dataset.
 
 3. **Analysis and Insights**:
-   - Identify at least 10 interesting insights from the dataset, ensuring a comprehensive analysis related to the user's question.
-   - Among these insights, creatively discover at least 3 interesting trends, utilizing different types of graphs to represent these trends effectively.
-   - Consider using line graphs for time series trends, bar charts for categorical comparisons, and scatter plots for correlation analysis.
-   - Focus on uncovering patterns, anomalies, or correlations that could provide valuable information for decision-making or strategic planning.
-   - Ensure the insights are diverse, covering various aspects of the dataset to provide a holistic view.
-   - Use advanced analytical techniques to derive insights that are not immediately obvious, enhancing the depth of the analysis.
-   - Clearly articulate the insights and trends in a manner that a language model can understand and generate meaningful SQL queries for visualization.
+   - Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+   - Among these insights, uncover at least 3 notable trends, employing a variety of graph types to effectively illustrate these trends.
+   - Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+   - Additionally, incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+   - Focus on detecting patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+   - Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+   - Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+   - Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
 
 4. **SQL Query Generation**:
-   - As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query based on the given reference data, table names, and column names.
-   - Ensure the query adheres to standard SQL conventions, is syntactically correct, and optimized for performance.
-   - Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY.
-   - If specific mathematical operations are requested and the necessary columns are not available, use SQL to perform the operation correctly and provide the answer.
-   - Correctly integrate table names, column names, and any specified conditions, strictly following the provided reference data.
-   - Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met.
-   - Use the * in the SELECT statement to retrieve all information unless grouping or counting is required, ensuring clarity and completeness.
-   - Use square brackets for column names to handle cases with spaces, ensuring syntactical accuracy.
-   - Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data.
-   - In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query.
-   - The available table names are: {', '.join(table_names)}; strictly use the table names among these.
-   - When grouping or counting is necessary, avoid using * after the SELECT statement to ensure semantic clarity.
-   - The data may contain null values; in such cases, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
-   - Avoid using constructs like top 5 or top to ensure the query remains generalizable and adaptable.
+   - Your task is to generate a precise, efficient, and optimized SQL query using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+   - Ensure the query adheres to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+   - Carefully analyze the user's input to ensure the query aligns with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and includes necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+   - Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the query justifies the targeted insights.
+   - Aim to produce a query that executes flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+   - Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+   - Use square brackets for column names with spaces to maintain syntactical accuracy.
+   - Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+   - In cases requiring multiple tables, identify relationships using the given columns to construct a coherent query.
+   - The available table names are: {', '.join(table_names)}; strictly use these table names.
+   - When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+   - If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains adaptable and generalizable.
    - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
 
 5. **Output Format**:
@@ -128,7 +138,7 @@ Instructions:
    - Ensure the output is strictly a JSON structure, with no additional statements.
 
 User Input: 
-    Instruction: {question}
+    Instruction: {dashboard_topic}
 
 Example Scenario:
 - If the user inquires about "matches", focus on data and insights related to matches among all tables.

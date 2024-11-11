@@ -115,6 +115,7 @@ def display_graphs_in_grid(results_dfs, dashboard_name):
         except ValueError as e:
             print(f"Skipping {df_name} due to error: {e}")
 
+
 def main():
     st.set_page_config(layout="wide")
     st.title("Automated Dashboard Generator")

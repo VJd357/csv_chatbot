@@ -9,6 +9,7 @@ import os
 import logging
 from openai import OpenAI
 import dashboard
+from streamlit_chat import message
 
 # Configure logging to log.txt
 logging.basicConfig(filename='log.txt', level=logging.INFO, 
@@ -59,6 +60,16 @@ if 'session_figures' not in st.session_state:
     st.session_state['session_figures'] = []
 if 'session_response_figures' not in st.session_state:
     st.session_state['session_response_figures'] = []
+if 'dashboard_name' not in st.session_state:
+    st.session_state.dashboard_name = None
+if 'dashboard_figures' not in st.session_state:
+    st.session_state.dashboard_figures = []
+if 'dashboard_query' not in st.session_state:
+    st.session_state.dashboard_query = None
+if 'api_key' not in st.session_state:
+    st.session_state.api_key = None
+if 'uploaded_files' not in st.session_state:
+    st.session_state.uploaded_files = []
 
 # Function to handle file uploads and table creation
 def handle_file_uploads(uploaded_files, dashboard_name):
@@ -75,8 +86,8 @@ def main():
     if 'sidebar_state' not in st.session_state:
         st.session_state.sidebar_state = 'expanded'
 
-    if st.button("☰"):
-        st.session_state.sidebar_state = 'collapsed' if st.session_state.sidebar_state == 'expanded' else 'expanded'
+    # Change the sidebar toggle button to a chat icon
+    
 
     if st.session_state.sidebar_state == 'expanded':
         st.sidebar.image("nice_icon.jpeg", width=150)
@@ -101,60 +112,124 @@ def main():
         df_results_dict = dashboard.get_query_results_dict(response_dict, dashboard_name)
         dashboard.display_graphs_in_grid(df_results_dict, dashboard_name)
         # Save all generated figures in session state
-        for df_name, df in df_results_dict.items():
-            fig = dashboard.generate_charts(df, df_name)
-            if fig:
-                st.session_state['session_figures'].append(fig)
-                
+        # **Important: Append to the list instead of overwriting**
+        st.session_state.dashboard_figures.extend(
+            [dashboard.generate_charts(df, df_name) for df_name, df in df_results_dict.items() if dashboard.generate_charts(df, df_name)]
+        )
+        st.session_state.dashboard_name = dashboard_name
+        st.session_state.dashboard_query = dashboard_query
+        st.session_state.api_key = api_key
+        st.session_state.uploaded_files = uploaded_files
+        
+    # Display the dashboard if it's generated
+    if st.session_state.dashboard_name:
+        st.header(f"Dashboard: {st.session_state.dashboard_name}")
+        cols = st.columns(2)  # Set columns to 2
+        for i, fig in enumerate(st.session_state.dashboard_figures):
+            with cols[i % 2]:  # Use modulo to cycle through columns
+                st.plotly_chart(fig, use_container_width=True, key=f"dashboard_chart_{i}")
     
-    # CSV Chatbot functionality
-    st.markdown("Don't know your data!? Ask us!")
-    question = st.text_input("Ask a question:")
-    if st.button("Get Response") and question and api_key:
-        cols = st.columns(2)  # Create a grid with 2 columns
-        for i, fig in enumerate(st.session_state['session_figures']):
-            col = cols[i % 2]  # Alternate between the two columns
-            with col:
-                st.plotly_chart(fig, use_container_width=True, key=f"saved_chart_{i}")
-        column_dict = Utility.read_csv_files([file.name for file in uploaded_files])
-        sql_prompt, system_prompt = Prompt.get_combined_prompt(question, column_dict)
-        model = Utility.get_openai_creds()  # Only retrieve the model
-        sql_query = Responses.get_openai_response(sql_prompt, system_prompt, api_key, model)
-        sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
-        context_df = Responses.execute_query_and_get_result(sql_query, dashboard_name)
-        final_prompt = Prompt.get_final_prompt(context_df, question)
-        solution = Responses.get_openai_response(prompt=final_prompt, system_prompt=system_prompt, api_key=api_key, model=model)
-        if "- **Graph type:** " in solution:
-            solution_parts = solution.split("- **Graph type:** ")
-            question_answers = solution_parts[0].strip()
-            graph_type = solution_parts[1].strip() if len(solution_parts) > 1 else "Not specified"
-        else:
-            question_answers = solution.strip()
-            graph_type = "Not specified"
-        # Store question, response, and figure in session state
-        st.session_state['session_questions'].append(question)
-        st.session_state['session_outputs'].append(question_answers)
-
-        st.write("Response:", question_answers)
-        if context_df is not None and not context_df.empty:
-            # Determine the name for the context_df based on graph_type and the first column name
-            df_name = f"{graph_type}_{context_df.columns[0]}"
-            # Generate and display the chart
-            fig = dashboard.generate_charts(context_df, df_name)
-            if fig:
-                # Ensure the figure is displayed in the main response section
-                st.plotly_chart(fig, use_container_width=True, key=f"chart_{df_name}")
-                # Save the figure in session state
-                st.session_state['session_response_figures'].append(fig)
-        else:
-            st.warning("The context DataFrame is empty or None, unable to generate chart.")
-    # Display session history as expandable tiles
+    # Chatbot UI
+    # Only display the chatbot UI if chat_open is True
+    st.sidebar.button("💬", key="sidebar_toggle")  # Added unique key
+    st.session_state.sidebar_state = 'collapsed' if st.session_state.sidebar_state == 'expanded' else 'expanded'
     if st.session_state.sidebar_state == 'expanded':
-        st.sidebar.header("Chat History")
-        for i, (q, a, f) in enumerate(zip(st.session_state['session_questions'], st.session_state['session_outputs'], st.session_state['session_response_figures'])):
-            with st.sidebar.expander(f"Q{i+1}: {q}"):
-                st.write(f"**A:** {a}")
-                st.plotly_chart(f, use_container_width=True, key=f"sidebar_chart_{i}")
+        with st.sidebar:
+            st.header("Chat with your Data")
+            if 'messages' not in st.session_state:
+                st.session_state.messages = []
+            for i, (q, a) in enumerate(zip(st.session_state['session_questions'], st.session_state['session_outputs'])):
+                message(q, is_user=True, key=f"user_{i}")
+                message(a, is_user=False, key=f"bot_{i}")
+            # Fix the input box and send button position
+            #st.markdown(
+            #    """
+            #    <style>
+            #    .sidebar-content {
+            #        position: fixed;
+            #        top: 0;
+            #        width: 100%;
+            #    }
+            #    .sidebar-content > * {
+            #        margin-bottom: 10px;
+            #    }
+            #    .sidebar-content input[type="text"] {
+            #        width: 100%;
+            #        padding: 10px;
+            #        border: 1px solid #ccc;
+            #        border-radius: 5px;
+            #        box-sizing: border-box;
+            #    }
+            #    .sidebar-content button {
+            #        width: 100%;
+            #        padding: 10px;
+            #        background-color: #4CAF50;
+            #        color: white;
+            #        border: none;
+            #        border-radius: 5px;
+            #        cursor: pointer;
+            #    }
+            #    </style>
+            #    """,
+            #    unsafe_allow_html=True
+            #)
+            #st.markdown("<div class='sidebar-content'>", unsafe_allow_html=True)
+            question = st.text_input("Ask a question:", key="question_input")
+            if st.button("Send", key="send_question"):
+                  # Added unique key
+                column_dict = Utility.read_csv_files([file.name for file in st.session_state.uploaded_files])
+                sql_prompt, system_prompt = Prompt.get_combined_prompt(question, column_dict)
+                model = Utility.get_openai_creds()  # Only retrieve the model
+                sql_query = Responses.get_openai_response(sql_prompt, system_prompt, st.session_state.api_key, model)
+                sql_query = sql_query.replace("```sql", "").replace("```", "").strip()
+                context_df = Responses.execute_query_and_get_result(sql_query, st.session_state.dashboard_name)
+                final_prompt = Prompt.get_final_prompt(context_df, question)
+                solution = Responses.get_openai_response(prompt=final_prompt, system_prompt=system_prompt, api_key=st.session_state.api_key, model=model)
+                if "- **Graph type:** " in solution:
+                    solution_parts = solution.split("- **Graph type:** ")
+                    question_answers = solution_parts[0].strip()
+                    graph_type = solution_parts[1].strip() if len(solution_parts) > 1 else "Not specified"
+                else:
+                    question_answers = solution.strip()
+                    graph_type = "Not specified"
+                # Store question, response, and figure in session state
+                st.session_state['session_questions'].append(question)
+                st.session_state['session_outputs'].append(question_answers)
+
+                st.write("Response:", question_answers)
+                if context_df is not None and not context_df.empty:
+                    # Determine the name for the context_df based on graph_type and the first column name
+                    df_name = f"{graph_type}_{context_df.columns[0]}"
+                    # Generate and display the chart
+                    fig = dashboard.generate_charts(context_df, df_name)
+                    if fig:
+                        # Ensure the figure is displayed in the main response section
+                        st.plotly_chart(fig, use_container_width=True, key=f"chart_{df_name}")
+                        # Save the figure in session state
+                        st.session_state['session_response_figures'].append(fig)
+                else:
+                    st.warning("The context DataFrame is empty or None, unable to generate chart.")
+            #st.markdown("</div>", unsafe_allow_html=True)
+    # Display session history as expandable tiles
+    #if st.session_state.sidebar_state == 'expanded':
+    #    st.sidebar.header("Chat History")
+    #    for i, (q, a, f) in enumerate(zip(st.session_state['session_questions'], st.session_state['session_outputs'], st.session_state['session_response_figures'])):
+    #        with st.sidebar.expander(f"Q{i+1}: {q}"):
+    #            st.write(f"**A:** {a}")
+    #            st.plotly_chart(f, use_container_width=True, key=f"sidebar_chart_{i}")
+    
+    # Add JavaScript to scroll to the bottom of the sidebar
+        st.sidebar.markdown(
+        """
+        <style>
+        .stSidebar > div {
+            overflow-y: auto;
+            height: calc(100vh - 60px); /* Adjust height as needed */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
     
 
 if __name__ == "__main__":

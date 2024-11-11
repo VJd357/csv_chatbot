@@ -54,7 +54,7 @@ class Prompt:
         If the data in context has None, Nan or null values ignore it and give the next most suitable output.
         If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
         Do not just read the context data given to you but also provide some actionable insight from the resultant data.
-        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense.
         Output guidelines: 
         1. The Output should be precise and follow the question given by the user.
         2. The Output should not display the complete df that is provided as context to the llm.

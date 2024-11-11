@@ -1,4 +1,5 @@
 streamlit
+streamlit-chat
 openai
 pandas
 PyYAML

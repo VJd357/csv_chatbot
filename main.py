@@ -208,7 +208,7 @@ def main():
                         # Save the figure in session state
                         st.session_state['session_response_figures'].append(fig)
                 else:
-                    st.warning("The context DataFrame is empty or None, unable to generate chart.")
+                    print("The context DataFrame is empty or None, unable to generate chart.")
             #st.markdown("</div>", unsafe_allow_html=True)
     # Display session history as expandable tiles
     #if st.session_state.sidebar_state == 'expanded':

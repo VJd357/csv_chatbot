@@ -85,7 +85,7 @@ def main():
     st.set_page_config(layout="wide")
     if 'sidebar_state' not in st.session_state:
         st.session_state.sidebar_state = 'expanded'
-
+    
     # Change the sidebar toggle button to a chat icon
     
 

@@ -12556,3 +12556,1357 @@ Answer:
 - **Visible trends**: The data shows a gap of 64 years between the two World Cups, indicating the long history of Brazil's participation and achievement in football on the world stage.
 - **Actionable Insights**: To capitalize on this historical success, Brazil could invest in youth development programs to ensure a continuity of talent that builds on past triumphs, potentially elevating future performances on the global stage.
 - **Graph type**: bar
+2024-11-11 17:09:08,106 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-11 17:09:08,163 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's Key statement. The dataset is composed of multiple CSV files, each representing a table. Your objective is to analyze the data as per the user's statement and create SQL queries that extract data suitable for dashboard visualization.
+
+Reference Data:
+- Table Names: ['Bank churn test data']
+- Column Names: Table 'Bank churn test data' has columns: customer_id, credit_score, country, gender, age, tenure, balance, products_number, credit_card, active_member, estimated_salary
+
+Instructions:
+
+1. **Data Input**: 
+   - You will be provided with a dataset described in the reference data.
+   - The structure of the data may vary, so your approach should be flexible to accommodate different datasets.
+
+2. **User statement**:
+   - The user will provide a Key statement or guidance, indicating the focus area for your analysis (e.g., "matches").
+   - Develop a comprehensive mind map around the key statement to broaden the scope of analysis. For instance, if the key statement is "matches," consider analyzing aspects such as "Wins, losses, successful teams, averages, totals, match types, levels," and more. This approach ensures a thorough exploration of the topic.
+   - Use this key statement to identify and focus on the most relevant parts of the dataset, ensuring a targeted and insightful analysis.
+
+   **Example Scenarios**:
+   - If the user provides a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+   - For a key statement such as "customer feedback," consider analyzing "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+   - With a focus on "employee performance," explore areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+
+   - These examples illustrate how to open up the area of analysis based on user input, ensuring a comprehensive and insightful exploration of the dataset.
+
+3. **Analysis and Insights**:
+   - Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+   - Among these insights, uncover at least 3 notable trends, employing a variety of graph types to effectively illustrate these trends.
+   - Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+   - Additionally, incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+   - Focus on detecting patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+   - Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+   - Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+   - Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+   - Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+4. **SQL Query Generation**:
+   - Your task is to generate a precise, efficient, and optimized SQL query using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+   - Ensure the query adheres to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+   - Carefully analyze the user's input to ensure the query aligns with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and includes necessary clauses like WHERE, ORDER BY, or GROUP BY.
+   - If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+   - Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the query justifies the targeted insights.
+   - Aim to produce a query that executes flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+   - Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+   - Use square brackets for column names with spaces to maintain syntactical accuracy.
+   - Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+   - In cases requiring multiple tables, identify relationships using the given columns to construct a coherent query.
+   - The available table names are: Bank churn test data; strictly use these table names.
+   - When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+   - If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+   - Avoid using constructs like top 5 or top to ensure the query remains adaptable and generalizable.
+   - The output should be solely the SQL query, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+5. **Output Format**:
+   - Output should be a JSON object.
+   - It is crucial that the keys in the output JSON strictly adhere to the format "chart_type_column_name". This ensures that the keys are both descriptive and consistent, clearly indicating the type of chart and the specific columns involved (e.g., "bar_total_goals"). Adhering to this format is essential for the correct interpretation and generation of SQL queries.
+   - Values should be the corresponding SQL queries.
+   - Ensure the output is strictly a JSON structure, with no additional statements.
+
+User Input: 
+    Instruction: Customers 
+
+Example Scenario:
+- If the user inquires about "matches", focus on data and insights related to matches among all tables.
+- Generate queries to extract data such as total goals, average attendance, and number of matches played.
+- Ensure queries can handle both numerical and non-numerical data for a comprehensive dashboard.
+
+The ultimate goal is to create a complete set of SQL queries that can be used to build a dashboard based on the user's question and the provided dataset.
+
+OpenAI Response: ```json
+{
+    "bar_gender_distribution": "SELECT [gender], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [gender]",
+    "bar_country_distribution": "SELECT [country], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [country]",
+    "bar_active_member_count": "SELECT [active_member], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [active_member]",
+    "bar_products_average": "SELECT AVG([products_number]) AS [average_products] FROM [Bank churn test data]",
+    "line_balance_over_age": "SELECT [age], AVG([balance]) AS [average_balance] FROM [Bank churn test data] GROUP BY [age] ORDER BY [age]",
+    "scatter_age_balance": "SELECT [age], [balance] FROM [Bank churn test data]",
+    "pie_credit_card_distribution": "SELECT [credit_card], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [credit_card]",
+    "heatmap_credit_score_age": "SELECT [age], AVG([credit_score]) AS [average_credit_score] FROM [Bank churn test data] GROUP BY [age] ORDER BY [age]",
+    "line_tenure_average_balance": "SELECT [tenure], AVG([balance]) AS [average_balance] FROM [Bank churn test data] GROUP BY [tenure] ORDER BY [tenure]",
+    "bar_age_product_count": "SELECT [age], COUNT([products_number]) AS [product_count] FROM [Bank churn test data] GROUP BY [age]"
+}
+```
+2024-11-11 17:09:08,241 - INFO - Executed Query: SELECT [gender], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [gender]
+Result:    gender  count
+0  Female   4543
+1    Male   5457
+2024-11-11 17:09:08,282 - INFO - Executed Query: SELECT [country], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [country]
+Result:    country  count
+0   France   5014
+1  Germany   2509
+2    Spain   2477
+2024-11-11 17:09:08,316 - INFO - Executed Query: SELECT [active_member], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [active_member]
+Result:    active_member  count
+0              0   4849
+1              1   5151
+2024-11-11 17:09:08,352 - INFO - Executed Query: SELECT AVG([products_number]) AS [average_products] FROM [Bank churn test data]
+Result:    average_products
+0            1.5302
+2024-11-11 17:09:08,392 - INFO - Executed Query: SELECT [age], AVG([balance]) AS [average_balance] FROM [Bank churn test data] GROUP BY [age] ORDER BY [age]
+Result:    age  average_balance
+0   18      79169.57500
+1   19      70502.53963
+2   20      76038.89000
+3   21      75926.88283
+4   22      68213.74881
+2024-11-11 17:09:08,476 - INFO - Executed Query: SELECT [age], [balance] FROM [Bank churn test data]
+Result:    age    balance
+0   42       0.00
+1   41   83807.86
+2   42  159660.80
+3   39       0.00
+4   43  125510.82
+2024-11-11 17:09:08,504 - INFO - Executed Query: SELECT [credit_card], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [credit_card]
+Result:    credit_card  count
+0            0   2945
+1            1   7055
+2024-11-11 17:09:08,542 - INFO - Executed Query: SELECT [age], AVG([credit_score]) AS [average_credit_score] FROM [Bank churn test data] GROUP BY [age] ORDER BY [age]
+Result:    age  average_credit_score
+0   18            686.681818
+1   19            665.629630
+2   20            665.050000
+3   21            647.283019
+4   22            636.547619
+2024-11-11 17:09:08,584 - INFO - Executed Query: SELECT [tenure], AVG([balance]) AS [average_balance] FROM [Bank churn test data] GROUP BY [tenure] ORDER BY [tenure]
+Result:    tenure  average_balance
+0       0     79878.910630
+1       1     78555.384222
+2       2     76839.626469
+3       3     77668.059881
+4       4     74059.394065
+2024-11-11 17:09:08,635 - INFO - Executed Query: SELECT [age], COUNT([products_number]) AS [product_count] FROM [Bank churn test data] GROUP BY [age]
+Result:    age  product_count
+0   18             22
+1   19             27
+2   20             40
+3   21             53
+4   22             84
+2024-11-11 17:14:42,782 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-11 17:14:42,801 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What is average balance as per the age of the customers </content>The available table names are: Bank churn test data, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'Bank churn test data' has columns: customer_id, credit_score, country, gender, age, tenure, balance, products_number, credit_card, active_member, estimated_salary </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [age], AVG([balance]) AS [average_balance]
+FROM [Bank churn test data]
+GROUP BY [age]
+ORDER BY [age];
+```
+2024-11-11 17:14:42,904 - INFO - Executed Query: SELECT [age], AVG([balance]) AS [average_balance]
+FROM [Bank churn test data]
+GROUP BY [age]
+ORDER BY [age];
+Result:    age  average_balance
+0   18      79169.57500
+1   19      70502.53963
+2   20      76038.89000
+3   21      75926.88283
+4   22      68213.74881
+2024-11-11 17:14:47,403 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-11 17:14:47,420 - INFO - Prompt: 
+        Based on the given context:     age  average_balance
+0    18      79169.57500
+1    19      70502.53963
+2    20      76038.89000
+3    21      75926.88283
+4    22      68213.74881
+..  ...              ...
+65   83     123356.63000
+66   84      90057.86500
+67   85          0.00000
+68   88          0.00000
+69   92     123794.77500
+
+[70 rows x 2 columns],
+        answer the following question: What is average balance as per the age of the customers. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is average balance as per the age of the customers 
+
+            
+            Answer: -> Data-Info : should have numbers and quick overview of the data piece provided in the prompt.
+                    -> Key findings : should list the findings from the glance of the data based on the question that is asked.
+                    -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
+                    -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
+                    -> Graph type : Also provide the graph type for the result_df best possible way to visualize the df:    age  average_balance
+0    18      79169.57500
+1    19      70502.53963
+2    20      76038.89000
+3    21      75926.88283
+4    22      68213.74881
+..  ...              ...
+65   83     123356.63000
+66   84      90057.86500
+67   85          0.00000
+68   88          0.00000
+69   92     123794.77500
+
+[70 rows x 2 columns] the output should be in the form : "bar" in case of bar graphs and "line" in case line graphs and so on, Ensure that output for graph type is one word only. 
+        
+OpenAI Response: **Question:** What is average balance as per the age of the customers
+
+**Answer:** 
+- **Data-Info:** The dataset contains 70 rows and 2 columns, showing the average balance across different age groups. The average balances range from 0 to over 123,000.
+  
+- **Key findings:** 
+  - The average balance fluctuates significantly with age, revealing peaks and troughs.
+  - Ages 18 to 21 have balances around 79,000 to 76,000, followed by a decline until the mid-60s.
+  - There is a notable peak at ages 83 and 92, indicating that older customers hold significantly higher average balances.
+
+- **Visible trends:** 
+  - A U-shaped trend is apparent, where average balances dip in the late 20s to early 60s, with a resurgence in older age groups (above 80).
+  
+- **Actionable Insights:** 
+  - Financial institutions may consider targeted communication strategies tailored for younger adults to encourage saving, while also exploring services for older clients who show higher average balances, possibly enhancing loyalty programs or investment options.
+
+- **Graph type:** line
+2024-11-14 13:39:36,606 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-14 13:39:36,674 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['WorldCupMatches', 'WorldCups']
+- **Column Names**: Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: WorldCupMatches, WorldCups; strictly use these table names.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Avoid using constructs like top 5 or top to ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g., "bar", "line", "pie", "heatmap").
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": An array of strings indicating the colors to be used for the graph, selected from a professional set of 4-5 colors. Use multiple colors for graphs with multiple labels or fields to distinguish them.
+
+**Example for a Pie Chart**:
+
+OpenAI Response: ```json
+{
+  "dashboard_name": "World Cup Match Insights",
+  "graphs": [
+    {
+      "name": "total_goals_by_year",
+      "type": "bar",
+      "query": "SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "[Year]",
+      "y_axis": "[Total Goals]",
+      "title": "Total Goals Scored by Year",
+      "labels": {
+        "x": "Year",
+        "y": "Total Goals"
+      },
+      "colors": ["#1f77b4", "#ff7f0e"]
+    },
+    {
+      "name": "match_attendance_trends",
+      "type": "line",
+      "query": "SELECT [Year], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "[Year]",
+      "y_axis": "[Average Attendance]",
+      "title": "Average Match Attendance Over Years",
+      "labels": {
+        "x": "Year",
+        "y": "Average Attendance"
+      },
+      "colors": ["#2ca02c"]
+    },
+    {
+      "name": "win_conditions_distribution",
+      "type": "pie",
+      "query": "SELECT [Win conditions], COUNT(*) AS [Matches] FROM WorldCupMatches GROUP BY [Win conditions]",
+      "x_axis": null,
+      "y_axis": "[Matches]",
+      "title": "Distribution of Win Conditions",
+      "labels": {
+        "key": "Win condition",
+        "value": "Matches"
+      },
+      "colors": ["#d62728", "#9467bd", "#8c564b"]
+    },
+    {
+      "name": "top_teams_by_goals",
+      "type": "bar",
+      "query": "SELECT [Home Team Name] AS [Team], SUM([Home Team Goals]) AS [Goals] FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY [Goals] DESC LIMIT 10 UNION SELECT [Away Team Name] AS [Team], SUM([Away Team Goals]) AS [Goals] FROM WorldCupMatches GROUP BY [Away Team Name] ORDER BY [Goals] DESC",
+      "x_axis": "[Team]",
+      "y_axis": "[Goals]",
+      "title": "Top Teams by Goals Scored",
+      "labels": {
+        "x": "Team",
+        "y": "Goals"
+      },
+      "colors": ["#ffbb78", "#2ca02c"]
+    },
+    {
+      "name": "match_stage_distribution",
+      "type": "bar",
+      "query": "SELECT [Stage], COUNT(*) AS [Matches] FROM WorldCupMatches GROUP BY [Stage] ORDER BY [Matches] DESC",
+      "x_axis": "[Stage]",
+      "y_axis": "[Matches]",
+      "title": "Number of Matches by Stage",
+      "labels": {
+        "x": "Stage",
+        "y": "Number of Matches"
+      },
+      "colors": ["#1f77b4", "#ff7f0e"]
+    },
+    {
+      "name": "average_half_time_goals",
+      "type": "line",
+      "query": "SELECT [Year], AVG([Half-time Home Goals] + [Half-time Away Goals]) AS [Average Half-time Goals] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "[Year]",
+      "y_axis": "[Average Half-time Goals]",
+      "title": "Average Half-time Goals Over Years",
+      "labels": {
+        "x": "Year",
+        "y": "Average Half-time Goals"
+      },
+      "colors": ["#2ca02c"]
+    },
+    {
+      "name": "attendance_per_country",
+      "type": "bar",
+      "query": "SELECT [Country], AVG([Attendance]) AS [Average Attendance] FROM WorldCups JOIN WorldCupMatches ON WorldCups.Year = WorldCupMatches.Year GROUP BY [Country]",
+      "x_axis": "[Country]",
+      "y_axis": "[Average Attendance]",
+      "title": "Average Attendance per Hosting Country",
+      "labels": {
+        "x": "Country",
+        "y": "Average Attendance"
+      },
+      "colors": ["#ffbb78", "#1f77b4"]
+    },
+    {
+      "name": "goals_scored_by_team",
+      "type": "bar",
+      "query": "SELECT [Home Team Name] AS [Team], SUM([Home Team Goals]) AS [Goals] FROM WorldCupMatches GROUP BY [Home Team Name] UNION SELECT [Away Team Name] AS [Team], SUM([Away Team Goals]) AS [Goals] FROM WorldCupMatches GROUP BY [Away Team Name]",
+      "x_axis": "[Team]",
+      "y_axis": "[Goals]",
+      "title": "Goals Scored by Each Team",
+      "labels": {
+        "x": "Team",
+        "y": "Goals"
+      },
+      "colors": ["#d62728", "#bcbd22"]
+    },
+    {
+      "name": "quarterfinals_vs_semifinals_attendance",
+      "type": "combo",
+      "query": "SELECT [Stage], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches WHERE [Stage] IN ('Quarter-finals', 'Semi-finals') GROUP BY [Stage]",
+      "x_axis": "[Stage]",
+      "y_axis": "[Average Attendance]",
+      "title": "Attendance Comparison: Quarter-finals vs Semi-finals",
+      "labels": {
+        "x": "Stage",
+        "y": "Average Attendance"
+      },
+      "colors": ["#ff7f0e", "#1f77b4"]
+    },
+    {
+      "name": "total_matches_per_year",
+      "type": "bar",
+      "query": "SELECT [Year], COUNT(*) AS [Total Matches] FROM WorldCupMatches GROUP BY [Year]",
+      "x_axis": "[Year]",
+      "y_axis": "[Total Matches]",
+      "title": "Total Matches Played Per Year",
+      "labels": {
+        "x": "Year",
+        "y": "Total Matches"
+      },
+      "colors": ["#ffbb78", "#d62728"]
+    }
+  ]
+}
+```
+2024-11-14 13:40:28,868 - INFO - Executed Query: SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  Total Goals
+0     NaN          NaN
+1  1930.0         70.0
+2  1934.0         70.0
+3  1938.0         84.0
+4  1950.0         88.0
+2024-11-14 13:40:28,956 - INFO - Executed Query: SELECT [Year], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  Average Attendance
+0     NaN                 NaN
+1  1930.0        32808.277778
+2  1934.0        21352.941176
+3  1938.0        20872.222222
+4  1950.0        47511.181818
+2024-11-14 13:40:28,988 - INFO - Executed Query: SELECT [Win conditions], COUNT(*) AS [Matches] FROM WorldCupMatches GROUP BY [Win conditions]
+Result:                Win conditions  Matches
+0                        None     3720
+1                                  787
+2   win on penalties (2 - 3)         1
+3   win on penalties (3 - 4)         1
+4   win on penalties (4 - 3)         1
+2024-11-14 13:45:00,473 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-14 13:45:00,480 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['WorldCupMatches', 'WorldCups']
+- **Column Names**: Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- Ensure adherence to the correct SQL syntax and structure when writing queries. Follow these guidelines:
+  1. **Clause Order**: Maintain the standard order of SQL clauses. For instance, the `ORDER BY` clause should always follow the `UNION` clause.
+  2. **Logical Flow**: Begin with the `SELECT` statement, followed by `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` as needed.
+- Always verify that the SQL query logic aligns with the intended data retrieval and analysis objectives.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: WorldCupMatches, WorldCups; strictly use these table names.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Avoid using constructs like top 5 or top to ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g., "bar", "line", "pie", "heatmap").
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": An array of strings indicating the colors to be used for the graph, selected from a professional set of 4-5 colors. Use multiple colors for graphs with multiple labels or fields to distinguish them.
+
+**Example for a Pie Chart**:
+
+OpenAI Response: ```json
+{
+  "dashboard_name": "World Cup Analysis Dashboard",
+  "graphs": [
+    {
+      "name": "total_goals_per_year",
+      "type": "bar",
+      "query": "SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "[Year]",
+      "y_axis": "[Total Goals]",
+      "title": "Total Goals Scored per Year",
+      "labels": {
+        "Year": "Year",
+        "Total Goals": "Total Goals"
+      },
+      "colors": ["#4CAF50", "#FFC107"]
+    },
+    {
+      "name": "average_attendance_per_stage",
+      "type": "bar",
+      "query": "SELECT [Stage], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Stage] ORDER BY [Stage]",
+      "x_axis": "[Stage]",
+      "y_axis": "[Average Attendance]",
+      "title": "Average Attendance per Match Stage",
+      "labels": {
+        "Stage": "Match Stage",
+        "Average Attendance": "Average Attendance"
+      },
+      "colors": ["#2196F3", "#FF5722"]
+    },
+    {
+      "name": "winning_teams_distribution",
+      "type": "pie",
+      "query": "SELECT [Winner], COUNT(*) AS [Wins] FROM WorldCups GROUP BY [Winner]",
+      "x_axis": "[Winner]",
+      "y_axis": "[Wins]",
+      "title": "Distribution of Winning Teams",
+      "labels": {
+        "Winner": "Winning Teams",
+        "Wins": "Number of Wins"
+      },
+      "colors": ["#FFC107", "#FF4081", "#8BC34A", "#3F51B5"]
+    },
+    {
+      "name": "win_loss_ratio_home_away",
+      "type": "column",
+      "query": "SELECT [Home Team Name] AS [Team], SUM([Home Team Goals]) AS [Home Goals], SUM([Away Team Goals]) AS [Away Goals] FROM WorldCupMatches GROUP BY [Home Team Name]",
+      "x_axis": "[Team]",
+      "y_axis": ["[Home Goals]", "[Away Goals]"],
+      "title": "Win/Loss Ratio of Home vs Away Teams",
+      "labels": {
+        "Team": "Team",
+        "Home Goals": "Home Goals",
+        "Away Goals": "Away Goals"
+      },
+      "colors": ["#FF9800", "#3F51B5"]
+    },
+    {
+      "name": "match_attendance_trend",
+      "type": "line",
+      "query": "SELECT [Year], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "[Year]",
+      "y_axis": "[Average Attendance]",
+      "title": "Attendance Trend Over the Years",
+      "labels": {
+        "Year": "Year",
+        "Average Attendance": "Average Attendance"
+      },
+      "colors": ["#8BC34A"]
+    },
+    {
+      "name": "goals_per_stage",
+      "type": "heatmap",
+      "query": "SELECT [Stage], SUM([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Stage]",
+      "x_axis": "[Stage]",
+      "y_axis": "[Total Goals]",
+      "title": "Heatmap of Goals Scored per Match Stage",
+      "labels": {
+        "Stage": "Match Stage",
+        "Total Goals": "Total Goals"
+      },
+      "colors": ["#FFC107", "#FF5722", "#FF4081"]
+    },
+    {
+      "name": "top_teams_by_goals",
+      "type": "bar",
+      "query": "SELECT [Home Team Name] AS [Team], SUM([Home Team Goals]) AS [Goals] FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY [Goals] DESC LIMIT 5",
+      "x_axis": "[Team]",
+      "y_axis": "[Goals]",
+      "title": "Top 5 Teams by Goals Scored (Home Matches)",
+      "labels": {
+        "Team": "Team",
+        "Goals": "Goals Scored"
+      },
+      "colors": ["#4CAF50"]
+    },
+    {
+      "name": "attendance_by_country",
+      "type": "bar",
+      "query": "SELECT [Country], SUM([Attendance]) AS [Total Attendance] FROM WorldCups GROUP BY [Country] ORDER BY [Total Attendance] DESC",
+      "x_axis": "[Country]",
+      "y_axis": "[Total Attendance]",
+      "title": "Total Attendance by Host Country",
+      "labels": {
+        "Country": "Host Country",
+        "Total Attendance": "Total Attendance"
+      },
+      "colors": ["#F44336"]
+    },
+    {
+      "name": "matches_per_country",
+      "type": "bar",
+      "query": "SELECT [Country], COUNT(*) AS [Matches] FROM WorldCups GROUP BY [Country] ORDER BY [Matches] DESC",
+      "x_axis": "[Country]",
+      "y_axis": "[Matches]",
+      "title": "Number of Matches per Host Country",
+      "labels": {
+        "Country": "Host Country",
+        "Matches": "Number of Matches"
+      },
+      "colors": ["#3F51B5"]
+    },
+    {
+      "name": "winners_vs_runners_up",
+      "type": "bar",
+      "query": "SELECT [Winner], COUNT(*) AS [Wins], (SELECT COUNT(*) FROM WorldCups WHERE [Runners-Up] = [Winner]) AS [Runners-Up] FROM WorldCups GROUP BY [Winner]",
+      "x_axis": "[Winner]",
+      "y_axis": ["[Wins]", "[Runners-Up]"],
+      "title": "Comparison of Winners and Runners-Up",
+      "labels": {
+        "Winner": "Winning Teams",
+        "Wins": "Wins",
+        "Runners-Up": "Runners-Up"
+      },
+      "colors": ["#F44336", "#4CAF50"]
+    }
+  ]
+}
+```
+2024-11-14 13:45:48,826 - INFO - Executed Query: SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  Total Goals
+0     NaN          NaN
+1  1930.0         70.0
+2  1934.0         70.0
+3  1938.0         84.0
+4  1950.0         88.0
+2024-11-14 13:45:48,857 - INFO - Executed Query: SELECT [Stage], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Stage] ORDER BY [Stage]
+Result:          Stage  Average Attendance
+0         None                 NaN
+1        Final        76383.650000
+2  First round        16120.333333
+3      Group 1        41664.064516
+4      Group 2        34241.762712
+2024-11-14 13:45:48,869 - INFO - Executed Query: SELECT [Winner], COUNT(*) AS [Wins] FROM WorldCups GROUP BY [Winner]
+Result:       Winner  Wins
+0  Argentina     2
+1     Brazil     5
+2    England     1
+3     France     1
+4    Germany     1
+2024-11-14 13:45:48,945 - INFO - Executed Query: SELECT [Home Team Name] AS [Team], SUM([Home Team Goals]) AS [Home Goals], SUM([Away Team Goals]) AS [Away Goals] FROM WorldCupMatches GROUP BY [Home Team Name]
+Result:         Team  Home Goals  Away Goals
+0       None         NaN         NaN
+1    Algeria         5.0        10.0
+2     Angola         0.0         1.0
+3  Argentina       111.0        44.0
+4  Australia         7.0        11.0
+2024-11-14 13:45:48,980 - INFO - Executed Query: SELECT [Year], AVG([Attendance]) AS [Average Attendance] FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  Average Attendance
+0     NaN                 NaN
+1  1930.0        32808.277778
+2  1934.0        21352.941176
+3  1938.0        20872.222222
+4  1950.0        47511.181818
+2024-11-14 13:45:49,057 - INFO - Executed Query: SELECT [Stage], SUM([Home Team Goals] + [Away Team Goals]) AS [Total Goals] FROM WorldCupMatches GROUP BY [Stage]
+Result:          Stage  Total Goals
+0         None          NaN
+1        Final         69.0
+2  First round         44.0
+3      Group 1        174.0
+4      Group 2        187.0
+2024-11-14 13:45:49,079 - INFO - Executed Query: SELECT [Home Team Name] AS [Team], SUM([Home Team Goals]) AS [Goals] FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY [Goals] DESC LIMIT 5
+Result:          Team  Goals
+0      Brazil  180.0
+1   Argentina  111.0
+2       Italy   99.0
+3  Germany FR   99.0
+4     Hungary   73.0
+2024-11-14 13:45:49,102 - INFO - Executed Query: SELECT [Country], SUM([Attendance]) AS [Total Attendance] FROM WorldCups GROUP BY [Country] ORDER BY [Total Attendance] DESC
+Result:        Country  Total Attendance
+0        Chile           893.172
+1       Sweden           819.810
+2  Switzerland           768.607
+3      Uruguay           590.549
+4       France           378.485
+2024-11-14 13:45:49,120 - INFO - Executed Query: SELECT [Country], COUNT(*) AS [Matches] FROM WorldCups GROUP BY [Country] ORDER BY [Matches] DESC
+Result:    Country  Matches
+0   Mexico        2
+1    Italy        2
+2  Germany        2
+3   France        2
+4   Brazil        2
+2024-11-14 13:45:49,149 - INFO - Executed Query: SELECT [Winner], COUNT(*) AS [Wins], (SELECT COUNT(*) FROM WorldCups WHERE [Runners-Up] = [Winner]) AS [Runners-Up] FROM WorldCups GROUP BY [Winner]
+Result:       Winner  Wins  Runners-Up
+0  Argentina     2           0
+1     Brazil     5           0
+2    England     1           0
+3     France     1           0
+4    Germany     1           0
+2024-11-14 14:27:26,866 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-14 14:27:26,897 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['dummy', 'dummy2']
+- **Column Names**: Table 'dummy' has columns: Metric, Value, Target; Table 'dummy2' has columns: Category, Amount
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- Ensure adherence to the correct SQL syntax and structure when writing queries. Follow these guidelines:
+  1. **Clause Order**: Maintain the standard order of SQL clauses. For instance, the `ORDER BY` clause should always follow the `UNION` clause.
+  2. **Logical Flow**: Begin with the `SELECT` statement, followed by `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` as needed.
+- Always verify that the SQL query logic aligns with the intended data retrieval and analysis objectives.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: dummy, dummy2; strictly use these table names.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Avoid using constructs like top 5 or top to ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g., "bar", "line", "pie", "heatmap").
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": An array of strings indicating the colors to be used for the graph, selected from a professional set of 4-5 colors. Use multiple colors for graphs with multiple labels or fields to distinguish them.
+
+**Example for a Pie Chart**:
+
+OpenAI Response: ```json
+{
+  "dashboard_name": "Company Performance Analysis",
+  "graphs": [
+    {
+      "name": "Total Metrics Overview",
+      "type": "bar",
+      "query": "SELECT [Metric], SUM([Value]) AS TotalValue FROM dummy GROUP BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": "TotalValue",
+      "title": "Total Values for Each Metric",
+      "labels": {
+        "Metric": "Metric Type",
+        "TotalValue": "Total Value"
+      },
+      "colors": ["#4CAF50", "#FF9800", "#2196F3", "#FF5722", "#9C27B0"]
+    },
+    {
+      "name": "Metrics vs Target Comparison",
+      "type": "bar",
+      "query": "SELECT [Metric], SUM([Value]) AS TotalValue, AVG([Target]) AS AverageTarget FROM dummy GROUP BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": ["TotalValue", "AverageTarget"],
+      "title": "Comparison of Total Value vs Average Target per Metric",
+      "labels": {
+        "Metric": "Metric Type",
+        "TotalValue": "Total Value",
+        "AverageTarget": "Average Target"
+      },
+      "colors": ["#FF9800", "#2196F3"]
+    },
+    {
+      "name": "Category Amount Breakdown",
+      "type": "pie",
+      "query": "SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category]",
+      "x_axis": "[Category]",
+      "y_axis": "TotalAmount",
+      "title": "Proportion of Amounts by Category",
+      "labels": {
+        "Category": "Category",
+        "TotalAmount": "Total Amount"
+      },
+      "colors": ["#FF5722", "#FFC107", "#2196F3", "#4CAF50", "#9C27B0"]
+    },
+    {
+      "name": "Total Amount across Categories",
+      "type": "column",
+      "query": "SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category] ORDER BY TotalAmount DESC",
+      "x_axis": "[Category]",
+      "y_axis": "TotalAmount",
+      "title": "Total Amount for Each Category",
+      "labels": {
+        "Category": "Category",
+        "TotalAmount": "Total Amount"
+      },
+      "colors": ["#4CAF50", "#FF9800", "#FF5722", "#2196F3"]
+    },
+    {
+      "name": "Key Performance Indicators Overview",
+      "type": "card",
+      "query": "SELECT SUM([Value]) AS TotalValue, COUNT(DISTINCT [Metric]) AS TotalMetrics FROM dummy",
+      "x_axis": null,
+      "y_axis": null,
+      "title": "Key Performance Indicators",
+      "labels": {
+        "TotalValue": "Total Value",
+        "TotalMetrics": "Total Metrics Count"
+      },
+      "colors": ["#3F51B5", "#FFC107"]
+    },
+    {
+      "name": "Average Value by Metric",
+      "type": "line",
+      "query": "SELECT [Metric], AVG([Value]) AS AverageValue FROM dummy GROUP BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": "AverageValue",
+      "title": "Average Value for Each Metric",
+      "labels": {
+        "Metric": "Metric Type",
+        "AverageValue": "Average Value"
+      },
+      "colors": ["#4CAF50"]
+    },
+    {
+      "name": "Trends of Values over Metrics",
+      "type": "line",
+      "query": "SELECT [Metric], [Value], [Target] FROM dummy ORDER BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": ["Value", "Target"],
+      "title": "Trends of Values and Targets Across Metrics",
+      "labels": {
+        "Metric": "Metric Type",
+        "Value": "Actual Value",
+        "Target": "Target Value"
+      },
+      "colors": ["#FF9800", "#2196F3"]
+    },
+    {
+      "name": "Top Categories by Amount",
+      "type": "bar",
+      "query": "SELECT TOP 5 [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category] ORDER BY TotalAmount DESC",
+      "x_axis": "[Category]",
+      "y_axis": "TotalAmount",
+      "title": "Top 5 Categories by Amount",
+      "labels": {
+        "Category": "Category",
+        "TotalAmount": "Total Amount"
+      },
+      "colors": ["#4CAF50", "#FF9800"]
+    },
+    {
+      "name": "Monthly Total Values",
+      "type": "line",
+      "query": "SELECT [Metric], SUM([Value]) AS TotalValue FROM dummy GROUP BY [Metric] ORDER BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": "TotalValue",
+      "title": "Monthly Total Values for Each Metric",
+      "labels": {
+        "Metric": "Metric Type",
+        "TotalValue": "Total Value"
+      },
+      "colors": ["#FFC107", "#FF5722"]
+    },
+    {
+      "name": "Heatmap of Amounts by Category",
+      "type": "heatmap",
+      "query": "SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category]",
+      "x_axis": "[Category]",
+      "y_axis": "TotalAmount",
+      "title": "Heatmap of Total Amounts by Category",
+      "labels": {
+        "Category": "Category",
+        "TotalAmount": "Total Amount"
+      },
+      "colors": ["#BA68C8", "#FFAB40", "#2196F3", "#4CAF50"]
+    }
+  ]
+}
+```
+2024-11-14 14:28:04,121 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue FROM dummy GROUP BY [Metric]
+Result:                   Metric  TotalValue
+0  Customer Satisfaction          85
+1    Employee Engagement          80
+2     Project Completion          90
+3         Revenue Growth          60
+4      Sales Performance          75
+2024-11-14 14:28:04,133 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue, AVG([Target]) AS AverageTarget FROM dummy GROUP BY [Metric]
+Result:                   Metric  TotalValue  AverageTarget
+0  Customer Satisfaction          85          100.0
+1    Employee Engagement          80          100.0
+2     Project Completion          90          100.0
+3         Revenue Growth          60          100.0
+4      Sales Performance          75          100.0
+2024-11-14 14:28:04,147 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category]
+Result:                   Category  TotalAmount
+0  Administrative Expenses         -150
+1       Cost of Goods Sold         -300
+2         Interest Expense          -30
+3       Marketing Expenses         -100
+4               Net Profit          640
+2024-11-14 14:28:04,159 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category] ORDER BY TotalAmount DESC
+Result:            Category  TotalAmount
+0  Starting Balance         1000
+1        Net Profit          640
+2     Sales Revenue          500
+3      Other Income           40
+4  Interest Expense          -30
+2024-11-14 14:28:04,169 - INFO - Executed Query: SELECT SUM([Value]) AS TotalValue, COUNT(DISTINCT [Metric]) AS TotalMetrics FROM dummy
+Result:    TotalValue  TotalMetrics
+0         390             5
+2024-11-14 14:28:04,182 - INFO - Executed Query: SELECT [Metric], AVG([Value]) AS AverageValue FROM dummy GROUP BY [Metric]
+Result:                   Metric  AverageValue
+0  Customer Satisfaction          85.0
+1    Employee Engagement          80.0
+2     Project Completion          90.0
+3         Revenue Growth          60.0
+4      Sales Performance          75.0
+2024-11-14 14:28:04,192 - INFO - Executed Query: SELECT [Metric], [Value], [Target] FROM dummy ORDER BY [Metric]
+Result:                   Metric  Value  Target
+0  Customer Satisfaction     85     100
+1    Employee Engagement     80     100
+2     Project Completion     90     100
+3         Revenue Growth     60     100
+4      Sales Performance     75     100
+2024-11-14 14:31:13,961 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-14 14:31:13,977 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['dummy', 'dummy2']
+- **Column Names**: Table 'dummy' has columns: Metric, Value, Target; Table 'dummy2' has columns: Category, Amount
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- Ensure adherence to the correct SQL syntax and structure when writing queries. Follow these guidelines:
+  1. **Clause Order**: Maintain the standard order of SQL clauses. For instance, the `ORDER BY` clause should always follow the `UNION` clause.
+  2. **Logical Flow**: Begin with the `SELECT` statement, followed by `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` as needed.
+- Always verify that the SQL query logic aligns with the intended data retrieval and analysis objectives.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: dummy, dummy2; strictly use these table names.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Emphasize avoiding constructs like 'SELECT TOP 5' or 'TOP' to prevent syntax errors and ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g., "bar", "line", "pie", "heatmap").
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": An array of strings indicating the colors to be used for the graph, selected from a professional set of 4-5 colors. Use multiple colors for graphs with multiple labels or fields to distinguish them.
+
+**Example for a Pie Chart**:
+
+OpenAI Response: ```json
+{
+  "dashboard_name": "Key Performance Indicators and Insights",
+  "graphs": [
+    {
+      "name": "Total Metric Values",
+      "type": "bar",
+      "query": "SELECT [Metric], SUM([Value]) AS [Total Value] FROM dummy GROUP BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": "[Total Value]",
+      "title": "Total Metric Values",
+      "labels": {
+        "Metric": "Metric",
+        "Total Value": "Total Value"
+      },
+      "colors": ["#3498db", "#e74c3c", "#2ecc71"]
+    },
+    {
+      "name": "Metric vs Target",
+      "type": "line",
+      "query": "SELECT [Metric], AVG([Value]) AS [Average Value], AVG([Target]) AS [Average Target] FROM dummy GROUP BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": ["[Average Value]", "[Average Target]"],
+      "title": "Metrics Average vs Target",
+      "labels": {
+        "Average Value": "Average Value",
+        "Average Target": "Average Target",
+      },
+      "colors": ["#9b59b6", "#34495e"]
+    },
+    {
+      "name": "Total Amount by Category",
+      "type": "pie",
+      "query": "SELECT [Category], SUM([Amount]) AS [Total Amount] FROM dummy2 GROUP BY [Category]",
+      "x_axis": "[Category]",
+      "y_axis": "[Total Amount]",
+      "title": "Distribution of Total Amount by Category",
+      "labels": {
+        "Category": "Category",
+        "Total Amount": "Total Amount"
+      },
+      "colors": ["#f1c40f", "#e67e22", "#e74c3c", "#3498db"]
+    },
+    {
+      "name": "Category Amount Trends",
+      "type": "line",
+      "query": "SELECT [Category], COUNT([Amount]) AS [Number of Entries] FROM dummy2 GROUP BY [Category]",
+      "x_axis": "[Category]",
+      "y_axis": "[Number of Entries]",
+      "title": "Entries per Category",
+      "labels": {
+        "Number of Entries": "Number of Entries"
+      },
+      "colors": ["#2ecc71"]
+    },
+    {
+      "name": "Metric Analysis",
+      "type": "heatmap",
+      "query": "SELECT [Metric], [Target], COUNT(*) AS [Count] FROM dummy GROUP BY [Metric], [Target]",
+      "x_axis": "[Metric]",
+      "y_axis": "[Target]",
+      "title": "Heatmap of Metric vs Target",
+      "labels": {
+        "Count": "Count"
+      },
+      "colors": ["#e74c3c", "#f39c12", "#f1c40f", "#2ecc71", "#3498db"]
+    },
+    {
+      "name": "Target Achievement Rate",
+      "type": "bar",
+      "query": "SELECT [Metric], SUM(CASE WHEN [Value] >= [Target] THEN 1 ELSE 0 END) AS [Achieved Count], COUNT(*) AS [Total Count] FROM dummy GROUP BY [Metric]",
+      "x_axis": "[Metric]",
+      "y_axis": ["[Achieved Count]", "[Total Count]"],
+      "title": "Target Achievement Rate by Metric",
+      "labels": {
+        "Achieved Count": "Achieved Count",
+        "Total Count": "Total Count"
+      },
+      "colors": ["#3498db", "#e74c3c"]
+    },
+    {
+      "name": "Comparison of Categories",
+      "type": "column",
+      "query": "SELECT [Category], SUM([Amount]) AS [Total Amount] FROM dummy2 GROUP BY [Category]",
+      "x_axis": "[Category]",
+      "y_axis": "[Total Amount]",
+      "title": "Comparison of Amounts Across Categories",
+      "labels": {
+        "Total Amount": "Total Amount"
+      },
+      "colors": ["#8e44ad", "#2980b9", "#27ae60"]
+    },
+    {
+      "name": "Average Amount by Category",
+      "type": "bar",
+      "query": "SELECT [Category], AVG([Amount]) AS [Average Amount] FROM dummy2 GROUP BY [Category]",
+      "x_axis": "[Category]",
+      "y_axis": "[Average Amount]",
+      "title": "Average Amount by Category",
+      "labels": {
+        "Average Amount": "Average Amount"
+      },
+      "colors": ["#16a085", "#fae5f5"]
+    },
+    {
+      "name": "Metric Value Distribution",
+      "type": "histogram",
+      "query": "SELECT [Value], COUNT(*) AS [Frequency] FROM dummy GROUP BY [Value]",
+      "x_axis": "[Value]",
+      "y_axis": "[Frequency]",
+      "title": "Distribution of Metric Values",
+      "labels": {
+        "Frequency": "Frequency"
+      },
+      "colors": ["#d35400"]
+    },
+    {
+      "name": "Percentage of Target Achievements",
+      "type": "gauge",
+      "query": "SELECT (SUM(CASE WHEN [Value] >= [Target] THEN 1 ELSE 0 END) * 100.0 / COUNT(*)) AS [Achievement Percentage] FROM dummy",
+      "x_axis": "",
+      "y_axis": "[Achievement Percentage]",
+      "title": "Target Achievement Percentage",
+      "labels": {
+        "Achievement Percentage": "Achievement Percentage"
+      },
+      "colors": ["#2ecc71"]
+    }
+  ]
+}
+```
+2024-11-14 14:34:47,234 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue FROM dummy GROUP BY [Metric]
+Result:                   Metric  TotalValue
+0  Customer Satisfaction          85
+1    Employee Engagement          80
+2     Project Completion          90
+3         Revenue Growth          60
+4      Sales Performance          75
+2024-11-14 14:34:47,255 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue, AVG([Target]) AS AverageTarget FROM dummy GROUP BY [Metric]
+Result:                   Metric  TotalValue  AverageTarget
+0  Customer Satisfaction          85          100.0
+1    Employee Engagement          80          100.0
+2     Project Completion          90          100.0
+3         Revenue Growth          60          100.0
+4      Sales Performance          75          100.0
+2024-11-14 14:34:47,289 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category]
+Result:                   Category  TotalAmount
+0  Administrative Expenses         -150
+1       Cost of Goods Sold         -300
+2         Interest Expense          -30
+3       Marketing Expenses         -100
+4               Net Profit          640
+2024-11-14 14:34:47,328 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category] ORDER BY TotalAmount DESC
+Result:            Category  TotalAmount
+0  Starting Balance         1000
+1        Net Profit          640
+2     Sales Revenue          500
+3      Other Income           40
+4  Interest Expense          -30
+2024-11-14 14:34:47,345 - INFO - Executed Query: SELECT SUM([Value]) AS TotalValue, COUNT(DISTINCT [Metric]) AS TotalMetrics FROM dummy
+Result:    TotalValue  TotalMetrics
+0         390             5
+2024-11-14 14:34:47,357 - INFO - Executed Query: SELECT [Metric], AVG([Value]) AS AverageValue FROM dummy GROUP BY [Metric]
+Result:                   Metric  AverageValue
+0  Customer Satisfaction          85.0
+1    Employee Engagement          80.0
+2     Project Completion          90.0
+3         Revenue Growth          60.0
+4      Sales Performance          75.0
+2024-11-14 14:34:47,372 - INFO - Executed Query: SELECT [Metric], [Value], [Target] FROM dummy ORDER BY [Metric]
+Result:                   Metric  Value  Target
+0  Customer Satisfaction     85     100
+1    Employee Engagement     80     100
+2     Project Completion     90     100
+3         Revenue Growth     60     100
+4      Sales Performance     75     100
+2024-11-14 14:36:16,736 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue FROM dummy GROUP BY [Metric]
+Result:                   Metric  TotalValue
+0  Customer Satisfaction          85
+1    Employee Engagement          80
+2     Project Completion          90
+3         Revenue Growth          60
+4      Sales Performance          75
+2024-11-14 14:36:16,750 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue, AVG([Target]) AS AverageTarget FROM dummy GROUP BY [Metric]
+Result:                   Metric  TotalValue  AverageTarget
+0  Customer Satisfaction          85          100.0
+1    Employee Engagement          80          100.0
+2     Project Completion          90          100.0
+3         Revenue Growth          60          100.0
+4      Sales Performance          75          100.0
+2024-11-14 14:36:16,777 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category]
+Result:                   Category  TotalAmount
+0  Administrative Expenses         -150
+1       Cost of Goods Sold         -300
+2         Interest Expense          -30
+3       Marketing Expenses         -100
+4               Net Profit          640
+2024-11-14 14:36:16,803 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category] ORDER BY TotalAmount DESC
+Result:            Category  TotalAmount
+0  Starting Balance         1000
+1        Net Profit          640
+2     Sales Revenue          500
+3      Other Income           40
+4  Interest Expense          -30
+2024-11-14 14:36:16,827 - INFO - Executed Query: SELECT SUM([Value]) AS TotalValue, COUNT(DISTINCT [Metric]) AS TotalMetrics FROM dummy
+Result:    TotalValue  TotalMetrics
+0         390             5
+2024-11-14 14:36:16,837 - INFO - Executed Query: SELECT [Metric], AVG([Value]) AS AverageValue FROM dummy GROUP BY [Metric]
+Result:                   Metric  AverageValue
+0  Customer Satisfaction          85.0
+1    Employee Engagement          80.0
+2     Project Completion          90.0
+3         Revenue Growth          60.0
+4      Sales Performance          75.0
+2024-11-14 14:36:16,845 - INFO - Executed Query: SELECT [Metric], [Value], [Target] FROM dummy ORDER BY [Metric]
+Result:                   Metric  Value  Target
+0  Customer Satisfaction     85     100
+1    Employee Engagement     80     100
+2     Project Completion     90     100
+3         Revenue Growth     60     100
+4      Sales Performance     75     100
+2024-11-14 14:36:16,854 - INFO - Executed Query: SELECT [Metric], SUM([Value]) AS TotalValue FROM dummy GROUP BY [Metric] ORDER BY [Metric]
+Result:                   Metric  TotalValue
+0  Customer Satisfaction          85
+1    Employee Engagement          80
+2     Project Completion          90
+3         Revenue Growth          60
+4      Sales Performance          75
+2024-11-14 14:36:16,865 - INFO - Executed Query: SELECT [Category], SUM([Amount]) AS TotalAmount FROM dummy2 GROUP BY [Category]
+Result:                   Category  TotalAmount
+0  Administrative Expenses         -150
+1       Cost of Goods Sold         -300
+2         Interest Expense          -30
+3       Marketing Expenses         -100
+4               Net Profit          640

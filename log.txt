@@ -21553,3 +21553,1394 @@ FROM [telco]
 GROUP BY [Gender]
 ORDER BY [Count] DESC;
 ```
+2024-11-22 14:25:28,566 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2024-11-22 14:26:14,283 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:26:14,289 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['WorldCupPlayers', 'WorldCups', 'WorldCupMatches']
+- **Column Names**: Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+- For "player performance," delve into metrics such as "most goals scored by players, top 5 performing players, assists, player efficiency ratings, and match impact scores," among other relevant statistics.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- Ensure adherence to the correct SQL syntax and structure when writing queries. Follow these guidelines:
+  1. **Clause Order**: Maintain the standard order of SQL clauses. For instance, the `ORDER BY` clause should always follow the `UNION` clause.
+  2. **Logical Flow**: Begin with the `SELECT` statement, followed by `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` as needed.
+- Always verify that the SQL query logic aligns with the intended data retrieval and analysis objectives.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: WorldCupPlayers, WorldCups, WorldCupMatches; strictly use these table names.
+- The available column names for each table are: Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; ensure to use these column names accurately.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Emphasize avoiding constructs like 'SELECT TOP 5' or 'TOP' to prevent syntax errors and ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+- Ensure all graphs of the same type use a consistent and professional color palette, maintaining visual uniformity across the entire dashboard. Select a palette that enhances readability and aesthetic appeal, and apply it consistently to reinforce the dashboard's thematic coherence.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g. Mentioned in the Graph Type Selection).
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": A string indicating the colorscale to be used for the graph, selected from a professional set. Use distinct colorscales for graphs with multiple labels or fields to distinguish them.
+
+**User Statement**: matches
+
+**Example for a Pie Chart**:
+{
+  "dashboard_name": "Sales Overview",
+  "graphs": [
+    {
+      "name": "sales_distribution",
+      "type": "pie",
+      "query": "SELECT region, SUM(sales) as total_sales FROM sales_data GROUP BY region",
+      "x_axis": "region",
+      "y_axis": "total_sales",
+      "title": "Sales Distribution by Region",
+      "labels": {"region": "Region", "total_sales": "Total Sales"},
+      "colors": ["#4e79a7", "#59a14f", "#9c755f", "#f28e2b"]
+    }
+  ]
+}
+
+**Example for a Bar Chart**:
+{
+  "dashboard_name": "Monthly Revenue",
+  "graphs": [
+    {
+      "name": "monthly_revenue",
+      "type": "bar",
+      "query": "SELECT month, revenue FROM revenue_data",
+      "x_axis": "month",
+      "y_axis": "revenue",
+      "title": "Monthly Revenue",
+      "labels": {"month": "Month", "revenue": "Revenue"},
+      "colors": ["#4e79a7", "#59a14f"]
+    }
+  ]
+}
+
+**Example for a Line Chart**:
+{
+  "dashboard_name": "Stock Prices",
+  "graphs": [
+    {
+      "name": "stock_trend",
+      "type": "line",
+      "query": "SELECT date, closing_price FROM stock_data ORDER BY date",
+      "x_axis": "date",
+      "y_axis": "closing_price",
+      "title": "Stock Price Trend",
+      "labels": {"date": "Date", "closing_price": "Closing Price"},
+      "colors": ["#4e79a7"]
+    }
+  ]
+}
+
+**Example for a Heatmap**:
+{
+  "dashboard_name": "Customer Activity",
+  "graphs": [
+    {
+      "name": "activity_heatmap",
+      "type": "heatmap",
+      "query": "SELECT hour, day, activity_level FROM activity_data",
+      "x_axis": "hour",
+      "y_axis": "day",
+      "title": "Customer Activity Heatmap",
+      "labels": {"hour": "Hour", "day": "Day", "activity_level": "Activity Level"},
+      "colors": "Blues"
+    }
+  ]
+}
+
+**Example for a Combo Chart**:
+{
+  "dashboard_name": "Sales and Profit",
+  "graphs": [
+    {
+      "name": "sales_profit_combo",
+      "type": "combo",
+      "query": "SELECT month, sales, profit FROM financial_data",
+      "x_axis": "month",
+      "y_axis": ["sales", "profit"],
+      "title": "Monthly Sales and Profit",
+      "labels": {"month": "Month", "sales": "Sales", "profit": "Profit"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    }
+  ]
+}
+
+OpenAI Response: {
+  "dashboard_name": "World Cup Matches Analysis",
+  "graphs": [
+    {
+      "name": "total_goals_per_match",
+      "type": "bar",
+      "query": "SELECT Year, SUM(Home_Team_Goals + Away_Team_Goals) as total_goals FROM WorldCupMatches GROUP BY Year ORDER BY Year",
+      "x_axis": "Year",
+      "y_axis": "total_goals",
+      "title": "Total Goals per Match by Year",
+      "labels": {"Year": "Year", "total_goals": "Total Goals"},
+      "colors": ["#4e79a7"]
+    },
+    {
+      "name": "matches_by_stage",
+      "type": "pie",
+      "query": "SELECT Stage, COUNT(*) as match_count FROM WorldCupMatches GROUP BY Stage",
+      "x_axis": "Stage",
+      "y_axis": "match_count",
+      "title": "Matches Distribution by Stage",
+      "labels": {"Stage": "Stage", "match_count": "Match Count"},
+      "colors": ["#f28e2b", "#4e79a7", "#e15759", "#76b7b2", "#59a14f"]
+    },
+    {
+      "name": "attendance_over_years",
+      "type": "line",
+      "query": "SELECT Year, SUM(Attendance) as total_attendance FROM WorldCupMatches GROUP BY Year ORDER BY Year",
+      "x_axis": "Year",
+      "y_axis": "total_attendance",
+      "title": "Total Attendance Over Years",
+      "labels": {"Year": "Year", "total_attendance": "Total Attendance"},
+      "colors": ["#1f77b4"]
+    },
+    {
+      "name": "home_vs_away_goals",
+      "type": "bar",
+      "query": "SELECT Home_Team_Name as team, SUM(Home_Team_Goals) as total_home_goals, SUM(Away_Team_Goals) as total_away_goals FROM WorldCupMatches GROUP BY Home_Team_Name ORDER BY total_home_goals DESC",
+      "x_axis": "team",
+      "y_axis": ["total_home_goals", "total_away_goals"],
+      "title": "Home vs Away Goals by Team",
+      "labels": {"team": "Team", "total_home_goals": "Total Home Goals", "total_away_goals": "Total Away Goals"},
+      "colors": ["#4e79a7", "#59a14f"]
+    },
+    {
+      "name": "wins_losses_per_team",
+      "type": "bar",
+      "query": "SELECT Home_Team_Name as team, SUM(CASE WHEN Home_Team_Goals > Away_Team_Goals THEN 1 ELSE 0 END) as wins, SUM(CASE WHEN Home_Team_Goals < Away_Team_Goals THEN 1 ELSE 0 END) as losses FROM WorldCupMatches GROUP BY Home_Team_Name",
+      "x_axis": "team",
+      "y_axis": ["wins", "losses"],
+      "title": "Wins and Losses per Team",
+      "labels": {"team": "Team", "wins": "Wins", "losses": "Losses"},
+      "colors": ["#9c755f", "#e15759"]
+    },
+    {
+      "name": "average_goals_by_stage",
+      "type": "bar",
+      "query": "SELECT Stage, AVG(Home_Team_Goals + Away_Team_Goals) as average_goals FROM WorldCupMatches GROUP BY Stage",
+      "x_axis": "Stage",
+      "y_axis": "average_goals",
+      "title": "Average Goals per Match by Stage",
+      "labels": {"Stage": "Stage", "average_goals": "Average Goals"},
+      "colors": ["#f28e2b"]
+    },
+    {
+      "name": "top_scorers",
+      "type": "bar",
+      "query": "SELECT Player_Name, COUNT(Event) as goals FROM WorldCupPlayers WHERE Event = 'Goal' GROUP BY Player_Name ORDER BY goals DESC LIMIT 10",
+      "x_axis": "Player_Name",
+      "y_axis": "goals",
+      "title": "Top Scorers in World Cup History",
+      "labels": {"Player_Name": "Player Name", "goals": "Goals"},
+      "colors": ["#76b7b2"]
+    },
+    {
+      "name": "matches_by_winner",
+      "type": "bar",
+      "query": "SELECT Winner, COUNT(*) as match_count FROM WorldCups GROUP BY Winner",
+      "x_axis": "Winner",
+      "y_axis": "match_count",
+      "title": "Matches Won by Teams",
+      "labels": {"Winner": "Team", "match_count": "Match Count"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    },
+    {
+      "name": "referee_distribution",
+      "type": "pie",
+      "query": "SELECT Referee, COUNT(*) as match_count FROM WorldCupMatches GROUP BY Referee",
+      "x_axis": "Referee",
+      "y_axis": "match_count",
+      "title": "Referee Distribution in Matches",
+      "labels": {"Referee": "Referee", "match_count": "Match Count"},
+      "colors": ["#9c755f", "#e15759", "#76b7b2"]
+    },
+    {
+      "name": "attendance_by_country",
+      "type": "bar",
+      "query": "SELECT w.Country, SUM(wm.Attendance) as total_attendance FROM WorldCups w JOIN WorldCupMatches wm ON w.Year = wm.Year GROUP BY w.Country",
+      "x_axis": "Country",
+      "y_axis": "total_attendance",
+      "title": "Total Attendance by Country",
+      "labels": {"Country": "Country", "total_attendance": "Total Attendance"},
+      "colors": ["#4e79a7", "#59a14f"]
+    }
+  ]
+}
+2024-11-22 14:26:14,327 - INFO - Executed Query: SELECT Stage, COUNT(*) as match_count FROM WorldCupMatches GROUP BY Stage
+Result:          Stage  match_count
+0         None         3720
+1        Final           20
+2  First round            9
+3      Group 1           62
+4      Group 2           59
+2024-11-22 14:26:14,356 - INFO - Executed Query: SELECT Year, SUM(Attendance) as total_attendance FROM WorldCupMatches GROUP BY Year ORDER BY Year
+Result:      Year  total_attendance
+0     NaN               NaN
+1  1930.0          590549.0
+2  1934.0          363000.0
+3  1938.0          375700.0
+4  1950.0         1045246.0
+2024-11-22 14:26:14,383 - INFO - Executed Query: SELECT Winner, COUNT(*) as match_count FROM WorldCups GROUP BY Winner
+Result:       Winner  match_count
+0  Argentina            2
+1     Brazil            5
+2    England            1
+3     France            1
+4    Germany            1
+2024-11-22 14:26:14,406 - INFO - Executed Query: SELECT Referee, COUNT(*) as match_count FROM WorldCupMatches GROUP BY Referee
+Result:                        Referee  match_count
+0                         None         3720
+1     ABD EL FATAH Essam (EGY)            1
+2             ADAIR John (NIR)            1
+3          AGNOLIN Luigi (ITA)            4
+4  AGUILAR ELIZALDE Abel (MEX)            1
+2024-11-22 14:26:14,422 - INFO - Executed Query: SELECT w.Country, SUM(wm.Attendance) as total_attendance FROM WorldCups w JOIN WorldCupMatches wm ON w.Year = wm.Year GROUP BY w.Country
+Result:      Country  total_attendance
+0  Argentina         1545791.0
+1     Brazil         5364489.0
+2      Chile          893172.0
+3    England         1563135.0
+4     France         3160800.0
+2024-11-22 14:26:33,899 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:26:33,911 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Countries wise breakdown  </content>The available table names are: WorldCupPlayers, WorldCups, WorldCupMatches, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Country], COUNT(*) AS [Number of World Cups]
+FROM [WorldCups]
+GROUP BY [Country]
+ORDER BY [Number of World Cups] DESC;
+```
+2024-11-22 14:26:33,934 - INFO - Executed Query: SELECT [Country], COUNT(*) AS [Number of World Cups]
+FROM [WorldCups]
+GROUP BY [Country]
+ORDER BY [Number of World Cups] DESC;
+Result:    Country  Number of World Cups
+0   Mexico                     2
+1    Italy                     2
+2  Germany                     2
+3   France                     2
+4   Brazil                     2
+2024-11-22 14:26:37,485 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:26:37,493 - INFO - Prompt: 
+        Based on the given context:          Country  Number of World Cups
+0         Mexico                     2
+1          Italy                     2
+2        Germany                     2
+3         France                     2
+4         Brazil                     2
+5        Uruguay                     1
+6            USA                     1
+7    Switzerland                     1
+8         Sweden                     1
+9          Spain                     1
+10  South Africa                     1
+11   Korea/Japan                     1
+12       England                     1
+13         Chile                     1
+14     Argentina                     1,
+        answer the following question: Countries wise breakdown . 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: Countries wise breakdown  
+
+            
+            Answer: -> Data-Info : should have numbers and quick overview of the data piece provided in the prompt.
+                    -> Key findings : should list the findings from the glance of the data based on the question that is asked.
+                    -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
+                    -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
+                    -> Graph type : Also provide the graph type for the result_df best possible way to visualize the df:         Country  Number of World Cups
+0         Mexico                     2
+1          Italy                     2
+2        Germany                     2
+3         France                     2
+4         Brazil                     2
+5        Uruguay                     1
+6            USA                     1
+7    Switzerland                     1
+8         Sweden                     1
+9          Spain                     1
+10  South Africa                     1
+11   Korea/Japan                     1
+12       England                     1
+13         Chile                     1
+14     Argentina                     1 the output should be in the form : "bar" in case of bar graphs and "line" in case line graphs and so on, Ensure that output for graph type is one word only. 
+        
+OpenAI Response: **Question: Countries wise breakdown**  
+
+**Answer:**  
+-> **Data-Info:** The dataset contains information about 15 countries and the number of FIFA World Cup titles they have won, with the highest number being 2 titles for five nations (Mexico, Italy, Germany, France, Brazil) and 10 countries with a single title.  
+
+-> **Key findings:**  
+- Five countries hold the record for winning the World Cup twice.  
+- A majority (10 out of 15) of the listed countries have won the World Cup only once, highlighting that winning the World Cup is a rare achievement.  
+
+-> **Visible trends:** The data demonstrates that specific countries have established dominance in football, winning multiple titles, while many others have only managed to secure a single title, indicating varying levels of football excellence and historical context behind each nation's performance.  
+
+-> **Actionable Insights:** To enhance the competitive edge in football, countries with fewer titles could invest more in grassroots programs and international coaching to improve their chances of winning in future tournaments.  
+
+-> **Graph type:** bar
+2024-11-22 14:26:44,733 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:26:44,738 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Countries wise breakdown  </content>The available table names are: WorldCupPlayers, WorldCups, WorldCupMatches, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Country], COUNT(*) AS [Teams Count]
+FROM [WorldCups]
+GROUP BY [Country]
+ORDER BY [Teams Count] DESC;
+```
+2024-11-22 14:26:44,743 - INFO - Executed Query: SELECT [Country], COUNT(*) AS [Teams Count]
+FROM [WorldCups]
+GROUP BY [Country]
+ORDER BY [Teams Count] DESC;
+Result:    Country  Teams Count
+0   Mexico            2
+1    Italy            2
+2  Germany            2
+3   France            2
+4   Brazil            2
+2024-11-22 14:26:49,600 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:26:49,604 - INFO - Prompt: 
+        Based on the given context:          Country  Teams Count
+0         Mexico            2
+1          Italy            2
+2        Germany            2
+3         France            2
+4         Brazil            2
+5        Uruguay            1
+6            USA            1
+7    Switzerland            1
+8         Sweden            1
+9          Spain            1
+10  South Africa            1
+11   Korea/Japan            1
+12       England            1
+13         Chile            1
+14     Argentina            1,
+        answer the following question: Countries wise breakdown . 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: Countries wise breakdown  
+
+            
+            Answer: -> Data-Info : should have numbers and quick overview of the data piece provided in the prompt.
+                    -> Key findings : should list the findings from the glance of the data based on the question that is asked.
+                    -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
+                    -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
+                    -> Graph type : Also provide the graph type for the result_df best possible way to visualize the df:         Country  Teams Count
+0         Mexico            2
+1          Italy            2
+2        Germany            2
+3         France            2
+4         Brazil            2
+5        Uruguay            1
+6            USA            1
+7    Switzerland            1
+8         Sweden            1
+9          Spain            1
+10  South Africa            1
+11   Korea/Japan            1
+12       England            1
+13         Chile            1
+14     Argentina            1 the output should be in the form : "bar" in case of bar graphs and "line" in case line graphs and so on, Ensure that output for graph type is one word only. 
+        
+OpenAI Response: **Question:** Countries wise breakdown  
+
+**Answer:**  
+- **Data-Info:** The dataset highlights the number of teams represented by different countries, totaling 15 entries. A majority of the countries (5) have 2 teams, while 10 countries have only 1 team.
+
+- **Key findings:** 
+  - Five countries (Mexico, Italy, Germany, France, Brazil) are leading with two teams each.
+  - A significant number of countries (10) are represented by just one team, indicating a disparity in participation levels.
+
+- **Visible trends:** The concentration of teams is observed in a few select countries, suggesting that those nations may have stronger football infrastructures or historical performance in international tournaments compared to others.
+
+- **Actionable Insights:** To enhance global representation in football, initiatives could be introduced to support football programs in countries with only one team or none. This could include funding for training, infrastructure development, and youth programs to promote football at a grassroots level.
+
+- **Graph type:** bar
+2024-11-22 14:28:40,421 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:28:40,425 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Countries wise breakdown  </content>The available table names are: WorldCupPlayers, WorldCups, WorldCupMatches, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Country], COUNT(*) AS [Total Occurrences]
+FROM [WorldCups]
+GROUP BY [Country]
+ORDER BY [Total Occurrences] DESC;
+```
+2024-11-22 14:28:40,437 - INFO - Executed Query: SELECT [Country], COUNT(*) AS [Total Occurrences]
+FROM [WorldCups]
+GROUP BY [Country]
+ORDER BY [Total Occurrences] DESC;
+Result:    Country  Total Occurrences
+0   Mexico                  2
+1    Italy                  2
+2  Germany                  2
+3   France                  2
+4   Brazil                  2
+2024-11-22 14:28:44,290 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:28:44,294 - INFO - Prompt: 
+        Based on the given context:          Country  Total Occurrences
+0         Mexico                  2
+1          Italy                  2
+2        Germany                  2
+3         France                  2
+4         Brazil                  2
+5        Uruguay                  1
+6            USA                  1
+7    Switzerland                  1
+8         Sweden                  1
+9          Spain                  1
+10  South Africa                  1
+11   Korea/Japan                  1
+12       England                  1
+13         Chile                  1
+14     Argentina                  1,
+        answer the following question: Countries wise breakdown . 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: Countries wise breakdown  
+
+            
+            Answer: -> Data-Info : should have numbers and quick overview of the data piece provided in the prompt.
+                    -> Key findings : should list the findings from the glance of the data based on the question that is asked.
+                    -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
+                    -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
+                    -> Graph type : Also provide the graph type for the result_df best possible way to visualize the df:         Country  Total Occurrences
+0         Mexico                  2
+1          Italy                  2
+2        Germany                  2
+3         France                  2
+4         Brazil                  2
+5        Uruguay                  1
+6            USA                  1
+7    Switzerland                  1
+8         Sweden                  1
+9          Spain                  1
+10  South Africa                  1
+11   Korea/Japan                  1
+12       England                  1
+13         Chile                  1
+14     Argentina                  1 the output should be in the form : "bar" in case of bar graphs and "line" in case line graphs and so on, Ensure that output for graph type is one word only. 
+        
+OpenAI Response: Question: Countries wise breakdown  
+
+Answer: 
+- **Data-Info**: The dataset indicates the total occurrences for 15 countries, with 5 countries (Mexico, Italy, Germany, France, Brazil) having the highest occurrence of 2, while 10 countries (Uruguay, USA, Switzerland, Sweden, Spain, South Africa, Korea/Japan, England, Chile, Argentina) have 1 occurrence each. 
+
+- **Key Findings**: 
+  - A significant portion of total occurrences is concentrated in just a few countries (5 out of 15 countries account for more than a third of total occurrences).
+  - The majority of countries have minimal representation, suggesting diversification in data sources or events is necessary.
+
+- **Visible Trends**: The data indicates a strong skew towards a small number of countries, which could imply a potential bias or an area of focus that is disproportionately represented compared to others.
+
+- **Actionable Insights**: It might be beneficial to investigate why certain countries have higher occurrences. Additional efforts can support more balanced data collection or engagement strategies in less represented countries, fostering broader participation or analysis.
+
+- **Graph type**: bar
+2024-11-22 14:31:52,267 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:31:52,272 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['WorldCupPlayers', 'WorldCups', 'WorldCupMatches']
+- **Column Names**: Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+- For "player performance," delve into metrics such as "most goals scored by players, top 5 performing players, assists, player efficiency ratings, and match impact scores," among other relevant statistics.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- Ensure adherence to the correct SQL syntax and structure when writing queries. Follow these guidelines:
+  1. **Clause Order**: Maintain the standard order of SQL clauses. For instance, the `ORDER BY` clause should always follow the `UNION` clause.
+  2. **Logical Flow**: Begin with the `SELECT` statement, followed by `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` as needed.
+- Always verify that the SQL query logic aligns with the intended data retrieval and analysis objectives.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: WorldCupPlayers, WorldCups, WorldCupMatches; strictly use these table names.
+- The available column names for each table are: Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; ensure to use these column names accurately.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Emphasize avoiding constructs like 'SELECT TOP 5' or 'TOP' to prevent syntax errors and ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+- Ensure all graphs of the same type use a consistent and professional color palette, maintaining visual uniformity across the entire dashboard. Select a palette that enhances readability and aesthetic appeal, and apply it consistently to reinforce the dashboard's thematic coherence.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g. Mentioned in the Graph Type Selection).
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": A string indicating the colorscale to be used for the graph, selected from a professional set. Use distinct colorscales for graphs with multiple labels or fields to distinguish them.
+
+**User Statement**: matches
+
+**Example for a Pie Chart**:
+{
+  "dashboard_name": "Sales Overview",
+  "graphs": [
+    {
+      "name": "sales_distribution",
+      "type": "pie",
+      "query": "SELECT region, SUM(sales) as total_sales FROM sales_data GROUP BY region",
+      "x_axis": "region",
+      "y_axis": "total_sales",
+      "title": "Sales Distribution by Region",
+      "labels": {"region": "Region", "total_sales": "Total Sales"},
+      "colors": ["#4e79a7", "#59a14f", "#9c755f", "#f28e2b"]
+    }
+  ]
+}
+
+**Example for a Bar Chart**:
+{
+  "dashboard_name": "Monthly Revenue",
+  "graphs": [
+    {
+      "name": "monthly_revenue",
+      "type": "bar",
+      "query": "SELECT month, revenue FROM revenue_data",
+      "x_axis": "month",
+      "y_axis": "revenue",
+      "title": "Monthly Revenue",
+      "labels": {"month": "Month", "revenue": "Revenue"},
+      "colors": ["#4e79a7", "#59a14f"]
+    }
+  ]
+}
+
+**Example for a Line Chart**:
+{
+  "dashboard_name": "Stock Prices",
+  "graphs": [
+    {
+      "name": "stock_trend",
+      "type": "line",
+      "query": "SELECT date, closing_price FROM stock_data ORDER BY date",
+      "x_axis": "date",
+      "y_axis": "closing_price",
+      "title": "Stock Price Trend",
+      "labels": {"date": "Date", "closing_price": "Closing Price"},
+      "colors": ["#4e79a7"]
+    }
+  ]
+}
+
+**Example for a Heatmap**:
+{
+  "dashboard_name": "Customer Activity",
+  "graphs": [
+    {
+      "name": "activity_heatmap",
+      "type": "heatmap",
+      "query": "SELECT hour, day, activity_level FROM activity_data",
+      "x_axis": "hour",
+      "y_axis": "day",
+      "title": "Customer Activity Heatmap",
+      "labels": {"hour": "Hour", "day": "Day", "activity_level": "Activity Level"},
+      "colors": "Blues"
+    }
+  ]
+}
+
+**Example for a Combo Chart**:
+{
+  "dashboard_name": "Sales and Profit",
+  "graphs": [
+    {
+      "name": "sales_profit_combo",
+      "type": "combo",
+      "query": "SELECT month, sales, profit FROM financial_data",
+      "x_axis": "month",
+      "y_axis": ["sales", "profit"],
+      "title": "Monthly Sales and Profit",
+      "labels": {"month": "Month", "sales": "Sales", "profit": "Profit"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    }
+  ]
+}
+
+OpenAI Response: {
+  "dashboard_name": "World Cup Matches Analysis",
+  "graphs": [
+    {
+      "name": "total_goals_per_match",
+      "type": "bar",
+      "query": "SELECT Year, SUM([Home Team Goals] + [Away Team Goals]) AS total_goals FROM WorldCupMatches GROUP BY Year",
+      "x_axis": "Year",
+      "y_axis": "total_goals",
+      "title": "Total Goals Scored Per World Cup Year",
+      "labels": {"Year": "Year", "total_goals": "Total Goals"},
+      "colors": ["#4e79a7"]
+    },
+    {
+      "name": "matches_played_by_stage",
+      "type": "pie",
+      "query": "SELECT Stage, COUNT(*) AS matches_count FROM WorldCupMatches GROUP BY Stage",
+      "x_axis": "Stage",
+      "y_axis": "matches_count",
+      "title": "Matches Played by Stage",
+      "labels": {"Stage": "Match Stage", "matches_count": "Number of Matches"},
+      "colors": ["#f28e2b", "#4e79a7", "#e15759", "#76b7b2", "#59a14f"]
+    },
+    {
+      "name": "home_away_goals",
+      "type": "combo",
+      "query": "SELECT Year, SUM([Home Team Goals]) AS home_goals, SUM([Away Team Goals]) AS away_goals FROM WorldCupMatches GROUP BY Year",
+      "x_axis": "Year",
+      "y_axis": ["home_goals", "away_goals"],
+      "title": "Home vs Away Goals Over Years",
+      "labels": {"Year": "Year", "home_goals": "Home Goals", "away_goals": "Away Goals"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    },
+    {
+      "name": "attendance_per_match",
+      "type": "line",
+      "query": "SELECT Year, AVG(Attendance) AS average_attendance FROM WorldCupMatches GROUP BY Year",
+      "x_axis": "Year",
+      "y_axis": "average_attendance",
+      "title": "Average Attendance Per Match by Year",
+      "labels": {"Year": "Year", "average_attendance": "Average Attendance"},
+      "colors": ["#9c755f"]
+    },
+    {
+      "name": "teams_with_most_goals",
+      "type": "bar",
+      "query": "SELECT [Home Team Name] AS team, SUM([Home Team Goals]) AS total_home_goals FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY total_home_goals DESC LIMIT 5",
+      "x_axis": "team",
+      "y_axis": "total_home_goals",
+      "title": "Top 5 Teams with Most Home Goals",
+      "labels": {"team": "Team", "total_home_goals": "Total Home Goals"},
+      "colors": ["#4e79a7"]
+    },
+    {
+      "name": "goal_difference",
+      "type": "bar",
+      "query": "SELECT [Home Team Name], (SUM([Home Team Goals]) - SUM([Away Team Goals])) AS goal_difference FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY goal_difference DESC LIMIT 5",
+      "x_axis": "Home Team Name",
+      "y_axis": "goal_difference",
+      "title": "Top 5 Teams by Goal Difference",
+      "labels": {"Home Team Name": "Team", "goal_difference": "Goal Difference"},
+      "colors": ["#e15759"]
+    },
+    {
+      "name": "matches_by_country",
+      "type": "column",
+      "query": "SELECT Country, COUNT(*) AS total_matches FROM WorldCups INNER JOIN WorldCupMatches ON WorldCups.Year = WorldCupMatches.Year GROUP BY Country",
+      "x_axis": "Country",
+      "y_axis": "total_matches",
+      "title": "Total Matches by Host Country",
+      "labels": {"Country": "Country", "total_matches": "Total Matches"},
+      "colors": ["#76b7b2"]
+    },
+    {
+      "name": "top_referees",
+      "type": "bar",
+      "query": "SELECT Referee, COUNT(*) AS matches_count FROM WorldCupMatches GROUP BY Referee ORDER BY matches_count DESC LIMIT 5",
+      "x_axis": "Referee",
+      "y_axis": "matches_count",
+      "title": "Top 5 Referees by Number of Matches",
+      "labels": {"Referee": "Referee", "matches_count": "Number of Matches"},
+      "colors": ["#59a14f"]
+    },
+    {
+      "name": "half_time_goals",
+      "type": "line",
+      "query": "SELECT Year, SUM([Half-time Home Goals] + [Half-time Away Goals]) AS total_half_time_goals FROM WorldCupMatches GROUP BY Year",
+      "x_axis": "Year",
+      "y_axis": "total_half_time_goals",
+      "title": "Total Half-Time Goals by Year",
+      "labels": {"Year": "Year", "total_half_time_goals": "Total Half-Time Goals"},
+      "colors": ["#4e79a7"]
+    },
+    {
+      "name": "successful_teams",
+      "type": "heatmap",
+      "query": "SELECT [Home Team Name], [Away Team Name], (SUM([Home Team Goals]) - SUM([Away Team Goals])) AS goal_difference FROM WorldCupMatches GROUP BY [Home Team Name], [Away Team Name]",
+      "x_axis": "Home Team Name",
+      "y_axis": "Away Team Name",
+      "title": "Goal Difference Heatmap by Teams",
+      "labels": {"Home Team Name": "Home Team", "Away Team Name": "Away Team", "goal_difference": "Goal Difference"},
+      "colors": "Reds"
+    }
+  ]
+}
+2024-11-22 14:31:52,293 - INFO - Executed Query: SELECT Year, SUM([Home Team Goals] + [Away Team Goals]) AS total_goals FROM WorldCupMatches GROUP BY Year
+Result:      Year  total_goals
+0     NaN          NaN
+1  1930.0         70.0
+2  1934.0         70.0
+3  1938.0         84.0
+4  1950.0         88.0
+2024-11-22 14:31:52,320 - INFO - Executed Query: SELECT Stage, COUNT(*) AS matches_count FROM WorldCupMatches GROUP BY Stage
+Result:          Stage  matches_count
+0         None           3720
+1        Final             20
+2  First round              9
+3      Group 1             62
+4      Group 2             59
+2024-11-22 14:31:52,341 - INFO - Executed Query: SELECT Year, SUM([Home Team Goals]) AS home_goals, SUM([Away Team Goals]) AS away_goals FROM WorldCupMatches GROUP BY Year
+Result:      Year  home_goals  away_goals
+0     NaN         NaN         NaN
+1  1930.0        59.0        11.0
+2  1934.0        48.0        22.0
+3  1938.0        61.0        23.0
+4  1950.0        69.0        19.0
+2024-11-22 14:31:52,362 - INFO - Executed Query: SELECT Year, AVG(Attendance) AS average_attendance FROM WorldCupMatches GROUP BY Year
+Result:      Year  average_attendance
+0     NaN                 NaN
+1  1930.0        32808.277778
+2  1934.0        21352.941176
+3  1938.0        20872.222222
+4  1950.0        47511.181818
+2024-11-22 14:31:52,370 - INFO - Executed Query: SELECT [Home Team Name] AS team, SUM([Home Team Goals]) AS total_home_goals FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY total_home_goals DESC LIMIT 5
+Result:          team  total_home_goals
+0      Brazil             180.0
+1   Argentina             111.0
+2       Italy              99.0
+3  Germany FR              99.0
+4     Hungary              73.0
+2024-11-22 14:31:52,377 - INFO - Executed Query: SELECT [Home Team Name], (SUM([Home Team Goals]) - SUM([Away Team Goals])) AS goal_difference FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY goal_difference DESC LIMIT 5
+Result:   Home Team Name  goal_difference
+0         Brazil            102.0
+1      Argentina             67.0
+2     Germany FR             63.0
+3          Italy             58.0
+4        Hungary             54.0
+2024-11-22 14:31:52,389 - INFO - Executed Query: SELECT Country, COUNT(*) AS total_matches FROM WorldCups INNER JOIN WorldCupMatches ON WorldCups.Year = WorldCupMatches.Year GROUP BY Country
+Result:      Country  total_matches
+0  Argentina             38
+1     Brazil            102
+2      Chile             32
+3    England             32
+4     France             82
+2024-11-22 14:31:52,398 - INFO - Executed Query: SELECT Referee, COUNT(*) AS matches_count FROM WorldCupMatches GROUP BY Referee ORDER BY matches_count DESC LIMIT 5
+Result:                  Referee  matches_count
+0                   None           3720
+1  Ravshan IRMATOV (UZB)             10
+2  RODRIGUEZ Marco (MEX)              8
+3     QUINIOU Joel (FRA)              8
+4  LARRIONDA Jorge (URU)              8
+2024-11-22 14:31:52,404 - INFO - Executed Query: SELECT Year, SUM([Half-time Home Goals] + [Half-time Away Goals]) AS total_half_time_goals FROM WorldCupMatches GROUP BY Year
+Result:      Year  total_half_time_goals
+0     NaN                    NaN
+1  1930.0                   32.0
+2  1934.0                   29.0
+3  1938.0                   30.0
+4  1950.0                   41.0
+2024-11-22 14:31:52,418 - INFO - Executed Query: SELECT [Home Team Name], [Away Team Name], (SUM([Home Team Goals]) - SUM([Away Team Goals])) AS goal_difference FROM WorldCupMatches GROUP BY [Home Team Name], [Away Team Name]
+Result:   Home Team Name    Away Team Name  goal_difference
+0           None              None              NaN
+1        Algeria           Austria             -2.0
+2        Algeria             Chile              1.0
+3        Algeria  Northern Ireland              0.0
+4        Algeria            Russia              0.0
+2024-11-22 14:33:32,129 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:33:32,139 - INFO - Prompt: 
+Your task is to generate a series of SQL queries based on a provided dataset and a user's key statement. The dataset comprises multiple CSV files, each representing a table. Your objective is to analyze the data according to the user's statement and generate SQL queries suitable for dashboard visualization.
+
+### Reference Data:
+- **Table Names**: ['WorldCups', 'WorldCupPlayers', 'WorldCupMatches']
+- **Column Names**: Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials
+
+### Instructions:
+
+#### 1. Data Input:
+- You will receive a dataset as described in the reference data.
+- The data structure may vary; ensure your approach is adaptable to different datasets.
+
+#### 2. User Statement:
+- The user will provide a key statement or guidance, which will be the central focus for your analysis (e.g., "matches").
+- Construct a detailed mind map around this key statement, expanding the analysis to encompass all relevant dimensions. For example, if the key statement is "matches," explore areas such as "Wins, losses, successful teams, averages, totals, match types, levels," and more.
+- Focus on the most pertinent sections of the dataset, ensuring a targeted and meaningful analysis.
+
+**Example Scenarios**:
+- For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
+- For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
+- With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+- For "player performance," delve into metrics such as "most goals scored by players, top 5 performing players, assists, player efficiency ratings, and match impact scores," among other relevant statistics.
+
+#### 3. Analysis and Insights:
+- Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
+- Uncover at least 3 notable trends, using a variety of graph types to effectively illustrate these trends.
+- Utilize line graphs for time series analysis, bar charts for categorical data comparisons, and scatter plots for examining correlations.
+- Incorporate pie charts for proportional data representation and heat maps for visualizing data density or intensity.
+- Detect patterns, anomalies, or correlations that could provide valuable insights for decision-making or strategic planning.
+- Ensure the insights are diverse, covering multiple facets of the dataset to offer a comprehensive perspective.
+- Apply advanced analytical techniques to extract insights that are not immediately apparent, thereby deepening the analysis.
+- Clearly articulate the insights and trends in a structured manner that a language model can comprehend, facilitating the generation of meaningful SQL queries for visualization.
+- Present the findings in a way that broadens the user's understanding, using visual elements to enhance clarity and engagement.
+
+#### 4. SQL Query Generation:
+- Generate precise, efficient, and optimized SQL queries using only the provided table names and their respective column names. Do not invent or assume any additional tables or columns.
+- Ensure the queries adhere to standard SQL conventions, maintaining both syntactical and semantic correctness, as well as performance optimization.
+- Analyze the user's input to ensure the queries align with the intended operations, such as SELECT, INSERT, UPDATE, or DELETE, and include necessary clauses like WHERE, ORDER BY, or GROUP BY.
+- Ensure adherence to the correct SQL syntax and structure when writing queries. Follow these guidelines:
+  1. **Clause Order**: Maintain the standard order of SQL clauses. For instance, the `ORDER BY` clause should always follow the `UNION` clause.
+  2. **Logical Flow**: Begin with the `SELECT` statement, followed by `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT` as needed.
+- Always verify that the SQL query logic aligns with the intended data retrieval and analysis objectives.
+- If specific mathematical operations are required and the necessary columns are not available, utilize SQL functions to perform these operations accurately.
+- Integrate the provided table names and column names correctly, adhering strictly to the reference data to ensure the queries justify the targeted insights.
+- Produce queries that execute flawlessly in a typical SQL environment, accurately displaying the data needed to derive the intended insights.
+- Use the * in the SELECT statement to retrieve all columns unless grouping or counting is necessary, ensuring clarity and completeness.
+- Use square brackets for column names with spaces to maintain syntactical accuracy.
+- Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
+- In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
+- The available table names are: WorldCups, WorldCupPlayers, WorldCupMatches; strictly use these table names.
+- The available column names for each table are: Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials; ensure to use these column names accurately.
+- When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
+- If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
+- Emphasize avoiding constructs like 'SELECT TOP 5' or 'TOP' to prevent syntax errors and ensure the queries remain adaptable and generalizable.
+- Adapt to the given context and use meaningful aliases for columns and tables to enhance clarity and user understanding when visualizing data. Ensure aliases are intuitive and reflect the insights or attributes they represent. For example, if the user statement is "Argentina vs Brazil," use aliases like `argentina_goals` and `brazil_goals` to clearly distinguish between the data for each country. Similarly, for a statement like "Q1 vs Q2 Sales," use aliases such as `sales_q1` and `sales_q2`.
+- The output should be solely the SQL queries, with no additional text or commentary, ensuring clarity and focus for the LLM.
+
+#### 5. Graph Type Selection:
+- Choose the most appropriate graph type based on the nature of the data and the insights you aim to convey. Consider the following guidelines:
+  - **Decomposition Tree**: Ideal for breaking down hierarchical data to explore relationships and contributions of different components.
+  - **Line Chart**: Best for visualizing trends over time, especially for continuous data.
+  - **Bar Chart**: Suitable for comparing quantities across different categories.
+  - **Pie Chart**: Useful for showing proportions and percentages within a whole.
+  - **Heatmap**: Effective for visualizing data density or intensity across two dimensions.
+  - **Column Chart**: Similar to bar charts but oriented vertically, useful for categorical data.
+  - **Combo Charts (Line and Bar)**: Combines line and bar charts to compare different data series with distinct scales.
+  - **Cards/Tiles for KPIs**: Perfect for displaying key performance indicators in a concise and visually appealing manner.
+  - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
+  - **Gauge Charts**: Useful for showing progress towards a goal or target.
+  - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+- Ensure all graphs of the same type use a consistent and professional color palette, maintaining visual uniformity across the entire dashboard. Select a palette that enhances readability and aesthetic appeal, and apply it consistently to reinforce the dashboard's thematic coherence.
+
+#### 6. Output Format:
+- Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
+- The output must be a JSON object structured as follows:
+  - "dashboard_name": A string representing the name of the dashboard.
+  - "graphs": An array of graph objects, each containing:
+    - "name": A string for the graph's unique identifier.
+    - "type": A string indicating the graph type (e.g. Mentioned in the Graph Type Selection).
+    - "query": A string containing the SQL query for the graph.
+    - "x_axis": A string or array indicating the x-axis data.
+    - "y_axis": A string or array indicating the y-axis data.
+    - "title": A string for the graph's title.
+    - "labels": An object mapping data keys to their display labels.
+    - "colors": A string indicating the colorscale to be used for the graph, selected from a professional set. Use distinct colorscales for graphs with multiple labels or fields to distinguish them.
+
+**User Statement**: matches
+
+**Example for a Pie Chart**:
+{
+  "dashboard_name": "Sales Overview",
+  "graphs": [
+    {
+      "name": "sales_distribution",
+      "type": "pie",
+      "query": "SELECT region, SUM(sales) as total_sales FROM sales_data GROUP BY region",
+      "x_axis": "region",
+      "y_axis": "total_sales",
+      "title": "Sales Distribution by Region",
+      "labels": {"region": "Region", "total_sales": "Total Sales"},
+      "colors": ["#4e79a7", "#59a14f", "#9c755f", "#f28e2b"]
+    }
+  ]
+}
+
+**Example for a Bar Chart**:
+{
+  "dashboard_name": "Monthly Revenue",
+  "graphs": [
+    {
+      "name": "monthly_revenue",
+      "type": "bar",
+      "query": "SELECT month, revenue FROM revenue_data",
+      "x_axis": "month",
+      "y_axis": "revenue",
+      "title": "Monthly Revenue",
+      "labels": {"month": "Month", "revenue": "Revenue"},
+      "colors": ["#4e79a7", "#59a14f"]
+    }
+  ]
+}
+
+**Example for a Line Chart**:
+{
+  "dashboard_name": "Stock Prices",
+  "graphs": [
+    {
+      "name": "stock_trend",
+      "type": "line",
+      "query": "SELECT date, closing_price FROM stock_data ORDER BY date",
+      "x_axis": "date",
+      "y_axis": "closing_price",
+      "title": "Stock Price Trend",
+      "labels": {"date": "Date", "closing_price": "Closing Price"},
+      "colors": ["#4e79a7"]
+    }
+  ]
+}
+
+**Example for a Heatmap**:
+{
+  "dashboard_name": "Customer Activity",
+  "graphs": [
+    {
+      "name": "activity_heatmap",
+      "type": "heatmap",
+      "query": "SELECT hour, day, activity_level FROM activity_data",
+      "x_axis": "hour",
+      "y_axis": "day",
+      "title": "Customer Activity Heatmap",
+      "labels": {"hour": "Hour", "day": "Day", "activity_level": "Activity Level"},
+      "colors": "Blues"
+    }
+  ]
+}
+
+**Example for a Combo Chart**:
+{
+  "dashboard_name": "Sales and Profit",
+  "graphs": [
+    {
+      "name": "sales_profit_combo",
+      "type": "combo",
+      "query": "SELECT month, sales, profit FROM financial_data",
+      "x_axis": "month",
+      "y_axis": ["sales", "profit"],
+      "title": "Monthly Sales and Profit",
+      "labels": {"month": "Month", "sales": "Sales", "profit": "Profit"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    }
+  ]
+}
+
+OpenAI Response: {
+  "dashboard_name": "World Cup Matches Overview",
+  "graphs": [
+    {
+      "name": "total_goals_by_year",
+      "type": "line",
+      "query": "SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS total_goals FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "Year",
+      "y_axis": "total_goals",
+      "title": "Total Goals by Year",
+      "labels": {"Year": "Year", "total_goals": "Total Goals"},
+      "colors": ["#4e79a7"]
+    },
+    {
+      "name": "matches_per_stage",
+      "type": "bar",
+      "query": "SELECT [Stage], COUNT(*) AS total_matches FROM WorldCupMatches GROUP BY [Stage]",
+      "x_axis": "Stage",
+      "y_axis": "total_matches",
+      "title": "Total Matches per Stage",
+      "labels": {"Stage": "Stage", "total_matches": "Total Matches"},
+      "colors": ["#59a14f"]
+    },
+    {
+      "name": "attendance_trend",
+      "type": "line",
+      "query": "SELECT [Year], SUM([Attendance]) AS total_attendance FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "Year",
+      "y_axis": "total_attendance",
+      "title": "Total Attendance by Year",
+      "labels": {"Year": "Year", "total_attendance": "Total Attendance"},
+      "colors": ["#f28e2b"]
+    },
+    {
+      "name": "average_goals_home_vs_away",
+      "type": "combo",
+      "query": "SELECT AVG([Home Team Goals]) AS avg_home_goals, AVG([Away Team Goals]) AS avg_away_goals FROM WorldCupMatches",
+      "x_axis": "Type",
+      "y_axis": ["avg_home_goals", "avg_away_goals"],
+      "title": "Average Goals: Home vs Away",
+      "labels": {"Type": "Type", "avg_home_goals": "Avg Home Goals", "avg_away_goals": "Avg Away Goals"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    },
+    {
+      "name": "top_teams_by_wins",
+      "type": "bar",
+      "query": "SELECT [Home Team Name] AS team, COUNT(*) AS total_wins FROM WorldCupMatches WHERE [Home Team Goals] > [Away Team Goals] GROUP BY [Home Team Name] ORDER BY total_wins DESC LIMIT 10",
+      "x_axis": "team",
+      "y_axis": "total_wins",
+      "title": "Top 10 Teams by Wins as Home Team",
+      "labels": {"team": "Team", "total_wins": "Total Wins"},
+      "colors": ["#9c755f"]
+    },
+    {
+      "name": "top_teams_by_goals_scored",
+      "type": "bar",
+      "query": "SELECT [Home Team Name] AS team, SUM([Home Team Goals]) AS goals_scored FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY goals_scored DESC LIMIT 10",
+      "x_axis": "team",
+      "y_axis": "goals_scored",
+      "title": "Top 10 Teams by Goals Scored",
+      "labels": {"team": "Team", "goals_scored": "Goals Scored"},
+      "colors": ["#4e79a7"]
+    },
+    {
+      "name": "winning_conditions_distribution",
+      "type": "pie",
+      "query": "SELECT [Win conditions], COUNT(*) AS matches_count FROM WorldCupMatches GROUP BY [Win conditions]",
+      "x_axis": "Win conditions",
+      "y_axis": "matches_count",
+      "title": "Distribution of Win Conditions",
+      "labels": {"Win conditions": "Win Conditions", "matches_count": "Matches Count"},
+      "colors": ["#59a14f", "#f28e2b", "#e15759"]
+    },
+    {
+      "name": "average_halftime_goals",
+      "type": "bar",
+      "query": "SELECT AVG([Half-time Home Goals]) AS avg_half_time_home, AVG([Half-time Away Goals]) AS avg_half_time_away FROM WorldCupMatches",
+      "x_axis": "Type",
+      "y_axis": ["avg_half_time_home", "avg_half_time_away"],
+      "title": "Average Half-Time Goals: Home vs Away",
+      "labels": {"Type": "Type", "avg_half_time_home": "Avg Half-Time Home Goals", "avg_half_time_away": "Avg Half-Time Away Goals"},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    },
+    {
+      "name": "attendance_by_year",
+      "type": "bar",
+      "query": "SELECT [Year], SUM([Attendance]) AS total_attendance FROM WorldCups GROUP BY [Year]",
+      "x_axis": "Year",
+      "y_axis": "total_attendance",
+      "title": "Attendance by Year",
+      "labels": {"Year": "Year", "total_attendance": "Total Attendance"},
+      "colors": ["#e15759"]
+    },
+    {
+      "name": "matches_over_time",
+      "type": "line",
+      "query": "SELECT [Year], COUNT(*) AS total_matches FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]",
+      "x_axis": "Year",
+      "y_axis": "total_matches",
+      "title": "Matches Over Time",
+      "labels": {"Year": "Year", "total_matches": "Total Matches"},
+      "colors": ["#4e79a7"]
+    }
+  ]
+}
+2024-11-22 14:33:32,165 - INFO - Executed Query: SELECT [Year], SUM([Home Team Goals] + [Away Team Goals]) AS total_goals FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  total_goals
+0     NaN          NaN
+1  1930.0         70.0
+2  1934.0         70.0
+3  1938.0         84.0
+4  1950.0         88.0
+2024-11-22 14:33:32,179 - INFO - Executed Query: SELECT [Stage], COUNT(*) AS total_matches FROM WorldCupMatches GROUP BY [Stage]
+Result:          Stage  total_matches
+0         None           3720
+1        Final             20
+2  First round              9
+3      Group 1             62
+4      Group 2             59
+2024-11-22 14:33:32,189 - INFO - Executed Query: SELECT [Year], SUM([Attendance]) AS total_attendance FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  total_attendance
+0     NaN               NaN
+1  1930.0          590549.0
+2  1934.0          363000.0
+3  1938.0          375700.0
+4  1950.0         1045246.0
+2024-11-22 14:33:32,196 - INFO - Executed Query: SELECT AVG([Home Team Goals]) AS avg_home_goals, AVG([Away Team Goals]) AS avg_away_goals FROM WorldCupMatches
+Result:    avg_home_goals  avg_away_goals
+0        1.811033          1.0223
+2024-11-22 14:33:32,208 - INFO - Executed Query: SELECT [Home Team Name] AS team, COUNT(*) AS total_wins FROM WorldCupMatches WHERE [Home Team Goals] > [Away Team Goals] GROUP BY [Home Team Name] ORDER BY total_wins DESC LIMIT 10
+Result:          team  total_wins
+0      Brazil          59
+1   Argentina          41
+2       Italy          38
+3  Germany FR          29
+4     Germany          24
+2024-11-22 14:33:32,226 - INFO - Executed Query: SELECT [Home Team Name] AS team, SUM([Home Team Goals]) AS goals_scored FROM WorldCupMatches GROUP BY [Home Team Name] ORDER BY goals_scored DESC LIMIT 10
+Result:          team  goals_scored
+0      Brazil         180.0
+1   Argentina         111.0
+2       Italy          99.0
+3  Germany FR          99.0
+4     Hungary          73.0
+2024-11-22 14:33:32,234 - INFO - Executed Query: SELECT [Win conditions], COUNT(*) AS matches_count FROM WorldCupMatches GROUP BY [Win conditions]
+Result:                Win conditions  matches_count
+0                        None           3720
+1                                        787
+2   win on penalties (2 - 3)               1
+3   win on penalties (3 - 4)               1
+4   win on penalties (4 - 3)               1
+2024-11-22 14:33:32,244 - INFO - Executed Query: SELECT AVG([Half-time Home Goals]) AS avg_half_time_home, AVG([Half-time Away Goals]) AS avg_half_time_away FROM WorldCupMatches
+Result:    avg_half_time_home  avg_half_time_away
+0             0.70892            0.428404
+2024-11-22 14:33:32,260 - INFO - Executed Query: SELECT [Year], SUM([Attendance]) AS total_attendance FROM WorldCups GROUP BY [Year]
+Result:    Year  total_attendance
+0  1930           590.549
+1  1934           363.000
+2  1938           375.700
+3  1950             1.045
+4  1954           768.607
+2024-11-22 14:33:32,275 - INFO - Executed Query: SELECT [Year], COUNT(*) AS total_matches FROM WorldCupMatches GROUP BY [Year] ORDER BY [Year]
+Result:      Year  total_matches
+0     NaN           3720
+1  1930.0             18
+2  1934.0             17
+3  1938.0             18
+4  1950.0             22
+2024-11-22 14:33:59,123 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:33:59,127 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: Brazil matches wins and losses history over all worldcups?  </content>The available table names are: WorldCups, WorldCupPlayers, WorldCupMatches, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT 
+    [Year], 
+    COUNT(CASE WHEN [Home Team Name] = 'Brazil' AND [Home Team Goals] > [Away Team Goals] THEN 1 END) AS Wins,
+    COUNT(CASE WHEN [Home Team Name] = 'Brazil' AND [Home Team Goals] < [Away Team Goals] THEN 1 END) AS Losses,
+    COUNT(CASE WHEN [Away Team Name] = 'Brazil' AND [Away Team Goals] > [Home Team Goals] THEN 1 END) AS Wins_Away,
+    COUNT(CASE WHEN [Away Team Name] = 'Brazil' AND [Away Team Goals] < [Home Team Goals] THEN 1 END) AS Losses_Away
+FROM 
+    WorldCupMatches
+WHERE 
+    [Home Team Name] = 'Brazil' OR [Away Team Name] = 'Brazil'
+GROUP BY 
+    [Year]
+ORDER BY 
+    [Year];
+```
+2024-11-22 14:34:35,556 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:34:35,565 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: who won in 1900s </content>The available table names are: WorldCups, WorldCupPlayers, WorldCupMatches, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT *
+FROM WorldCups
+WHERE Year BETWEEN 1900 AND 1999;
+```
+2024-11-22 14:38:32,756 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:38:32,761 - INFO - Prompt: As a highly advanced SQL query generator, your mission is to craft a precise, efficient, and optimized SQL query. The query must adhere to standard SQL conventions and be optimized for performance, ensuring it is syntactically correct. Thoroughly analyze the user's input to ensure the query accurately reflects the intended operations, including SELECT, INSERT, UPDATE, or DELETE, and incorporates necessary clauses like WHERE, ORDER BY, or GROUP BY. If some specific mathematical operations are asked in the question, and the columns with that specific values are not available, use sql to correctly perform the mathematical operation and provide the answer.It is essential to correctly integrate table names, column names, and any specified conditions. Your goal is to produce a query that executes flawlessly in a typical SQL environment, returning the complete row of data where the conditions are met. Always use the * in the SELECT statement to retrieve all information unless grouping or counting is required. Strictly use square brackets for column names to handle cases with spaces. Select the most appropriate table names from the provided list based on the question, identifying the table with relevant data. In special cases, understand the necessity to use multiple tables, identifying relationships from the given columns to construct the query. <content> User's question: What is the win ratio with respect to teams over the world cups? </content>The available table names are: WorldCups, WorldCupPlayers, WorldCupMatches, strictly use the table names among these. When grouping or counting is necessary, avoid using * after the SELECT statement. The data may contain null values; in such cases, do not limit the query to 1, instead, provide the first 5 rows or, if not specifically requested, do not limit the query. Do not use cases such as top 5 or top. <context> Table 'WorldCups' has columns: Year, Country, Winner, Runners-Up, Third, Fourth, GoalsScored, QualifiedTeams, MatchesPlayed, Attendance; Table 'WorldCupPlayers' has columns: RoundID, MatchID, Team Initials, Coach Name, Line-up, Shirt Number, Player Name, Position, Event; Table 'WorldCupMatches' has columns: Year, Datetime, Stage, Stadium, City, Home Team Name, Home Team Goals, Away Team Goals, Away Team Name, Win conditions, Attendance, Half-time Home Goals, Half-time Away Goals, Referee, Assistant 1, Assistant 2, RoundID, MatchID, Home Team Initials, Away Team Initials </context>The output should be solely the SQL query, with no additional text or commentary.
+OpenAI Response: ```sql
+SELECT [Home Team Name], 
+       COUNT(CASE WHEN [Home Team Goals] > [Away Team Goals] THEN 1 END) AS HomeWins, 
+       COUNT(CASE WHEN [Away Team Goals] > [Home Team Goals] THEN 1 END) AS AwayWins,
+       COUNT(*) AS TotalMatches,
+       (COUNT(CASE WHEN [Home Team Goals] > [Away Team Goals] THEN 1 END) + 
+        COUNT(CASE WHEN [Away Team Goals] > [Home Team Goals] THEN 1 END)) * 1.0 /
+       COUNT(*) AS WinRatio
+FROM [WorldCupMatches]
+GROUP BY [Home Team Name]
+ORDER BY WinRatio DESC;
+```
+2024-11-22 14:38:32,783 - INFO - Executed Query: SELECT [Home Team Name], 
+       COUNT(CASE WHEN [Home Team Goals] > [Away Team Goals] THEN 1 END) AS HomeWins, 
+       COUNT(CASE WHEN [Away Team Goals] > [Home Team Goals] THEN 1 END) AS AwayWins,
+       COUNT(*) AS TotalMatches,
+       (COUNT(CASE WHEN [Home Team Goals] > [Away Team Goals] THEN 1 END) + 
+        COUNT(CASE WHEN [Away Team Goals] > [Home Team Goals] THEN 1 END)) * 1.0 /
+       COUNT(*) AS WinRatio
+FROM [WorldCupMatches]
+GROUP BY [Home Team Name]
+ORDER BY WinRatio DESC;
+Result:                Home Team Name  HomeWins  AwayWins  TotalMatches  WinRatio
+0    rn">United Arab Emirates         0         1             1       1.0
+1   rn">Serbia and Montenegro         0         1             1       1.0
+2  rn">Bosnia and Herzegovina         1         0             1       1.0
+3                       Zaire         0         2             2       1.0
+4                       Wales         1         0             1       1.0
+2024-11-22 14:38:39,117 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-11-22 14:38:39,122 - INFO - Prompt: 
+        Based on the given context:                 Home Team Name  HomeWins  AwayWins  TotalMatches  WinRatio
+0     rn">United Arab Emirates         0         1             1       1.0
+1    rn">Serbia and Montenegro         0         1             1       1.0
+2   rn">Bosnia and Herzegovina         1         0             1       1.0
+3                        Zaire         0         2             2       1.0
+4                        Wales         1         0             1       1.0
+..                         ...       ...       ...           ...       ...
+74     rn">Republic of Ireland         0         0             5       0.0
+75                 New Zealand         0         0             1       0.0
+76                        Iran         0         0             1       0.0
+77                     IR Iran         0         0             1       0.0
+78                        None         0         0          3720       0.0
+
+[79 rows x 5 columns],
+        answer the following question: What is the win ratio with respect to teams over the world cups?. 
+        If the data in context has None, Nan or null values ignore it and give the next most suitable output.
+        If the question demands mathematical operations, and the context provided doesn't have the necessary information try to perform the necessary mathematical operation and get the desired answer.
+        Do not just read the context data given to you but also provide some actionable insight from the resultant data.
+        Plot the given context data frame in a chart by identifying the type of question that is asked, plot a chart in manner which makes most sense.
+        Output guidelines: 
+        1. The Output should be precise and follow the question given by the user.
+        2. The Output should not display the complete df that is provided as context to the llm.
+        3. The Output should always be concise and should be informative at the same time.
+        4. Understand the user question and based on the data give the answers.
+        5. Output should be described in the text format in a sentence or more if required.
+        Output Format: 
+            Question: What is the win ratio with respect to teams over the world cups? 
+
+            
+            Answer: -> Data-Info : should have numbers and quick overview of the data piece provided in the prompt.
+                    -> Key findings : should list the findings from the glance of the data based on the question that is asked.
+                    -> Visible trends : should mention and explain any trends that are shown in the data but may be not graspable by mere human eye.
+                    -> Actionable Insights : should give a preposition on what needs to be done to enhance, or for betterment of the user with the given insights.
+                    -> Graph type : Also provide the graph type for the result_df best possible way to visualize the df:                Home Team Name  HomeWins  AwayWins  TotalMatches  WinRatio
+0     rn">United Arab Emirates         0         1             1       1.0
+1    rn">Serbia and Montenegro         0         1             1       1.0
+2   rn">Bosnia and Herzegovina         1         0             1       1.0
+3                        Zaire         0         2             2       1.0
+4                        Wales         1         0             1       1.0
+..                         ...       ...       ...           ...       ...
+74     rn">Republic of Ireland         0         0             5       0.0
+75                 New Zealand         0         0             1       0.0
+76                        Iran         0         0             1       0.0
+77                     IR Iran         0         0             1       0.0
+78                        None         0         0          3720       0.0
+
+[79 rows x 5 columns] the output should be in the form : "bar" in case of bar graphs and "line" in case line graphs and so on, Ensure that output for graph type is one word only. 
+        
+OpenAI Response: **Question:** What is the win ratio with respect to teams over the world cups?
+
+**Answer:**
+- **Data-Info:** The dataset contains records of 79 teams participating in World Cups, with statistics on HomeWins, AwayWins, TotalMatches, and WinRatio. The win ratios range from 0.0 to 1.0, showcasing varying levels of success among teams.
+  
+- **Key findings:** 
+  - Teams with a total of only one match can achieve a win ratio of 1.0 if they win that match. 
+  - Some teams, including "None" and "Republic of Ireland," show a win ratio of 0.0, indicating no wins in multiple matches.
+  - Overall win ratios reveal a significant number of teams performing extremely well (1.0) versus those struggling to secure wins.
+
+- **Visible trends:** 
+  - A correlation can be seen where teams with more matches (TotalMatches) tend to have lower win ratios if they haven't succeeded in winning, hinting at a possible trend that established teams face tougher competition.
+  - The presence of numerous teams with a win ratio of 0 suggests a group of less competitive or newly participating teams.
+
+- **Actionable Insights:** 
+  - Teams performing below average should analyze their match strategies to identify weaknesses. 
+  - Future training regimes or preparatory matches could be tailored to improve team performance, especially for those with a 0.0 win ratio.
+  - Increasing competitive exposure through friendly matches could be beneficial for teams new to the World Cup format.
+
+- **Graph type:** bar

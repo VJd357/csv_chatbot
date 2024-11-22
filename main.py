@@ -104,7 +104,7 @@ def main():
     if 'uploaded_files' not in st.session_state:
         st.session_state.uploaded_files = []
 
-    st.title("Automated Dashboard and CSV Chatbot")
+    st.title("ConverSight")
     dashboard_name = st.text_input("Enter Database Name:")
     uploaded_files = st.file_uploader("Upload CSV Files", accept_multiple_files=True, type="csv")
     api_key = st.text_input("Enter your OpenAI API Key:", type="password")

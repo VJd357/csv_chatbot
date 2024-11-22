@@ -10,6 +10,7 @@ import logging
 from openai import OpenAI
 import dashboard
 from streamlit_chat import message
+from dashboard_visualization import GraphPlotter
 
 # Configure logging to log.txt
 logging.basicConfig(filename='log.txt', level=logging.INFO, 
@@ -81,19 +82,33 @@ def handle_file_uploads(uploaded_files, dashboard_name):
     st.session_state.tables_created = True
     return table_names
 
+
+def enrich_graphs_with_data(response_dict, dashboard_name):
+    """Enrich each graph in the response_dict with data from the executed query and return the updated dictionary."""
+    for graph in response_dict.get('graphs', []):
+        query = graph.get('query')
+        if query:
+            try:
+                # Execute the query and get the result
+                result_df = Responses.execute_query_and_get_result(query, dashboard_name)
+                # Append the result to the graph dict under the key 'data'
+                graph['data'] = result_df
+            except Exception as e:
+                # Print the query that caused an error
+                print(f"Error executing query: {query}\nException: {e}")
+    return response_dict
+
 def main():
     st.set_page_config(layout="wide")
     if 'sidebar_state' not in st.session_state:
         st.session_state.sidebar_state = 'expanded'
     
     # Change the sidebar toggle button to a chat icon
-    
-
     if st.session_state.sidebar_state == 'expanded':
         st.sidebar.image("nice_icon.jpeg", width=150)
 
     st.title("Automated Dashboard and CSV Chatbot")
-    dashboard_name = st.text_input("Enter Dashboard Name:")
+    dashboard_name = st.text_input("Enter Database Name:")
     uploaded_files = st.file_uploader("Upload CSV Files", accept_multiple_files=True, type="csv")
     api_key = st.text_input("Enter your OpenAI API Key:", type="password")
     dashboard_query = st.text_input("Dashboard topic:")
@@ -107,30 +122,55 @@ def main():
         sql_prompt, system_prompt = Prompt.get_combined_dashboard_prompt(dashboard_query, column_dict)
         model = Utility.get_openai_creds()  # Only retrieve the model
         response = Responses.get_openai_response(sql_prompt, system_prompt, api_key, model)
-        json_content = re.search(r'\{.*?\}', response, re.DOTALL).group(0)
-        response_dict = json.loads(json_content)
-        df_results_dict = dashboard.get_query_results_dict(response_dict, dashboard_name)
-        dashboard.display_graphs_in_grid(df_results_dict, dashboard_name)
-        # Save all generated figures in session state
-        # **Important: Append to the list instead of overwriting**
-        st.session_state.dashboard_figures.extend(
-            [dashboard.generate_charts(df, df_name) for df_name, df in df_results_dict.items() if dashboard.generate_charts(df, df_name)]
-        )
-        st.session_state.dashboard_name = dashboard_name
+        cleaned_json = Utility.clean_markdown(response)
+        response_dict = json.loads(cleaned_json)
+        data_dict = enrich_graphs_with_data(response_dict, dashboard_name)
+        
+        serializable_data_dict = {}
+        for key, value in data_dict.items():
+            if isinstance(value, dict) and 'data' in value:
+                if isinstance(value['data'], pd.DataFrame):
+                    # Convert DataFrame to a list of dictionaries
+                    value['data'] = value['data'].to_dict(orient='records')
+                serializable_data_dict[key] = value
+            else:
+                # Handle cases where value is not a dictionary or doesn't have 'data'
+                serializable_data_dict[key] = value
+
+        # Log the serializable data_dict to a file
+        with open("data_logs.txt", "a+") as log_file:
+            try:
+                log_file.write(json.dumps(serializable_data_dict, indent=4))
+                log_file.write("\n\n")
+            except TypeError as e:
+                logging.error(f"Error serializing data_dict: {e}")
+                # Optionally, print or log the problematic part of the data_dict
+                for key, value in serializable_data_dict.items():
+                    if isinstance(value, dict) and 'data' in value:
+                        if isinstance(value['data'], pd.DataFrame):
+                            logging.error(f"DataFrame not converted for key: {key}")
+
+        # Use GraphPlotter to plot graphs in grid
+        plotter = GraphPlotter(data_dict)
+        plotter.plot_graphs_in_grid()
+        
+        # Store dashboard-related session state
+        st.session_state.dashboard_name = data_dict.get('dashboard_name', dashboard_name)
         st.session_state.dashboard_query = dashboard_query
         st.session_state.api_key = api_key
         st.session_state.uploaded_files = uploaded_files
-        
-    # Display the dashboard if it's generated
-    if st.session_state.dashboard_name:
+        st.session_state.dashboard_figures = plotter.get_figures()  # Store the figures
+
+    # Display the most recent dashboard if it's generated
+    if st.session_state.dashboard_name and st.session_state.dashboard_figures:
         st.header(f"Dashboard: {st.session_state.dashboard_name}")
         cols = st.columns(2)  # Set columns to 2
         for i, fig in enumerate(st.session_state.dashboard_figures):
-            with cols[i % 2]:  # Use modulo to cycle through columns
-                st.plotly_chart(fig, use_container_width=True, key=f"dashboard_chart_{i}")
+            if fig:  # Ensure the figure is not None
+                with cols[i % 2]:  # Use modulo to cycle through columns
+                    st.plotly_chart(fig, use_container_width=True, key=f"dashboard_chart_{i}")
     
     # Chatbot UI
-    # Only display the chatbot UI if chat_open is True
     st.sidebar.button("💬", key="sidebar_toggle")  # Added unique key
     st.session_state.sidebar_state = 'collapsed' if st.session_state.sidebar_state == 'expanded' else 'expanded'
     if st.session_state.sidebar_state == 'expanded':
@@ -141,42 +181,8 @@ def main():
             for i, (q, a) in enumerate(zip(st.session_state['session_questions'], st.session_state['session_outputs'])):
                 message(q, is_user=True, key=f"user_{i}")
                 message(a, is_user=False, key=f"bot_{i}")
-            # Fix the input box and send button position
-            #st.markdown(
-            #    """
-            #    <style>
-            #    .sidebar-content {
-            #        position: fixed;
-            #        top: 0;
-            #        width: 100%;
-            #    }
-            #    .sidebar-content > * {
-            #        margin-bottom: 10px;
-            #    }
-            #    .sidebar-content input[type="text"] {
-            #        width: 100%;
-            #        padding: 10px;
-            #        border: 1px solid #ccc;
-            #        border-radius: 5px;
-            #        box-sizing: border-box;
-            #    }
-            #    .sidebar-content button {
-            #        width: 100%;
-            #        padding: 10px;
-            #        background-color: #4CAF50;
-            #        color: white;
-            #        border: none;
-            #        border-radius: 5px;
-            #        cursor: pointer;
-            #    }
-            #    </style>
-            #    """,
-            #    unsafe_allow_html=True
-            #)
-            #st.markdown("<div class='sidebar-content'>", unsafe_allow_html=True)
             question = st.text_input("Ask a question:", key="question_input")
             if st.button("Send", key="send_question"):
-                  # Added unique key
                 column_dict = Utility.read_csv_files([file.name for file in st.session_state.uploaded_files])
                 sql_prompt, system_prompt = Prompt.get_combined_prompt(question, column_dict)
                 model = Utility.get_openai_creds()  # Only retrieve the model
@@ -209,16 +215,6 @@ def main():
                         st.session_state['session_response_figures'].append(fig)
                 else:
                     print("The context DataFrame is empty or None, unable to generate chart.")
-            #st.markdown("</div>", unsafe_allow_html=True)
-    # Display session history as expandable tiles
-    #if st.session_state.sidebar_state == 'expanded':
-    #    st.sidebar.header("Chat History")
-    #    for i, (q, a, f) in enumerate(zip(st.session_state['session_questions'], st.session_state['session_outputs'], st.session_state['session_response_figures'])):
-    #        with st.sidebar.expander(f"Q{i+1}: {q}"):
-    #            st.write(f"**A:** {a}")
-    #            st.plotly_chart(f, use_container_width=True, key=f"sidebar_chart_{i}")
-    
-    # Add JavaScript to scroll to the bottom of the sidebar
         st.sidebar.markdown(
         """
         <style>

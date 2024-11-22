@@ -8,7 +8,6 @@ class Utility:
         with open('creds.yaml', 'r') as file:
             creds = yaml.safe_load(file)
         model = creds['openai']['openai_model']
-       # api_key = creds['openai']['openai_key']
         return model
 
     @staticmethod
@@ -51,3 +50,24 @@ class Utility:
             columns_dict[table_name] = df.columns.tolist()
 
         return columns_dict
+
+    @staticmethod
+    def clean_markdown(json_string):
+        # Strip leading and trailing whitespace
+        json_string = json_string.strip()
+        
+        # Check if the string starts and ends with triple backticks
+        if json_string.startswith("```") and json_string.endswith("```"):
+            # Remove the triple backticks
+            json_string = json_string[3:-3].strip()
+            
+            # Check for a language identifier at the start
+            first_newline = json_string.find('\n')
+            if first_newline != -1:
+                # Extract the first line to see if it's a language identifier
+                first_line = json_string[:first_newline].strip()
+                # If the first line is a language identifier, remove it
+                if first_line.isalpha():
+                    json_string = json_string[first_newline:].strip()
+        
+        return json_string

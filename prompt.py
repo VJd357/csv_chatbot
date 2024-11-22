@@ -100,6 +100,7 @@ Your task is to generate a series of SQL queries based on a provided dataset and
 - For a key statement like "sales," expand the analysis to include "total revenue, sales growth, top-selling products, regional performance, seasonal trends," etc.
 - For "customer feedback," analyze "positive vs. negative feedback, common complaints, customer satisfaction scores, feedback trends over time," and other related aspects.
 - With "employee performance," investigate areas like "productivity metrics, performance reviews, training effectiveness, team collaboration," and similar dimensions.
+- For "player performance," delve into metrics such as "most goals scored by players, top 5 performing players, assists, player efficiency ratings, and match impact scores," among other relevant statistics.
 
 #### 3. Analysis and Insights:
 - Conduct a thorough analysis to identify at least 10 compelling insights from the dataset, ensuring they are directly relevant to the user's question.
@@ -128,6 +129,7 @@ Your task is to generate a series of SQL queries based on a provided dataset and
 - Select the most relevant table names from the provided list based on the user's question, ensuring the data source is appropriate for the analysis.
 - In cases requiring multiple tables, identify relationships using the given columns to construct coherent queries.
 - The available table names are: {', '.join(table_names)}; strictly use these table names.
+- The available column names for each table are: {columns_info}; ensure to use these column names accurately.
 - When grouping or counting, avoid using * after the SELECT statement to maintain semantic clarity.
 - If the data contains null values, do not limit the query to 1. Instead, provide the first 5 rows or, if not specifically requested, do not limit the query.
 - Emphasize avoiding constructs like 'SELECT TOP 5' or 'TOP' to prevent syntax errors and ensure the queries remain adaptable and generalizable.
@@ -147,6 +149,7 @@ Your task is to generate a series of SQL queries based on a provided dataset and
   - **Funnel Charts**: Ideal for illustrating stages in a process and identifying potential drop-offs.
   - **Gauge Charts**: Useful for showing progress towards a goal or target.
   - **Area Charts**: Good for displaying cumulative totals over time or comparing multiple data series.
+- Ensure all graphs of the same type use a consistent and professional color palette, maintaining visual uniformity across the entire dashboard. Select a palette that enhances readability and aesthetic appeal, and apply it consistently to reinforce the dashboard's thematic coherence.
 
 #### 6. Output Format:
 - Ensure the output contains a minimum of 10 diverse graphs, and mandatorily include between 3 to 4 key performance indicators (KPIs) to provide a comprehensive analysis.
@@ -154,15 +157,100 @@ Your task is to generate a series of SQL queries based on a provided dataset and
   - "dashboard_name": A string representing the name of the dashboard.
   - "graphs": An array of graph objects, each containing:
     - "name": A string for the graph's unique identifier.
-    - "type": A string indicating the graph type (e.g., "bar", "line", "pie", "heatmap").
+    - "type": A string indicating the graph type (e.g. Mentioned in the Graph Type Selection).
     - "query": A string containing the SQL query for the graph.
     - "x_axis": A string or array indicating the x-axis data.
     - "y_axis": A string or array indicating the y-axis data.
     - "title": A string for the graph's title.
     - "labels": An object mapping data keys to their display labels.
-    - "colors": An array of strings indicating the colors to be used for the graph, selected from a professional set of 4-5 colors. Use multiple colors for graphs with multiple labels or fields to distinguish them.
+    - "colors": A string indicating the colorscale to be used for the graph, selected from a professional set. Use distinct colorscales for graphs with multiple labels or fields to distinguish them.
+
+**User Statement**: {dashboard_topic}
 
 **Example for a Pie Chart**:
+{{
+  "dashboard_name": "Sales Overview",
+  "graphs": [
+    {{
+      "name": "sales_distribution",
+      "type": "pie",
+      "query": "SELECT region, SUM(sales) as total_sales FROM sales_data GROUP BY region",
+      "x_axis": "region",
+      "y_axis": "total_sales",
+      "title": "Sales Distribution by Region",
+      "labels": {{"region": "Region", "total_sales": "Total Sales"}},
+      "colors": ["#4e79a7", "#59a14f", "#9c755f", "#f28e2b"]
+    }}
+  ]
+}}
+
+**Example for a Bar Chart**:
+{{
+  "dashboard_name": "Monthly Revenue",
+  "graphs": [
+    {{
+      "name": "monthly_revenue",
+      "type": "bar",
+      "query": "SELECT month, revenue FROM revenue_data",
+      "x_axis": "month",
+      "y_axis": "revenue",
+      "title": "Monthly Revenue",
+      "labels": {{"month": "Month", "revenue": "Revenue"}},
+      "colors": ["#4e79a7", "#59a14f"]
+    }}
+  ]
+}}
+
+**Example for a Line Chart**:
+{{
+  "dashboard_name": "Stock Prices",
+  "graphs": [
+    {{
+      "name": "stock_trend",
+      "type": "line",
+      "query": "SELECT date, closing_price FROM stock_data ORDER BY date",
+      "x_axis": "date",
+      "y_axis": "closing_price",
+      "title": "Stock Price Trend",
+      "labels": {{"date": "Date", "closing_price": "Closing Price"}},
+      "colors": ["#4e79a7"]
+    }}
+  ]
+}}
+
+**Example for a Heatmap**:
+{{
+  "dashboard_name": "Customer Activity",
+  "graphs": [
+    {{
+      "name": "activity_heatmap",
+      "type": "heatmap",
+      "query": "SELECT hour, day, activity_level FROM activity_data",
+      "x_axis": "hour",
+      "y_axis": "day",
+      "title": "Customer Activity Heatmap",
+      "labels": {{"hour": "Hour", "day": "Day", "activity_level": "Activity Level"}},
+      "colors": "Blues"
+    }}
+  ]
+}}
+
+**Example for a Combo Chart**:
+{{
+  "dashboard_name": "Sales and Profit",
+  "graphs": [
+    {{
+      "name": "sales_profit_combo",
+      "type": "combo",
+      "query": "SELECT month, sales, profit FROM financial_data",
+      "x_axis": "month",
+      "y_axis": ["sales", "profit"],
+      "title": "Monthly Sales and Profit",
+      "labels": {{"month": "Month", "sales": "Sales", "profit": "Profit"}},
+      "colors": ["#1f77b4", "#ff7f0e"]
+    }}
+  ]
+}}
 """
         return prompt
 

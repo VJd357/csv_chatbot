@@ -1,0 +1,485 @@
+{
+    "dashboard_name": "Bank Churn Analysis Dashboard",
+    "graphs": [
+        {
+            "name": "Total Customers by Country",
+            "type": "bar",
+            "query": "SELECT [country], COUNT(*) AS [total_customers] FROM [Bank churn test data] GROUP BY [country] ORDER BY [total_customers] DESC",
+            "x_axis": "[country]",
+            "y_axis": "[total_customers]",
+            "title": "Total Customers by Country",
+            "labels": {
+                "country": "Country",
+                "total_customers": "Total Customers"
+            },
+            "colors": [
+                "#4CAF50",
+                "#2196F3",
+                "#FFC107",
+                "#FF5722",
+                "#673AB7"
+            ]
+        },
+        {
+            "name": "Average Credit Score by Gender",
+            "type": "bar",
+            "query": "SELECT [gender], AVG([credit_score]) AS [avg_credit_score] FROM [Bank churn test data] GROUP BY [gender]",
+            "x_axis": "[gender]",
+            "y_axis": "[avg_credit_score]",
+            "title": "Average Credit Score by Gender",
+            "labels": {
+                "gender": "Gender",
+                "avg_credit_score": "Average Credit Score"
+            },
+            "colors": [
+                "#FF9800",
+                "#3F51B5"
+            ]
+        },
+        {
+            "name": "Churn Rate by Active Member Status",
+            "type": "pie",
+            "query": "SELECT [active_member], COUNT(*) AS [total] FROM [Bank churn test data] GROUP BY [active_member]",
+            "x_axis": "",
+            "y_axis": "[total]",
+            "title": "Churn Rate by Active Member Status",
+            "labels": {
+                "active_member": "Active Member Status",
+                "total": "Total"
+            },
+            "colors": [
+                "#FF5722",
+                "#4CAF50"
+            ]
+        },
+        {
+            "name": "Customer Age Distribution",
+            "type": "histogram",
+            "query": "SELECT [age], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [age] ORDER BY [age]",
+            "x_axis": "[age]",
+            "y_axis": "[count]",
+            "title": "Customer Age Distribution",
+            "labels": {
+                "age": "Age",
+                "count": "Count"
+            },
+            "colors": [
+                "#E91E63"
+            ]
+        },
+        {
+            "name": "Balance vs Credit Score",
+            "type": "scatter",
+            "query": "SELECT [balance], [credit_score] FROM [Bank churn test data]",
+            "x_axis": "[balance]",
+            "y_axis": "[credit_score]",
+            "title": "Balance vs Credit Score",
+            "labels": {
+                "balance": "Balance",
+                "credit_score": "Credit Score"
+            },
+            "colors": [
+                "#9C27B0"
+            ]
+        },
+        {
+            "name": "Average Tenure by Product Number",
+            "type": "line",
+            "query": "SELECT [products_number], AVG([tenure]) AS [avg_tenure] FROM [Bank churn test data] GROUP BY [products_number]",
+            "x_axis": "[products_number]",
+            "y_axis": "[avg_tenure]",
+            "title": "Average Tenure by Product Number",
+            "labels": {
+                "products_number": "Number of Products",
+                "avg_tenure": "Average Tenure"
+            },
+            "colors": [
+                "#FF9800"
+            ]
+        },
+        {
+            "name": "Customer Distribution by Credit Card Usage",
+            "type": "bar",
+            "query": "SELECT [credit_card], COUNT(*) AS [total] FROM [Bank churn test data] GROUP BY [credit_card]",
+            "x_axis": "[credit_card]",
+            "y_axis": "[total]",
+            "title": "Customer Distribution by Credit Card Usage",
+            "labels": {
+                "credit_card": "Credit Card Usage",
+                "total": "Total Customers"
+            },
+            "colors": [
+                "#2196F3",
+                "#FFC107"
+            ]
+        },
+        {
+            "name": "Estimated Salary Distribution",
+            "type": "histogram",
+            "query": "SELECT [estimated_salary], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [estimated_salary] ORDER BY [estimated_salary]",
+            "x_axis": "[estimated_salary]",
+            "y_axis": "[count]",
+            "title": "Estimated Salary Distribution",
+            "labels": {
+                "estimated_salary": "Estimated Salary",
+                "count": "Count"
+            },
+            "colors": [
+                "#E91E63"
+            ]
+        },
+        {
+            "name": "Active Members Average Balance vs Gender",
+            "type": "combo",
+            "query": "SELECT [gender], AVG([balance]) AS [avg_balance] FROM [Bank churn test data] WHERE [active_member] = 1 GROUP BY [gender]",
+            "x_axis": "[gender]",
+            "y_axis": "[avg_balance]",
+            "title": "Active Members Average Balance vs Gender",
+            "labels": {
+                "gender": "Gender",
+                "avg_balance": "Average Balance"
+            },
+            "colors": [
+                "#FF5722",
+                "#4CAF50"
+            ]
+        },
+        {
+            "name": "Distribution of Customers by Age and Balance",
+            "type": "heatmap",
+            "query": "SELECT [age], [balance], COUNT(*) AS [count] FROM [Bank churn test data] GROUP BY [age], [balance]",
+            "x_axis": "[age]",
+            "y_axis": "[balance]",
+            "title": "Distribution of Customers by Age and Balance",
+            "labels": {
+                "age": "Age",
+                "balance": "Balance",
+                "count": "Count"
+            },
+            "colors": [
+                "#3F51B5",
+                "#FF9800",
+                "#2196F3"
+            ]
+        }
+    ]
+}
+
+{
+    "dashboard_name": "Cancer Patients Analysis",
+    "graphs": [
+        {
+            "name": "age_distribution",
+            "type": "bar",
+            "query": "SELECT Age, COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY Age ORDER BY Age",
+            "x_axis": "Age",
+            "y_axis": "Total_Patients",
+            "title": "Distribution of Cancer Patients by Age",
+            "labels": {
+                "Age": "Age",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#1f77b4"
+            ]
+        },
+        {
+            "name": "gender_distribution",
+            "type": "pie",
+            "query": "SELECT Gender, COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY Gender",
+            "x_axis": "Gender",
+            "y_axis": "Total_Patients",
+            "title": "Gender Distribution of Cancer Patients",
+            "labels": {
+                "Gender": "Gender",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#ff9999",
+                "#66b3ff"
+            ]
+        },
+        {
+            "name": "smoking_status",
+            "type": "bar",
+            "query": "SELECT Smoking, COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY Smoking",
+            "x_axis": "Smoking",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients by Smoking Status",
+            "labels": {
+                "Smoking": "Smoking Status",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#007bff"
+            ]
+        },
+        {
+            "name": "obesity_impact",
+            "type": "bar",
+            "query": "SELECT Obesity, COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY Obesity",
+            "x_axis": "Obesity",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients by Obesity Status",
+            "labels": {
+                "Obesity": "Obesity Status",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#ffcc00"
+            ]
+        },
+        {
+            "name": "air_pollution_impact",
+            "type": "bar",
+            "query": "SELECT Air Pollution, COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY Air Pollution",
+            "x_axis": "Air Pollution",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients by Air Pollution Exposure",
+            "labels": {
+                "Air Pollution": "Air Pollution",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#e74c3c"
+            ]
+        },
+        {
+            "name": "diet_impact",
+            "type": "bar",
+            "query": "SELECT [Balanced Diet], COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY [Balanced Diet]",
+            "x_axis": "Balanced Diet",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients by Balanced Diet",
+            "labels": {
+                "Balanced Diet": "Balanced Diet",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#2ecc71"
+            ]
+        },
+        {
+            "name": "fatigue_analysis",
+            "type": "bar",
+            "query": "SELECT Fatigue, COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY Fatigue",
+            "x_axis": "Fatigue",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients by Fatigue Level",
+            "labels": {
+                "Fatigue": "Fatigue",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#34495e"
+            ]
+        },
+        {
+            "name": "cough_blood_analysis",
+            "type": "bar",
+            "query": "SELECT [Coughing of Blood], COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY [Coughing of Blood]",
+            "x_axis": "Coughing of Blood",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients with Coughing of Blood",
+            "labels": {
+                "Coughing of Blood": "Coughing of Blood",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#8e44ad"
+            ]
+        },
+        {
+            "name": "shortness_breath_analysis",
+            "type": "bar",
+            "query": "SELECT [Shortness of Breath], COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY [Shortness of Breath]",
+            "x_axis": "Shortness of Breath",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients with Shortness of Breath",
+            "labels": {
+                "Shortness of Breath": "Shortness of Breath",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#f39c12"
+            ]
+        },
+        {
+            "name": "frequent_cold_analysis",
+            "type": "bar",
+            "query": "SELECT [Frequent Cold], COUNT(Patient Id) as Total_Patients FROM cancer_patients_data GROUP BY [Frequent Cold]",
+            "x_axis": "Frequent Cold",
+            "y_axis": "Total_Patients",
+            "title": "Total Cancer Patients with Frequent Cold",
+            "labels": {
+                "Frequent Cold": "Frequent Cold",
+                "Total_Patients": "Total Patients"
+            },
+            "colors": [
+                "#d35400"
+            ]
+        }
+    ]
+}
+
+{
+    "dashboard_name": "Cancer Patients Analysis",
+    "graphs": [
+        {
+            "name": "age_distribution",
+            "type": "bar",
+            "query": "SELECT Age, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Age ORDER BY Age",
+            "x_axis": "Age",
+            "y_axis": "total_patients",
+            "title": "Age Distribution of Cancer Patients",
+            "labels": {
+                "Age": "Age",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#4e79a7"
+            ]
+        },
+        {
+            "name": "gender_distribution",
+            "type": "pie",
+            "query": "SELECT Gender, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Gender",
+            "x_axis": "Gender",
+            "y_axis": "total_patients",
+            "title": "Gender Distribution of Cancer Patients",
+            "labels": {
+                "Gender": "Gender",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#59a14f",
+                "#f28e2b"
+            ]
+        },
+        {
+            "name": "air_pollution_impact",
+            "type": "bar",
+            "query": "SELECT Air_Pollution, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Air_Pollution",
+            "x_axis": "Air Pollution",
+            "y_axis": "total_patients",
+            "title": "Impact of Air Pollution on Cancer Patients",
+            "labels": {
+                "Air Pollution": "Air Pollution Level",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#9c755f",
+                "#4e79a7"
+            ]
+        },
+        {
+            "name": "alcohol_use_effect",
+            "type": "bar",
+            "query": "SELECT Alcohol_use, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Alcohol_use",
+            "x_axis": "Alcohol Use",
+            "y_axis": "total_patients",
+            "title": "Impact of Alcohol Use on Cancer Patients",
+            "labels": {
+                "Alcohol Use": "Alcohol Use Status",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#f28e2b",
+                "#59a14f"
+            ]
+        },
+        {
+            "name": "smoking_prevalence",
+            "type": "bar",
+            "query": "SELECT Smoking, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Smoking",
+            "x_axis": "Smoking Status",
+            "y_axis": "total_patients",
+            "title": "Smoking Prevalence Among Cancer Patients",
+            "labels": {
+                "Smoking": "Smoking Status",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#1f77b4",
+                "#ff7f0e"
+            ]
+        },
+        {
+            "name": "chronic_lung_disease_correlation",
+            "type": "scatter",
+            "query": "SELECT Smoking, Chronic_Lung_Disease, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Smoking, Chronic_Lung_Disease",
+            "x_axis": "Smoking Status",
+            "y_axis": "Chronic Lung Disease",
+            "title": "Correlation Between Smoking and Chronic Lung Disease",
+            "labels": {
+                "Smoking": "Smoking",
+                "Chronic_Lung_Disease": "Chronic Lung Disease",
+                "total_patients": "Total Patients"
+            },
+            "colors": "#4e79a7"
+        },
+        {
+            "name": "weight_loss_performance",
+            "type": "bar",
+            "query": "SELECT Weight_Loss, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Weight_Loss",
+            "x_axis": "Weight Loss Status",
+            "y_axis": "total_patients",
+            "title": "Weight Loss Among Cancer Patients",
+            "labels": {
+                "Weight Loss": "Weight Loss Status",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#59a14f",
+                "#9c755f"
+            ]
+        },
+        {
+            "name": "shortness_of_breath_analysis",
+            "type": "bar",
+            "query": "SELECT Shortness_of_Breath, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Shortness_of_Breath",
+            "x_axis": "Shortness of Breath",
+            "y_axis": "total_patients",
+            "title": "Shortness of Breath in Cancer Patients",
+            "labels": {
+                "Shortness of Breath": "Shortness of Breath Status",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#f28e2b",
+                "#1f77b4"
+            ]
+        },
+        {
+            "name": "fatigue_level_analysis",
+            "type": "bar",
+            "query": "SELECT Fatigue, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Fatigue",
+            "x_axis": "Fatigue Level",
+            "y_axis": "total_patients",
+            "title": "Fatigue Level Among Cancer Patients",
+            "labels": {
+                "Fatigue": "Fatigue Level",
+                "total_patients": "Total Patients"
+            },
+            "colors": [
+                "#ff7f0e",
+                "#4e79a7"
+            ]
+        },
+        {
+            "name": "clinical_symptoms_overview",
+            "type": "heatmap",
+            "query": "SELECT Coughing_of_Blood, Weight_Loss, COUNT(*) as total_patients FROM cancer_patients_data GROUP BY Coughing_of_Blood, Weight_Loss",
+            "x_axis": "Coughing of Blood",
+            "y_axis": "Weight Loss",
+            "title": "Clinical Symptoms Heatmap",
+            "labels": {
+                "Coughing_of_Blood": "Coughing of Blood",
+                "Weight_Loss": "Weight Loss",
+                "total_patients": "Total Patients"
+            },
+            "colors": "Reds"
+        }
+    ]
+}
+
